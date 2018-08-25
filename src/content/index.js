@@ -12,6 +12,8 @@ const client = new bytom(url, accessToken)
 const keyPromise = client.keys.create('alias', 'password')
 keyPromise.then(key => {
     console.log(key)
+}).catch(function(error){
+    console.log(error)
 })
 
 //accounts list
