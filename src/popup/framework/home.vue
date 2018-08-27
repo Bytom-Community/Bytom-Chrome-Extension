@@ -112,7 +112,7 @@ select.btn-toggle {
 
 <template>
   <div>
-    <section class="background-green">
+    <section class="bg-green">
       <div class="row account">
           <a class="btn-menu" href="#"><i class="iconfont icon-menu" @click="openMenu"></i></a>
           <select class="btn-toggle">
@@ -164,7 +164,7 @@ select.btn-toggle {
 </template>
 
 <script>
-import Menu from "./menu";
+import Menu from "./components/menu/main";
 export default {
   name: "",
   components: {

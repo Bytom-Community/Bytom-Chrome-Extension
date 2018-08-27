@@ -1,15 +1,26 @@
-html,
-body {
-  margin: 0;
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+body,
+html {
   padding: 0;
+  margin: 0;
+}
+body {
   width: 350px;
   height: 600px;
-  background-color: #282f38;
+  background-color: #3c454b;
 }
+
 a,
 p,
 div,
 section,
+input,
 select {
   color: #ffffff;
 }
@@ -24,45 +35,6 @@ a {
   line-height: 25px;
 }
 
-/*按钮样式*/
-/* button, */
-.btn {
-  width: 100%;
-  position: relative;
-  display: inline-block;
-  font-size: 0.7rem;
-  font-weight: 400;
-  font-family: inherit;
-  text-decoration: none;
-  text-align: center;
-  margin: 0;
-  background: #dddddd;
-  padding: 0 0.6rem;
-  height: 1.5rem;
-  line-height: 1.5rem;
-  border-radius: 0.2rem;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  vertical-align: middle;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  -webkit-user-select: none;
-  user-select: none;
-}
-.btn:active {
-  color: #212121;
-  background-color: #bdbdbd;
-}
-.btn-primary {
-  color: #ffffff;
-  background-color: #282f38;
-}
-.btn-primary.active,
-.btn-primary:active {
-  color: #ffffff;
-  background-color: #282f38;
-  border: none;
-}
 .float-right {
   float: right;
 }
@@ -148,16 +120,84 @@ hr {
 .color-black {
   color: #282f38;
 }
-.color-gray {
-  background-color: #3c454b;
-}
-.color-red {
-  color: #d84c4c;
-}
 .color-green {
   color: #1bc1b0;
 }
 
-.background-green {
-  background-color: #1bc1b0;
+.bg-red {
+  background-color: #d84c4c !important;
+}
+.bg-gray {
+  background-color: #3c454b !important;
+}
+.bg-green {
+  background-color: #1bc1b0 !important;
+}
+
+/*按钮样式*/
+/* button, */
+.btn {
+  width: 100%;
+  position: relative;
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 400;
+  font-family: inherit;
+  text-decoration: none;
+  text-align: center;
+  margin: 0;
+  background: #dddddd;
+  padding: 0 0.6rem;
+  height: 1.5rem;
+  line-height: 1.5rem;
+  border-radius: 0.2rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.btn:hover {
+  cursor: pointer;
+}
+.btn:active {
+  color: #212121;
+  background-color: #bdbdbd;
+}
+.btn-primary {
+  color: #ffffff;
+  background-color: #282f38;
+}
+.btn-primary.active,
+.btn-primary:active {
+  color: #ffffff;
+  background-color: #282f38;
+  border: none;
+}
+.btn-group {
+  padding: 5px 50px;
+  line-height: 45px;
+}
+
+.form {
+}
+
+.form-item {
+  margin: 10px 0;
+  padding: 5px 10px;
+  background-color: #282f38;
+  border-radius: 5px;
+}
+
+.form-item label {
+  display: inline-flex;
+  width: 25%;
+}
+.form-item input {
+  width: 70%;
+  border: none;
+  background: transparent;
+  outline: none;
 }

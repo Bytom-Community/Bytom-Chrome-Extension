@@ -1,9 +1,4 @@
 <style scoped>
-h2,
-p {
-  padding: 0;
-  margin: 0;
-}
 .btn-close {
   color: #ffffff;
   font-weight: bold;
@@ -52,7 +47,7 @@ li.active {
 </style>
 
 <template>
-        <div class="mc-wrap color-gray">
+        <div class="mc-wrap bg-gray">
             <section>
                 <i class="iconfont btn-close" @click="close">&#xe605;</i>
             </section>
