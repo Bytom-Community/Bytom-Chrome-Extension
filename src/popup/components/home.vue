@@ -1,31 +1,55 @@
 <style lang="" scoped>
 .account {
-  border-bottom: 1px solid rgb(229, 229, 229);
-  padding-bottom: 10px;
-  text-align: center;
+  /* text-align: center; */
+  font-size: 18px;
 }
-.qrcode{
-    margin-left: 5px;
-    vertical-align: middle;
+.account .btn-menu {
+  float: left;
+  margin: 20px 8px 0 20px;
 }
-.account .menu,
-.toggle {
-  font-size: 24px;
+
+select.btn-toggle {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+.account .btn-toggle {
+  float: right;
+  margin-top: 22px;
+  margin-right: 20px;
+  border: 2px solid #fff;
+  border-radius: 18px;
+  padding: 0 10px;
+  font-size: 14px;
+}
+.account span {
+  display: block;
+  padding-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .balance {
-  margin-top: 30px;
+  margin-top: 20px;
   text-align: center;
   padding: 0 30px 20px;
 }
 .balance .balance-icon {
   display: inline-flex;
-  height: 50px;
-  width: 50px;
+  height: 40px;
+  width: 40px;
+  background: #fff;
   border: 1px solid #dedede;
   border-radius: 25px;
   padding: 8px;
-  background: #fff;
+  margin: 8px;
 }
 .balance .amount {
   padding-bottom: 10px;
@@ -33,31 +57,47 @@
 .balance .token-amount {
   font-size: 32px;
 }
-.balance .fiat-amount {
-  text-transform: uppercase;
-  color: #a0a0a0;
+.qrcode {
+  margin-left: 5px;
+  vertical-align: middle;
+}
+.btn-transfer {
+  width: 200px;
+  font-size: 20px;
+  line-height: 22px;
+  height: 40px;
+  line-height: 40px;
 }
 
 .transactions {
   font-size: 14px;
-  line-height: 40px;
-  display: contents;
+  /* line-height: 40px; */
+  /* display: contents; */
 }
-.transactions .time {
+.transactions h3 {
+  padding: 10px;
+  margin: 0;
+  color: #cacaca;
 }
-.transactions .addr {
+.transactions .list {
+  padding: 0 20px;
 }
-.transactions .value {
+.list-item {
+  display: flex;
+  border-bottom: 1px solid #5e5e5e;
 }
-.aui-list-item {
-  padding: 0;
+
+.list-item .value {
+  position: absolute;
+  right: 20px;
+  margin-top: 13px;
 }
 .mask {
   z-index: 25;
   position: fixed;
   height: 100%;
   width: 100%;
-  top: 60px;
+  top: 0;
   left: 0;
   right: 0;
   bottom: 0;
@@ -71,59 +111,56 @@
 </style>
 
 <template>
-    <div>
-        <section class="aui-content-padded">
-            <div class="aui-row account">
-                <div class="aui-col-xs-2 menu">
-                    <a href="#" style="color: #000"><i class="iconfont" @click="openMenu">&#xe6a9;</i></a>
-                </div>
-                <div class="aui-col-xs-8 info">
-                    <p class="account-name">账户1</p>
-                    <p class="account-address">bm1qsgh.....2dz8uny<i class="iconfont qrcode" @click="showQrcode">&#xe7dd;</i></p>
-                </div>
-                <div class="aui-col-xs-2 toggle">
-                    <i class="iconfont">&#xe60d;</i>
-                </div>
-            </div>
-            <div class="aui-row balance">
-                <img src="../../assets/logo.png" class="balance-icon">
-                <div class="amount">
-                    <div class="token-amount">100.123 BTM</div>
-                    <div class="fiat-amount">≈￥501.23</div>
-                </div>
-                <button class="aui-btn aui-btn-info aui-btn-block">转账</button>
-            </div>
+  <div>
+    <section class="background-green">
+      <div class="row account">
+          <a class="btn-menu" href="#"><i class="iconfont icon-menu" @click="openMenu"></i></a>
+          <select class="btn-toggle">
+            <option value="">BYTOM主网络</option>
+            <option value="">BYTOM测试网络</option>
+          </select>
+          <span>账户1aaadfddssdsd</span>
+      </div>
+      <div class="row balance">
+          <img src="../../assets/logo.png" class="balance-icon">
+          <div class="amount">
+              <div class="token-amount">100.123 BTM</div>
+              <p class="account-address">bm1qsgh.....2dz8uny<i class="iconfont qrcode" @click="showQrcode">&#xe7dd;</i></p>
+          </div>
+          <a href="#" class="btn btn-primary btn-transfer">转账</a>
+      </div>
+    </section>
 
-            <div class="aui-row">
-                <ul class="aui-list aui-list-in">
-                    <li class="aui-list-item">
-                        <div class="transactions">
-                            <div class="time">2018-08-22</div>
-                            <div class="addr">bm1qsg...8uny</div>
-                            <div class="value">+2344 BTM</div>
-                        </div>
-                    </li>
-                    <li class="aui-list-item">
-                        <div class="transactions">
-                            <div class="time">2018-08-22</div>
-                            <div class="addr">bm1qsg...8uny</div>
-                            <div class="value">-1234 BTM</div>
-                        </div>
-                    </li>
-                </ul>
+    <section class="transactions">
+      <h3 class="color-gray">交易记录</h3>
+      <ul class="list">
+        <li class="list-item">
+            <div>
+              <div class="time">2018-08-22</div>
+              <div class="addr">bm1qsg...8uny</div>
             </div>
-        </section>
+            <div class="value">+2344 BTM</div>
+        </li>
+        <li class="list-item">
+            <div>
+              <div class="time">2018-08-22</div>
+              <div class="addr">bm1qsg...8uny</div>
+            </div>
+            <div class="value">-1234 BTM</div>
+        </li>
+      </ul>
+    </section>
 
-        <!-- modal -->
-        <div v-show="maskOpen" class="mask"></div>
-        <link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">
-        <transition name="custom-classes-transition" 
-            enter-active-class="animated slideInLeft faster" 
-            leave-active-class="animated slideOutLeft faster" 
-            v-on:after-leave="afterLeave">
-            <Menu v-show="menuOpen" @closeNotify="menuOpen=false"></Menu>
-        </transition>
-    </div>
+    <!-- modal -->
+    <div v-show="maskOpen" class="mask"></div>
+    <link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">
+    <transition name="custom-classes-transition" 
+        enter-active-class="animated slideInLeft faster" 
+        leave-active-class="animated slideOutLeft faster" 
+        v-on:after-leave="afterLeave">
+        <Menu v-show="menuOpen" @closeNotify="menuOpen=false"></Menu>
+    </transition>
+  </div>
 </template>
 
 <script>
@@ -147,12 +184,23 @@ export default {
     afterLeave: function() {
       this.maskOpen = false;
     },
-    showQrcode: function(){
-
-    }
+    showQrcode: function() {}
   },
-  mounted(){
-    //   this.openMenu()
+  mounted() {
+    // const url = 'http://127.0.0.1:9888'
+    // const accessToken = ''
+    // const client = new bytom(url, accessToken)
+    // //create key
+    // const keyPromise = client.keys.create('alias', 'password')
+    // keyPromise.then(key => {
+    //     console.log(key)
+    // })
+    // //accounts list
+    // const acPromise = client.accounts.listAll()
+    // acPromise.then(res => {
+    //     console.log(res)
+    // })
+    // this.openMenu()
   }
 };
 </script>

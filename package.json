@@ -12,6 +12,8 @@
     "clear": "rm -rf chrome-ext.crx extension.zip dist"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "babel-preset-es2015": "^6.24.1",
     "iview": "^3.0.0",
     "vue": "^2.5.11"
   },
