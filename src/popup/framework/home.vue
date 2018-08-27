@@ -187,19 +187,6 @@ export default {
     showQrcode: function() {}
   },
   mounted() {
-    // const url = 'http://127.0.0.1:9888'
-    // const accessToken = ''
-    // const client = new bytom(url, accessToken)
-    // //create key
-    // const keyPromise = client.keys.create('alias', 'password')
-    // keyPromise.then(key => {
-    //     console.log(key)
-    // })
-    // //accounts list
-    // const acPromise = client.accounts.listAll()
-    // acPromise.then(res => {
-    //     console.log(res)
-    // })
     // this.openMenu()
   }
 };

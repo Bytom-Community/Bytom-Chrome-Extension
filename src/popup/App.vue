@@ -11,14 +11,16 @@
 import Home from "./framework/home";
 import Login from "./framework/login";
 
+import Bytom from "bytom-js-sdk";
+
 export default {
   components: {
     Login,
-    Home,
+    Home
   },
   data() {
     return {
-      currView: "home",
+      currView: "home"
     };
   },
   computed: {
@@ -26,11 +28,30 @@ export default {
       const { currView } = this;
       return {
         login: currView === "login",
-        home: currView === "home",
+        home: currView === "home"
       };
     }
   },
-  methods: {
+  methods: {},
+  mounted() {
+    const url = "http://127.0.0.1:9888";
+    const accessToken = "";
+
+    const client = new Bytom(url, accessToken);
+
+    //create key
+    // const keyPromise = client.keys.create('alias', 'password')
+    // keyPromise.then(key => {
+    //     console.log(key)
+    // }).catch(function(error){
+    //     console.log(error)
+    // })
+
+    //accounts list
+    const acPromise = client.accounts.listAll();
+    acPromise.then(res => {
+      console.log(res);
+    });
   }
 };
 </script>
