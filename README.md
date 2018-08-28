@@ -14,3 +14,6 @@ npm run dev
 # build for production with minification && crx package
 npm run build
 ```
+
+## Architecture Diagram
+![png](https://gitee.com/eostimeline/bytom-chrome-extension/raw/master/doc/architecture-diagram.png)
