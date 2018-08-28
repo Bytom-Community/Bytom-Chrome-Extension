@@ -5,24 +5,24 @@
   left: 0;
   right: 0;
 }
-.header {
+.login-header {
   height: 60px;
   text-align: center;
 }
-.header img {
+.login-header img {
   width: 30px;
   height: 30px;
   margin-top: 15px;
 }
-.content {
+.login-content {
   padding: 30px;
   font-size: 12px;
 }
-.content h4 {
+.login-content h4 {
   text-align: center;
   font-size: 18px;
 }
-.footer {
+.login-footer {
   padding: 20px 85px;
 }
 </style>

@@ -3,10 +3,10 @@
 
 <template>
     <div class="warp">
-        <section class="header bg-green">
-            <img src="../../../../assets/logo.png" class="balance-icon">
+        <section class="login-header bg-green">
+            <img src="../../../../assets/logo.png">
         </section>
-        <section class="content">
+        <section class="login-content">
             <h4>从种子导入</h4>
             <div class="form">
                 <div class="form-item">
@@ -17,7 +17,6 @@
                     </select>
                 </div>
                 <div class="form-item">
-                    <label for="">账户别名</label>
                     <input type="file">
                 </div>
                 <div class="btn-group">

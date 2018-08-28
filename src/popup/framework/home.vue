@@ -1,4 +1,7 @@
 <style lang="" scoped>
+.warp {
+  z-index: 1;
+}
 .account {
   /* text-align: center; */
   font-size: 18px;
@@ -6,15 +9,6 @@
 .account .btn-menu {
   float: left;
   margin: 20px 8px 0 20px;
-}
-
-select.btn-toggle {
-  appearance: none;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  background: transparent;
-  border: none;
-  outline: none;
 }
 .account .btn-toggle {
   float: right;
@@ -41,13 +35,13 @@ select.btn-toggle {
   text-align: center;
   padding: 0 30px 20px;
 }
-.balance .balance-icon {
+.balance .token-icon {
   display: inline-flex;
   height: 40px;
   width: 40px;
-  background: #fff;
-  border: 1px solid #dedede;
-  border-radius: 25px;
+  /* background: #fff; */
+  /* border: 1px solid #dedede; */
+  /* border-radius: 25px; */
   padding: 8px;
   margin: 8px;
 }
@@ -60,6 +54,7 @@ select.btn-toggle {
 .qrcode {
   margin-left: 5px;
   vertical-align: middle;
+  cursor: pointer;
 }
 .btn-transfer {
   width: 200px;
@@ -92,42 +87,28 @@ select.btn-toggle {
   right: 20px;
   margin-top: 13px;
 }
-.mask {
-  z-index: 25;
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  opacity: 1;
-  visibility: visible;
-  background-color: rgba(0, 0, 0, 0.3);
-}
-.faster {
-  animation-duration: 0.3s;
-}
 </style>
 
 <template>
-  <div>
+  <div class="warp">
     <section class="bg-green">
       <div class="row account">
           <a class="btn-menu" href="#"><i class="iconfont icon-menu" @click="openMenu"></i></a>
-          <select class="btn-toggle">
-            <option value="">BYTOM主网络</option>
-            <option value="">BYTOM测试网络</option>
-          </select>
+          <span class="btn-toggle">
+            <select>
+              <option value="">BYTOM主网络</option>
+              <option value="">BYTOM测试网络</option>
+            </select>
+          </span>
           <span>账户1aaadfddssdsd</span>
       </div>
       <div class="row balance">
-          <img src="../../assets/logo.png" class="balance-icon">
+          <img src="../../assets/logo.png" class="token-icon">
           <div class="amount">
               <div class="token-amount">100.123 BTM</div>
               <p class="account-address">bm1qsgh.....2dz8uny<i class="iconfont qrcode" @click="showQrcode">&#xe7dd;</i></p>
           </div>
-          <a href="#" class="btn btn-primary btn-transfer">转账</a>
+          <a href="#" class="btn btn-primary btn-transfer" @click="transferOpen">转账</a>
       </div>
     </section>
 
@@ -154,21 +135,32 @@ select.btn-toggle {
     <!-- modal -->
     <div v-show="maskOpen" class="mask"></div>
     <link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">
-    <transition name="custom-classes-transition" 
+    <transition name="left-menu" 
         enter-active-class="animated slideInLeft faster" 
         leave-active-class="animated slideOutLeft faster" 
         v-on:after-leave="afterLeave">
         <Menu v-show="menuOpen" @closeNotify="menuOpen=false"></Menu>
     </transition>
+    
+    <Qrcode ref="qrcode"></Qrcode>
+    <Transfer ref="transfer"></Transfer>
+
   </div>
 </template>
 
 <script>
 import Menu from "./components/menu/main";
+import Qrcode from "./components/trans/qrcode";
+import Transfer from "./components/trans/transfer";
+import TransList from "./components/trans/trans-list";
+import TransDetail from "./components/trans/trans-detail";
 export default {
   name: "",
   components: {
-    Menu
+    Menu,
+    Qrcode,
+    Transfer,
+    TransDetail
   },
   data() {
     return {
@@ -184,10 +176,17 @@ export default {
     afterLeave: function() {
       this.maskOpen = false;
     },
-    showQrcode: function() {}
+    showQrcode: function() {
+      this.$refs.qrcode.open();
+    },
+    transferOpen: function() {
+      this.$refs.transfer.open();
+    }
   },
   mounted() {
+    console.log(1111);
     // this.openMenu()
+    this.transferOpen();
   }
 };
 </script>

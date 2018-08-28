@@ -4,10 +4,10 @@
 
 <template>
     <div class="warp">
-        <section class="header bg-green">
-            <img src="../../../../assets/logo.png" class="balance-icon">
+        <section class="login-header bg-green">
+            <img src="../../../../assets/logo.png">
         </section>
-        <section class="content">
+        <section class="login-content">
             <h4>创建账户</h4>
             <div class="form">
                 <div class="form-item">

@@ -1,22 +1,22 @@
 <style scoped>
-.content {
+.login-content {
   height: 414px;
   font-size: 12px;
 }
-.footer {
+.login-footer {
   padding: 20px 85px;
 }
 </style>
 <template>
     <div class="warp">
-        <section class="header bg-green">
-            <img src="../../../../assets/logo.png" class="balance-icon">
+        <section class="login-header bg-green">
+            <img src="../../../../assets/logo.png">
         </section>
-        <section class="content">
+        <section class="login-content">
             <h4>钱包使用条款</h4>
             <p>1.是范德萨发</p>
         </section>
-        <section class="footer bg-green">
+        <section class="login-footer bg-green">
             <div class="btn btn-primary" @click="confirm">确认</div>
         </section>
     </div>
