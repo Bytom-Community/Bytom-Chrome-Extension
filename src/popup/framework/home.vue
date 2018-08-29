@@ -187,6 +187,9 @@ export default {
     showQrcode: function() {}
   },
   mounted() {
+    this.$Bytom.accounts.listAll().then(resp=>{
+      console.log(resp)
+    });
     // this.openMenu()
   }
 };
