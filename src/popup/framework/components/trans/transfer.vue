@@ -75,7 +75,7 @@
               </div>
             </div>
         </section>
-        <section v-show="maskOpen" class="mask"></section>
+        <section v-show="maskShow" class="mask"></section>
         <section class="form">
           <div class="form-item-group">
             <div class="form-item">
@@ -144,6 +144,7 @@ export default {
   data() {
     return {
       show: false,
+      maskShow: false,
       confirmShow: false
     };
   },
@@ -152,12 +153,12 @@ export default {
       this.show = true;
     },
     confirmOpen: function() {
-      this.maskOpen = true;
+      this.maskShow = true;
       this.confirmShow = true;
     },
     confirmClose: function() {
       this.confirmShow = false;
-      this.maskOpen = false;
+      this.maskShow = false;
     }
   }
 };

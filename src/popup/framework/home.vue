@@ -139,7 +139,7 @@
         enter-active-class="animated slideInLeft faster" 
         leave-active-class="animated slideOutLeft faster" 
         v-on:after-leave="afterLeave">
-        <Menu v-show="menuOpen" @closeNotify="menuOpen=false"></Menu>
+        <Menu v-show="menuOpen" @closed="menuOpen=false"></Menu>
     </transition>
     
     <Qrcode ref="qrcode"></Qrcode>
@@ -185,8 +185,8 @@ export default {
   },
   mounted() {
     console.log(1111);
-    // this.openMenu()
-    this.transferOpen();
+    this.openMenu()
+    // this.transferOpen();
   }
 };
 </script>

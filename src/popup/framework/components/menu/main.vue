@@ -1,4 +1,4 @@
-<style scoped>
+<style>
 .btn-close {
   color: #ffffff;
   font-weight: bold;
@@ -15,6 +15,16 @@
   z-index: 9999;
   width: 60%;
   height: 100%;
+  padding: 40px;
+  background-color: #3c454b;
+}
+
+.mc2warp {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   padding: 40px;
 }
 
@@ -47,58 +57,93 @@ li.active {
 </style>
 
 <template>
-        <div class="mc-wrap bg-gray">
-            <section>
-                <i class="iconfont btn-close" @click="close">&#xe605;</i>
-            </section>
-            <section class="account-list">
-                <h2>账号切换</h2>
-                <ul>
-                    <li class="active">
-                        <i class="iconfont icon-user"></i>
-                        <div>
-                            <p>账号1</p>
-                            <p>1000 BTM</p>
-                        </div>
-                    </li>
-                    <li>
-                        <i class="iconfont icon-user"></i>
-                        <div>
-                            <p>账号2</p>
-                            <p>200 BTM</p>
-                        </div>
-                    </li>
-                    <li>
-                        <i class="iconfont icon-user"></i>
-                        <div>
-                            <p>账号3</p>
-                            <p>0 BTM</p>
-                        </div>
-                    </li>
-                </ul>
-            </section>
-            <hr>
-            <section class="menu-list">
-                <ul>
-                    <li><i class="iconfont icon-plusbox"></i>创建账户</li>
-                    <li><i class="iconfont icon-import"></i>导入账号</li>
-                    <li><i class="iconfont icon-backup"></i>备份种子</li>
-                    <li><i class="iconfont icon-help"></i>帮助</li>
-                    <li><i class="iconfont icon-settings"></i>设置</li>
-                </ul>
-            </section>
-        </div>
+  <div class="mc-wrap bg-gray">
+    <section>
+      <i class="iconfont btn-close" @click="close">&#xe605;</i>
+      <h3>账号切换</h3>
+    </section>
+    <section class="account-list">
+      <ul>
+        <li class="active">
+            <i class="iconfont icon-user"></i>
+            <div>
+                <p>账号1</p>
+                <p>1000 BTM</p>
+            </div>
+        </li>
+        <li>
+            <i class="iconfont icon-user"></i>
+            <div>
+                <p>账号2</p>
+                <p>200 BTM</p>
+            </div>
+        </li>
+        <li>
+            <i class="iconfont icon-user"></i>
+            <div>
+                <p>账号3</p>
+                <p>0 BTM</p>
+            </div>
+        </li>
+      </ul>
+    </section>
+    <hr>
+    <section class="menu-list">
+        <ul>
+            <li @click="currView='creation'"><i class="iconfont icon-plusbox"></i>创建账户</li>
+            <li @click="currView='recovery'"><i class="iconfont icon-import"></i>导入账号</li>
+            <li @click="currView='backup'"><i class="iconfont icon-backup"></i>备份种子</li>
+            <li @click="currView='help'"><i class="iconfont icon-help"></i>帮助</li>
+            <li @click="currView='settings'"><i class="iconfont icon-settings"></i>设置</li>
+        </ul>
+    </section>
+
+    <!-- modal -->
+    <transition-group name="menus">
+      <Creation key="creation" v-show="view.creation" @closed="currView=''"></Creation>
+      <Recovery key="recovery" v-show="view.recovery" @closed="currView=''"></Recovery>
+      <Bakcup key="backup" v-show="view.backup" @closed="currView=''"></Bakcup>
+      <Help key="help" v-show="view.help" @closed="currView=''"></Help>
+      <Settings key="settings" v-show="view.settings" @closed="currView=''"></Settings>
+    </transition-group>
+  </div>
 </template>
 
 <script>
+import Creation from "./page/creation";
+import Recovery from "./page/recovery";
+import Bakcup from "./page/backup";
+import Help from "./page/help";
+import Settings from "./page/settings";
 export default {
   name: "",
+  components: {
+    Creation,
+    Recovery,
+    Bakcup,
+    Help,
+    Settings
+  },
   data() {
-    return {};
+    return {
+      currView: ""
+    };
+  },
+  computed: {
+    view() {
+      const { currView } = this;
+      return {
+        creation: currView === "creation",
+        recovery: currView === "recovery",
+        backup: currView === "backup",
+        help: currView === "help",
+        settings: currView === "settings"
+      };
+    }
   },
   methods: {
     close: function() {
-      this.$emit("closeNotify");
+      this.$emit("closed");
     }
   }
 };
