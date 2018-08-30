@@ -184,9 +184,16 @@ export default {
     }
   },
   mounted() {
+<<<<<<< HEAD
     console.log(1111);
     this.openMenu()
     // this.transferOpen();
+=======
+    this.$Bytom.accounts.listAll().then(resp=>{
+      console.log(resp)
+    });
+    // this.openMenu()
+>>>>>>> origin/feat_api
   }
 };
 </script>
