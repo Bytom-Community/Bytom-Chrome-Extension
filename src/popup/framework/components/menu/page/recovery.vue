@@ -28,6 +28,9 @@ export default {
   methods: {
     close: function() {
       this.$emit("closed", '');
+    },
+    recovery: function() {
+      
     }
   }
 };
