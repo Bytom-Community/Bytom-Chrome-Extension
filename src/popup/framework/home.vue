@@ -185,6 +185,47 @@ export default {
   },
   mounted() {
     // this.openMenu()
+    chrome.runtime.getBackgroundPage(function(bg){
+      let testxpub = "9eb5c5ccc86bd16661c2b32b60f5a43a1a955a73f1de5b441ef8dfe8263e6b806dac0d28bcbc2225fb7bba0a1722e2944b7d190d57a7913821c7fe6eb0b0ca36";
+      // let oldpass = "123456";
+      // let newpass = "123456";
+      // bg.bytom.sdk.keys.resetKeyPassword(testxpub, oldpass, newpass)
+      // .then(res => {
+      //   console.log(res);
+      // }).catch(error => {
+      //   console.log(error)
+      // })
+      // bg.bytom.sdk.keys.getKeyByXPub("6c1fed22cd2da6017bb417fb82ad8467a76db7b1f6ea11b4227e8673745d70a406cad6fbcd0b688e13724b2be675f1535a3c0efe042dd59b10001e9aa49cff73").then(res => {
+      //   console.log(res);
+      // }).catch(error => {
+      //   console.log(error);
+      // })
+      // bg.bytom.sdk.keys.create("test666", "123456").then((res)=>{
+      //   console.log(res)
+      // }).catch(error => {
+      //   console.log(error)
+      // });
+      // bg.bytom.sdk.accounts.createAccount("test6", 1, testxpub).then(res => {
+      //   console.log(res)
+      //   bg.bytom.sdk.accounts.createAccountReceiver(res).then(r => {
+      //     console.log(r);
+      //   }).catch(e => {
+      //     console.log(e);
+      //   })
+      // }).catch(error => {
+      //   console.log(error)
+      // });
+      // bg.bytom.sdk.accounts.createAccountUseServer(testxpub).then(res => {
+      //   console.log(res)
+      // }).catch(error => {
+      //   console.log(error)
+      // });
+      bg.bytom.sdk.accounts.createAccountReceiverUseServer("c69ce8ec-af7d-4e3d-9285-b1ee10288094").then(res => {
+        console.log(res)
+      }).catch(error => {
+        console.log(error)
+      });
+    });
   }
 };
 </script>
