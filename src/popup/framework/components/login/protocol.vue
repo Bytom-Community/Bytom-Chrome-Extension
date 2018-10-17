@@ -8,7 +8,7 @@
 }
 </style>
 <template>
-    <div class="warp">
+    <div class="warp bg-gray">
         <section class="login-header bg-green">
             <img src="../../../../assets/logo.png">
         </section>

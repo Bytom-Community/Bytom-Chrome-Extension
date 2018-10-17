@@ -1,6 +1,9 @@
 <style scoped>
-.body{
+.body {
   padding: 20px 15px;
+}
+input {
+  width: 165px;
 }
 </style>
 
@@ -12,7 +15,7 @@
         </section>
         <section class="body">
           <div class="form-item">
-              <input type="file">
+              <input type="file" ref="file" @change="tirggerFile($event)">
           </div>
           <div class="btn bg-green" @click="recovery">从种子导入</div>
         </section> 
@@ -20,17 +23,37 @@
 </template>
 
 <script>
+import bytom from "../../../../script/bytom";
 export default {
   name: "",
   data() {
-    return {};
+    return {
+      fileTxt: ""
+    };
   },
   methods: {
     close: function() {
-      this.$emit("closed", '');
+      this.$emit("closed", "");
+    },
+    tirggerFile: function(event) {
+      var reader = new FileReader();
+      reader.onload = e => {
+        this.fileTxt = e.target.result;
+      };
+
+      var file = event.target.files[0];
+      reader.readAsText(file);
     },
     recovery: function() {
-      
+      bytom
+        .restore(this.fileTxt)
+        .then(res => {
+          this.close();
+          console.log(res);
+        })
+        .catch(error => {
+          alert(error);
+        });
     }
   }
 };

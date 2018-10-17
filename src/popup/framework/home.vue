@@ -12,12 +12,15 @@
 }
 .account .btn-toggle {
   float: right;
-  margin-top: 22px;
+  margin-top: 15px;
   margin-right: 20px;
   border: 2px solid #fff;
   border-radius: 18px;
   padding: 0 10px;
   font-size: 14px;
+}
+.account .alias {
+  height: 25px;
 }
 .account span {
   display: block;
@@ -75,10 +78,11 @@
   color: #cacaca;
 }
 .transactions .list {
-  padding: 0 20px;
+  padding: 0 10px;
 }
 .list-item {
   display: flex;
+  padding: 5px 10px;
   border-bottom: 1px solid #5e5e5e;
 }
 
@@ -100,13 +104,13 @@
               <option value="">BYTOM测试网络</option>
             </select>
           </span>
-          <span>账户1aaadfddssdsd</span>
+          <span class="alias">{{accountInfo.alias}}</span>
       </div>
       <div class="row balance">
           <img src="../../assets/logo.png" class="token-icon">
           <div class="amount">
-              <div class="token-amount">100.123 BTM</div>
-              <p class="account-address">bm1qsgh.....2dz8uny<i class="iconfont qrcode" @click="showQrcode">&#xe7dd;</i></p>
+              <div class="token-amount">{{accountInfo.balance}} BTM</div>
+              <p class="account-address">{{accountInfo.address_short}}<i class="iconfont qrcode" @click="showQrcode">&#xe7dd;</i></p>
           </div>
           <a href="#" class="btn btn-primary btn-transfer" @click="transferOpen">转账</a>
       </div>
@@ -115,20 +119,14 @@
     <section class="transactions">
       <h3 class="color-gray">交易记录</h3>
       <ul class="list">
-        <li class="list-item">
+        <li class="list-item" v-for="(transcation, index) in latestTranscations" v-if="index < 4">
             <div>
-              <div class="time">2018-08-22</div>
-              <div class="addr">bm1qsg...8uny</div>
+              <div class="time">{{transcation.timestamp | moment}}</div>
+              <div class="addr">{{transcation.address}}</div>
             </div>
-            <div class="value">+2344 BTM</div>
+            <div class="value">{{transcation.direct}} {{transcation.val}} BTM</div>
         </li>
-        <li class="list-item">
-            <div>
-              <div class="time">2018-08-22</div>
-              <div class="addr">bm1qsg...8uny</div>
-            </div>
-            <div class="value">-1234 BTM</div>
-        </li>
+        <span v-else style="width: 22px; margin: 0px auto; font-weight: bold; font-size: 22px;">...</span>
       </ul>
     </section>
 
@@ -139,11 +137,11 @@
         enter-active-class="animated slideInLeft faster" 
         leave-active-class="animated slideOutLeft faster" 
         v-on:after-leave="afterLeave">
-        <Menu v-show="menuOpen" @closed="menuOpen=false"></Menu>
+        <Menu v-show="menuOpen" @closed="menuOpen=false" @account-change="selectedAccountChange"></Menu>
     </transition>
     
     <Qrcode ref="qrcode"></Qrcode>
-    <Transfer ref="transfer"></Transfer>
+    <Transfer ref="transfer" @on-success="refreshTransactions"></Transfer>
 
   </div>
 </template>
@@ -154,6 +152,7 @@ import Qrcode from "./components/trans/qrcode";
 import Transfer from "./components/trans/transfer";
 import TransList from "./components/trans/trans-list";
 import TransDetail from "./components/trans/trans-detail";
+import bytom from "../script/bytom";
 export default {
   name: "",
   components: {
@@ -165,67 +164,94 @@ export default {
   data() {
     return {
       menuOpen: false,
-      maskOpen: false
+      maskOpen: false,
+      accountInfo: {},
+      latestTranscations: []
     };
   },
   methods: {
     openMenu: function() {
       this.maskOpen = true;
       this.menuOpen = true;
+      this.$refs.qrcode.close();
+    },
+    shortAddress(address) {
+      return (
+        address.substr(0, 7) + "..." + address.substr(address.length - 7, 7)
+      );
+    },
+    selectedAccountChange: function(accountInfo) {
+      console.log(accountInfo);
+
+      this.accountInfo = accountInfo;
+      this.accountInfo.address_short = this.shortAddress(
+        this.accountInfo.address
+      );
+      this.refreshTransactions();
     },
     afterLeave: function() {
       this.maskOpen = false;
     },
     showQrcode: function() {
-      this.$refs.qrcode.open();
+      this.$refs.qrcode.open(this.accountInfo.address);
     },
     transferOpen: function() {
-      this.$refs.transfer.open();
+      this.$refs.transfer.open(this.accountInfo);
+    },
+    refreshTransactions: function() {
+      bytom.Transaction.list(
+        this.accountInfo.guid,
+        this.accountInfo.address
+      ).then(ret => {
+        let transactions = ret.data.transactions;
+        if (transactions == null) {
+          this.latestTranscations = [];
+          return;
+        }
+
+        transactions.forEach(transaction => {
+          let inputSum = 0;
+          let outoutSum = 0;
+          let inputAddresses = [],
+            outputAddresses = [];
+          transaction.inputs.forEach(input => {
+            if (input.address == this.accountInfo.address) {
+              inputSum += input.amount;
+              return;
+            }
+
+            inputAddresses.push(input.address);
+          });
+
+          transaction.outputs.forEach(output => {
+            if (output.address == this.accountInfo.address) {
+              outoutSum += output.amount;
+              return;
+            }
+
+            outputAddresses.push(output.address);
+          });
+          console.log(112, inputAddresses, outputAddresses);
+
+          let val = outoutSum - inputSum;
+          if (val > 0) {
+            transaction.direct = "+";
+            transaction.address = this.shortAddress(inputAddresses.pop());
+          } else {
+            val = inputSum - outoutSum;
+            transaction.direct = "-";
+            transaction.address = this.shortAddress(outputAddresses.pop());
+          }
+          transaction.val = Number(val / 100000000).toFixed(8);
+          // console.log(111, transaction, val);
+        });
+        console.log(transactions);
+        this.latestTranscations = transactions;
+      });
     }
   },
   mounted() {
-    // this.openMenu()
-    chrome.runtime.getBackgroundPage(function(bg){
-      let testxpub = "9eb5c5ccc86bd16661c2b32b60f5a43a1a955a73f1de5b441ef8dfe8263e6b806dac0d28bcbc2225fb7bba0a1722e2944b7d190d57a7913821c7fe6eb0b0ca36";
-      // let oldpass = "123456";
-      // let newpass = "123456";
-      // bg.bytom.sdk.keys.resetKeyPassword(testxpub, oldpass, newpass)
-      // .then(res => {
-      //   console.log(res);
-      // }).catch(error => {
-      //   console.log(error)
-      // })
-      // bg.bytom.sdk.keys.getKeyByXPub("6c1fed22cd2da6017bb417fb82ad8467a76db7b1f6ea11b4227e8673745d70a406cad6fbcd0b688e13724b2be675f1535a3c0efe042dd59b10001e9aa49cff73").then(res => {
-      //   console.log(res);
-      // }).catch(error => {
-      //   console.log(error);
-      // })
-      // bg.bytom.sdk.keys.create("test666", "123456").then((res)=>{
-      //   console.log(res)
-      // }).catch(error => {
-      //   console.log(error)
-      // });
-      // bg.bytom.sdk.accounts.createAccount("test6", 1, testxpub).then(res => {
-      //   console.log(res)
-      //   bg.bytom.sdk.accounts.createAccountReceiver(res).then(r => {
-      //     console.log(r);
-      //   }).catch(e => {
-      //     console.log(e);
-      //   })
-      // }).catch(error => {
-      //   console.log(error)
-      // });
-      // bg.bytom.sdk.accounts.createAccountUseServer(testxpub).then(res => {
-      //   console.log(res)
-      // }).catch(error => {
-      //   console.log(error)
-      // });
-      bg.bytom.sdk.accounts.createAccountReceiverUseServer("c69ce8ec-af7d-4e3d-9285-b1ee10288094").then(res => {
-        console.log(res)
-      }).catch(error => {
-        console.log(error)
-      });
-    });
+    this.refreshTransactions();
   }
 };
 </script>

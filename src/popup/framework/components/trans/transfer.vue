@@ -12,9 +12,9 @@
 }
 .balance {
   display: flex;
-  width: 350px;
-  padding-left: 75px;
-  padding-top: 30px;
+  position: absolute;
+  right: 0px;
+  margin: 30px 50px;
 }
 .balance .token-icon {
   height: 30px;
@@ -28,6 +28,7 @@
 }
 .balance span {
   line-height: 42px;
+  margin-left: 3px;
 }
 .mask {
   z-index: 3 !important;
@@ -70,8 +71,8 @@
             <div class="balance">
               <img src="../../../../assets/logo.png" class="token-icon">
               <div style="display: flex">
-                <h1>3000000</h1>
-                <span>BTM</span>
+                <h1>{{balance}}</h1>
+                <span> BTM</span>
               </div>
             </div>
         </section>
@@ -79,40 +80,50 @@
         <section class="form">
           <div class="form-item-group">
             <div class="form-item">
-              <select placeholder="账户">
-                <option value="">账户1</option>
+              <!-- <label>账户</label> -->
+              <select v-model="transaction.guid">
+                <option v-for="account in accounts" :value="account.guid">{{account.alias != null ? account.alias : '账户1'}}</option>
               </select>
             </div>
             <div class="form-item" style="margin-left: 20px;">
-              <select placeholder="资产">
-                <option value="">BTM</option>
+              <!-- <label>资产</label> -->
+              <select v-model="transaction.asset">
+                <option value="ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff">BTM</option>
               </select>
             </div>
           </div>
           <div class="form-item">
-            <label for="">地址</label>
-            <input type="text">
+            <label class="form-item-label">地址</label>
+            <div class="form-item-content" style="margin-left: 60px;">
+              <input type="text" v-model="transaction.to">
+            </div>
           </div>
           <div class="form-item">
-            <label for="">数量</label>
-            <input type="text">
-            <span>单位</span>
+            <label class="form-item-label">数量</label>
+            <div class="form-item-content" style="margin-left: 60px; display: flex;">
+              <input type="text" v-model="transaction.amount">
+              <span style="width: 30px;">{{unit}}</span>
+            </div>
           </div>
-          <div class="form-item">
+          <!-- <div class="form-item">
             <label for="">≈</label>
-            <input type="text">
+            <input type="text" disabled>
             <span>CNY</span>
-          </div>
+          </div> -->
           <div class="form-item">
-            <label for="">矿工费用</label>
-            <select>
-              <option value=""></option>
-            </select>
+            <label class="form-item-label">矿工费用</label>
+            <div class="form-item-content" style="margin-left: 60px;">
+              <select v-model="transaction.fee">
+                <option value="">标准</option>
+              </select>
+            </div>
           </div>
           <br>
           <div class="form-item">
-            <label for="">交易密码</label>
-            <input type="password">
+            <label class="form-item-label">交易密码</label>
+            <div class="form-item-content" style="margin-left: 60px;">
+              <input type="password" v-model="transaction.passwd">
+            </div>
           </div>
           <div class="btn-group">
             <div class="btn bg-green" @click="confirmOpen">发送交易</div>
@@ -126,11 +137,13 @@
         leave-active-class="animated slideOutDown faster">
         <div v-show="confirmShow" class="confirm form bg-gray">
             <div class="form-item">
-              <label for="">密码确认</label>
-              <input type="password">
+              <label class="form-item-label">密码确认</label>
+              <div class="form-item-content" style="margin-left: 60px;">
+                <input type="password" v-model="confirmPasssword" autofocus>
+              </div>
             </div>
             <div class="btn-group btn-inline">
-              <div class="btn bg-green">确认发送</div>
+              <div class="btn bg-green" @click="confirmTransfer">确认发送</div>
               <div class="btn bg-red" @click="confirmClose">取消发送</div>
             </div>
         </div>
@@ -139,18 +152,47 @@
 </template>
 
 <script>
+import bytom from "../../../script/bytom";
 export default {
   name: "",
   data() {
+    const ASSET_BTM =
+      "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
     return {
       show: false,
       maskShow: false,
-      confirmShow: false
+      confirmShow: false,
+      balance: 0,
+      accounts: [],
+      unit: "单位",
+      confirmPasssword: "",
+      assets: {
+        ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff: "BTM"
+      },
+      transaction: {
+        guid: "",
+        to: "",
+        asset: ASSET_BTM,
+        amount: 0,
+        fee: "",
+        passwd: ""
+      }
     };
   },
   methods: {
-    open: function() {
+    open: function(accountInfo) {
       this.show = true;
+
+      bytom.Account.list().then(accounts => {
+        this.accounts = accounts;
+      });
+
+      this.balance = accountInfo.balance;
+      this.transaction.guid = accountInfo.guid;
+      this.unit = this.assets[this.transaction.asset];
+    },
+    close: function() {
+      this.show = false;
     },
     confirmOpen: function() {
       this.maskShow = true;
@@ -159,6 +201,35 @@ export default {
     confirmClose: function() {
       this.confirmShow = false;
       this.maskShow = false;
+    },
+    confirmTransfer: function() {
+      if (this.confirmPasssword != this.transaction.passwd) {
+        alert("密码不一致");
+        return;
+      }
+      // guid, to, asset, amount, fee, password
+      bytom.Transaction.transfer(
+        this.transaction.guid,
+        this.transaction.to,
+        this.transaction.asset,
+        this.transaction.amount,
+        this.transaction.fee,
+        this.transaction.passwd
+      )
+        .then(ret => {
+          console.log(ret);
+
+          this.close();
+          this.confirmClose();
+          this.$emit("on-success");
+          this.confirmPasssword = "";
+          this.transaction.passwd = "";
+        })
+        .catch(error => {
+          alert(error);
+          this.transaction.passwd = "";
+          this.confirmPasssword = "";
+        });
     }
   }
 };

@@ -27,7 +27,15 @@
   right: 0;
   padding: 40px;
 }
-
+.account-list {
+  width: 100%;
+  height: 230px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+.account-list::-webkit-scrollbar {
+  display: none;
+}
 .account-list ul {
   margin-top: 30px;
 }
@@ -42,7 +50,7 @@ ul {
 }
 ul li {
   display: flex;
-  padding: 5px;
+  padding: 5px 0;
 }
 li i {
   margin: 0 8px;
@@ -54,6 +62,12 @@ li.active {
   border-radius: 8px;
   cursor: pointer;
 }
+.acc-alias {
+  width: 150px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 </style>
 
 <template>
@@ -64,35 +78,26 @@ li.active {
     </section>
     <section class="account-list">
       <ul>
-        <li class="active">
-            <i class="iconfont icon-user"></i>
-            <div>
-                <p>账号1</p>
-                <p>1000 BTM</p>
-            </div>
-        </li>
-        <li>
-            <i class="iconfont icon-user"></i>
-            <div>
-                <p>账号2</p>
-                <p>200 BTM</p>
-            </div>
-        </li>
-        <li>
-            <i class="iconfont icon-user"></i>
-            <div>
-                <p>账号3</p>
-                <p>0 BTM</p>
-            </div>
-        </li>
+        <!--  class="active" -->
+        <div v-for="(account, index) in accounts">
+            <li :class="(currentAccount != undefined && account.address == currentAccount.address) ? 'active': ''" @click="accountSelected(account)">
+              <i class="iconfont icon-user"></i>
+              <div>
+                  <p v-if="account.alias" class="acc-alias">{{account.alias}}</p>
+                  <p v-else>账户{{index+1}}</p>
+                  <p>{{account.balance}} BTM</p>
+              </div>
+          </li>
+        </div>
+        
       </ul>
     </section>
     <hr>
     <section class="menu-list">
         <ul>
             <li @click="currView='creation'"><i class="iconfont icon-plusbox"></i>创建账户</li>
-            <li @click="currView='recovery'"><i class="iconfont icon-import"></i>导入账号</li>
-            <li @click="currView='backup'"><i class="iconfont icon-backup"></i>备份种子</li>
+            <!-- <li @click="currView='recovery'"><i class="iconfont icon-import"></i>导入账号</li> -->
+            <li @click="currView='backup'"><i class="iconfont icon-backup"></i>备份</li>
             <li @click="currView='help'"><i class="iconfont icon-help"></i>帮助</li>
             <li @click="currView='settings'"><i class="iconfont icon-settings"></i>设置</li>
         </ul>
@@ -115,6 +120,7 @@ import Recovery from "./page/recovery";
 import Bakcup from "./page/backup";
 import Help from "./page/help";
 import Settings from "./page/settings";
+import bytom from "../../../script/bytom";
 export default {
   name: "",
   components: {
@@ -126,7 +132,9 @@ export default {
   },
   data() {
     return {
-      currView: ""
+      currView: "",
+      accounts: [],
+      currentAccount: ""
     };
   },
   computed: {
@@ -141,10 +149,37 @@ export default {
       };
     }
   },
+  watch: {
+    currView: function() {
+      if (this.currView == "" || this.accounts.length == 0) {
+        this.refresh();
+      }
+    }
+  },
   methods: {
     close: function() {
       this.$emit("closed");
+    },
+    accountSelected: function(accountInfo) {
+      this.currentAccount = accountInfo;
+      this.$emit("account-change", this.currentAccount);
+      this.close();
+    },
+    refresh: function(accountInfo) {
+      bytom.Account.list().then(accounts => {
+        console.log(222, accounts);
+        if (accounts.length == 0) {
+          return;
+        }
+
+        this.accounts = accounts;
+        this.currentAccount = accounts[0];
+        this.$emit("account-change", this.currentAccount);
+      });
     }
+  },
+  mounted() {
+    this.refresh();
   }
 };
 </script>

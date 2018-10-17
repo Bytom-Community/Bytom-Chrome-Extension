@@ -1,14 +1,14 @@
 <style scoped>
 .warp {
-  width: 200px;
-  margin: 175px auto;
+  width: 220px;
+  height: 200px;
+  margin: 128px auto;
   border-radius: 5px;
   text-align: center;
   padding: 30px;
 }
-img {
-  width: 150px;
-  height: 150px;
+#qrcode {
+  display: inline-block;
 }
 p {
   word-wrap: break-word;
@@ -20,28 +20,46 @@ p {
         enter-active-class="animated zoomIn faster" 
         leave-active-class="animated zoomOut faster">
         <div v-show="show" class="warp bg-gray">
-            <i class="iconfont btn-close" @click="show=false">&#xe605;</i>
-            <img src="">
-            <p>bm1qsgherfsdfdsadfsdfdsfasdfdsdfsafajkjwe2dz8uny</p>
+            <i class="iconfont btn-close" @click="close">&#xe605;</i>
+            <div id="qrcode"></div>
+            <p>{{addr}}</p>
         </div>
     </transition>
 </template>
 
 <script>
+import QRCode from "qrcodejs2";
 export default {
   name: "",
-  props: {
-    addr: "111"
-  },
+  props: {},
   data() {
     return {
-      show: false
+      show: false,
+      addr: "111",
+      qrcode: Object
     };
   },
   methods: {
-    open: function() {
+    open: function(address) {
       this.show = true;
+      this.addr = address;
+
+      // 使用 API
+      this.qrcode.clear();
+      this.qrcode.makeCode("new content");
+    },
+    close: function() {
+      this.show = false;
     }
+  },
+  mounted() {
+    this.qrcode = new QRCode("qrcode", {
+      width: 150,
+      height: 150,
+      colorDark: "#000000",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.H
+    });
   }
 };
 </script>

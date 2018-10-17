@@ -4,6 +4,7 @@
   top: 0;
   left: 0;
   right: 0;
+  height: 100%;
 }
 .login-header {
   height: 60px;
@@ -33,7 +34,7 @@
       <Welcome class="view" key="welcome" v-show="view.welcome" @next="currView='protocol'"></Welcome>
       <Protocol class="view" key="protocol" v-show="view.protocol" @next="currView='formAddon'"></Protocol>
       <FormAddon class="view" key="formAddon" v-show="view.formAddon" @next="currView='formRecover'" @success="loadHome"></FormAddon>
-      <FormRecover class="view" key="formRecover" v-show="view.formRecover" @back="currView='formAddon'"></FormRecover>
+      <FormRecover class="view" key="formRecover" v-show="view.formRecover" @back="currView='formAddon'" @success="loadHome"></FormRecover>
     </transition-group>
   </section>
 </template>

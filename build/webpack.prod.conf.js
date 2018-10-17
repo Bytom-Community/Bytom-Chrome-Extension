@@ -14,12 +14,6 @@ module.exports = merge(baseConf, {
       'process.env.NODE_ENV': '"production"'
     }),
     new CleanWebpackPlugin(['dist/*.*']),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: false,
-      compress: {
-        warnings: false
-      }
-    }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
     })
