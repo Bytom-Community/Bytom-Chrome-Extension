@@ -119,7 +119,7 @@
     <section class="transactions">
       <h3 class="color-gray">交易记录</h3>
       <ul class="list">
-        <li class="list-item" v-for="(transcation, index) in latestTranscations" v-if="index < 4">
+        <li class="list-item" v-for="(transcation, index) in latestTranscations" v-if="index < 4" :key="index">
             <div>
               <div class="time">{{transcation.timestamp | moment}}</div>
               <div class="addr">{{transcation.address}}</div>

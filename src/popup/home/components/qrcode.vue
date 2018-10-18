@@ -46,7 +46,7 @@ export default {
 
       // 使用 API
       this.qrcode.clear();
-      this.qrcode.makeCode("new content");
+      this.qrcode.makeCode(address);
     },
     close: function() {
       this.show = false;
