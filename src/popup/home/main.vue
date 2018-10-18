@@ -91,6 +91,9 @@
   right: 20px;
   margin-top: 13px;
 }
+.account-address {
+  cursor: pointer
+}
 </style>
 
 <template>
@@ -110,7 +113,13 @@
           <img src="../../assets/logo.png" class="token-icon">
           <div class="amount">
               <div class="token-amount">{{accountInfo.balance}} BTM</div>
-              <p class="account-address">{{accountInfo.address_short}}<i class="iconfont qrcode" @click="showQrcode">&#xe7dd;</i></p>
+              <p
+                :data-clipboard-text="accountInfo.address"
+                :title="addressTitle" 
+                class="account-address">
+                {{accountInfo.address_short}}
+                <i class="iconfont qrcode" @click="showQrcode">&#xe7dd;</i>
+              </p>
           </div>
           <a href="#" class="btn btn-primary btn-transfer" @click="transferOpen">转账</a>
       </div>
@@ -163,6 +172,7 @@ export default {
   },
   data() {
     return {
+      addressTitle: "点击复制地址",
       menuOpen: false,
       maskOpen: false,
       accountInfo: {},
