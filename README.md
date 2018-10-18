@@ -16,4 +16,4 @@ npm run build
 ```
 
 ## Architecture Diagram
-![png](https://gitee.com/eostimeline/bytom-chrome-extension/raw/master/doc/architecture-diagram.png)
+![png](https://raw.githubusercontent.com/Bytom-Community/Bytom-Chrome-Extension/master/doc/architecture-diagram.png)
