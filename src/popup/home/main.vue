@@ -147,11 +147,11 @@
 </template>
 
 <script>
-import Menu from "./components/menu/main";
-import Qrcode from "./components/trans/qrcode";
-import Transfer from "./components/trans/transfer";
-import TransList from "./components/trans/trans-list";
-import TransDetail from "./components/trans/trans-detail";
+import Menu from "./menu";
+import Qrcode from "./components/qrcode";
+import Transfer from "./components/transfer";
+import TransList from "./components/trans-list";
+import TransDetail from "./components/trans-detail";
 import bytom from "../script/bytom";
 export default {
   name: "",

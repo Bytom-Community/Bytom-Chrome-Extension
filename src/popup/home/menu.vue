@@ -115,12 +115,12 @@ li.active {
 </template>
 
 <script>
-import Creation from "./page/creation";
-import Recovery from "./page/recovery";
-import Bakcup from "./page/backup";
-import Help from "./page/help";
-import Settings from "./page/settings";
-import bytom from "../../../script/bytom";
+import Creation from "./components/menu-creation";
+import Recovery from "./components/menu-recovery";
+import Bakcup from "./components/menu-backup";
+import Help from "./components/menu-help";
+import Settings from "./components/menu-settings";
+import bytom from "../script/bytom";
 export default {
   name: "",
   components: {

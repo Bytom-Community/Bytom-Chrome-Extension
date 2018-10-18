@@ -3,7 +3,7 @@
   height: 534px;
   text-align: center;
   font-size: 15px;
-  background: url('../../../../assets/welcome.jpeg') no-repeat;
+  background: url('../../../assets/welcome.jpeg') no-repeat;
   background-size: 100%;
 }
 .welcome-top p {

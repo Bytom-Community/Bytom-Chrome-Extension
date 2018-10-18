@@ -1,10 +1,11 @@
 import Vue from "vue";
-import Spin from "./components/spin";
 import App from "./App.vue";
+import Loading from 'vue-loading-overlay';
 import moment from "moment";
 import "../assets/style.css";
+import 'vue-loading-overlay/dist/vue-loading.css';
 
-Vue.prototype.$Spin = Spin;
+Vue.use(Loading);
 Vue.filter("moment", function(value, formatString) {
   formatString = formatString || "YYYY-MM-DD HH:mm:ss";
   return moment(value * 1000).format(formatString);

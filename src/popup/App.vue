@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import Home from "./framework/home";
-import Login from "./framework/login";
+import Home from "./home/main";
+import Login from "./login/main";
 import bytom from "./script/bytom";
 
 export default {

@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import bytom from "../../../../script/bytom";
+import bytom from "../../script/bytom";
 export default {
   name: "",
   components: {},
@@ -72,19 +72,28 @@ export default {
         return;
       }
 
+      let loader = this.$loading.show({
+        // Optional parameters
+        container: this.fullPage ? null : this.$refs.formContainer,
+        canCancel: true,
+        onCancel: this.onCancel
+      });
+
       bytom.Account.create(
         this.formItem.accAlias,
         this.formItem.keyAlias,
         this.formItem.passwd1
       )
         .then(res => {
+          loader.hide();
           this.close();
           console.log(res);
           this.formItem = {};
         })
         .catch(err => {
+          loader.hide();
           console.log(err);
-          alert(err)
+          alert(err);
           // this.tips = err.message;
         });
     }

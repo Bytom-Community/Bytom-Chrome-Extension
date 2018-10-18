@@ -69,7 +69,7 @@
         <section class="header bg-green">
             <i class="iconfont icon-back" @click="show=false; confirmClose()"></i>
             <div class="balance">
-              <img src="../../../../assets/logo.png" class="token-icon">
+              <img src="../../../assets/logo.png" class="token-icon">
               <div style="display: flex">
                 <h1>{{balance}}</h1>
                 <span> BTM</span>
@@ -152,7 +152,7 @@
 </template>
 
 <script>
-import bytom from "../../../script/bytom";
+import bytom from "../../script/bytom";
 export default {
   name: "",
   data() {

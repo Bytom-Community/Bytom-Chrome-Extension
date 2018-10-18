@@ -23,7 +23,7 @@ input {
 </template>
 
 <script>
-import bytom from "../../../../script/bytom";
+import bytom from "../../script/bytom";
 export default {
   name: "",
   data() {

@@ -10,7 +10,7 @@
 <template>
     <div class="warp bg-gray">
         <section class="login-header bg-green">
-            <img src="../../../../assets/logo.png">
+            <img src="../../../assets/logo.png">
         </section>
         <section class="login-content">
             <h4>钱包使用条款</h4>

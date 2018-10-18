@@ -5,7 +5,7 @@
 <template>
     <div class="warp bg-gray">
         <section class="login-header bg-green">
-            <img src="../../../../assets/logo.png">
+            <img src="../../../assets/logo.png">
         </section>
         <section class="login-content">
             <h4>创建账户</h4>
@@ -14,9 +14,8 @@
                     <label class="form-item-label">选择网络</label>
                     <div class="form-item-content" style="margin-left: 60px;">
                         <select name="" id="">
-                            <option value="BYTOM私有网络">BYTOM私有网络</option>
                             <!-- <option value="BYTOM主网络">BYTOM主网络</option> -->
-                            <!-- <option value="BYTOM测试网络">BYTOM测试网络</option> -->
+                            <option value="BYTOM测试网络">BYTOM测试网络</option>
                         </select>
                     </div>
                 </div>
@@ -54,7 +53,7 @@
 </template>
 
 <script>
-import bytom from "../../../script/bytom";
+import bytom from "../../script/bytom";
 export default {
   name: "",
   data() {

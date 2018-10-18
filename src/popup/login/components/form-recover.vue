@@ -4,7 +4,7 @@
 <template>
     <div class="warp bg-gray">
         <section class="login-header bg-green">
-            <img src="../../../../assets/logo.png">
+            <img src="../../../assets/logo.png">
         </section>
         <section class="login-content">
             <h4>从种子导入</h4>
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import bytom from "../../../script/bytom";
+import bytom from "../../script/bytom";
 export default {
   name: "",
   data() {

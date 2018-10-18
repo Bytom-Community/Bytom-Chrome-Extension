@@ -1,10 +1,10 @@
 import Bytom from "bytom-js-sdk";
 
-let netWork = {
-  solonet: "http://52.82.24.155:3000/"
+let network = {
+  testnet: "http://52.82.24.155:3000/"
 };
 
-var bytom = new Bytom(netWork, chrome.runtime.getURL("wasm/main.wasm"));
-bytom.setNetType("solonet");
+var bytom = new Bytom(network, chrome.runtime.getURL("wasm/main.wasm"));
+bytom.setNetType("testnet");
 
 export default bytom.sdk;
