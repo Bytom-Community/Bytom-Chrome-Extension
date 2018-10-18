@@ -79,7 +79,7 @@ li.active {
     <section class="account-list">
       <ul>
         <!--  class="active" -->
-        <div v-for="(account, index) in accounts">
+        <div v-for="(account, index) in accounts" :key="index">
             <li :class="(currentAccount != undefined && account.address == currentAccount.address) ? 'active': ''" @click="accountSelected(account)">
               <i class="iconfont icon-user"></i>
               <div>
