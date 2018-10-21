@@ -89,7 +89,7 @@
 .transactions .list {
   padding: 0 10px;
   /* overflow-y: scroll; */
-  height: 290px;
+  
 }
 .list-item {
   display: block;
@@ -103,6 +103,11 @@
 }
 .account-address {
   cursor: pointer;
+}
+.btn-creation {
+  display: block;
+  width: 200px;
+  margin: 0 auto;
 }
 </style>
 
@@ -122,35 +127,41 @@
       </div>
       <div class="row balance">
           <img src="../../assets/logo.png" class="token-icon">
-          <div class="amount">
+          <div v-if="accountInfo.address!=undefined" class="amount">
               <div class="token-amount">{{accountInfo.balance}} BTM</div>
               <p class="account-address">
                 <span class="address-text" :title="addressTitle" :data-clipboard-text="accountInfo.address">{{accountInfo.address_short}}</span>
                 <i class="iconfont qrcode" @click="showQrcode">&#xe7dd;</i>
               </p>
           </div>
-          <a href="#" class="btn btn-primary btn-transfer" @click="transferOpen">转账</a>
+          <a v-if="accountInfo.address!=undefined" class="btn btn-primary btn-transfer" @click="transferOpen">转账</a>
       </div>
     </section>
 
-    <section class="transactions">
+    <section v-if="accountInfo.address!=undefined" class="transactions">
       <h3 class="bg-gray">交易记录</h3>
-      <vue-scroll>
-        <ul class="list">
-            <li class="list-item" v-for="(transcation, index) in transcations" :key="index" v-if="index<2" @click="$refs.trxInfo.open(transcation, accountInfo.address)">
-              <div class="value">{{transcation.direct}} {{transcation.val}} BTM</div>
-              <div>
-                <div class="time">{{transcation.timestamp | moment}}</div>
-                <div class="addr">{{transcation.address}}</div>
-              </div>
-            </li>
-        </ul>
-      </vue-scroll>
+      <div style="height: 290px;">
+        <vue-scroll>
+          <ul class="list">
+              <li class="list-item" v-for="(transcation, index) in transcations" :key="index" @click="$refs.trxInfo.open(transcation, accountInfo.address)">
+                <div class="value">{{transcation.direct}} {{transcation.val}} BTM</div>
+                <div>
+                  <div class="time">{{transcation.timestamp | moment}}</div>
+                  <div class="addr">{{transcation.address}}</div>
+                </div>
+              </li>
+          </ul>
+        </vue-scroll>
+      </div>
+    </section>
+    <section v-else>
+      <p style="width: 250px; margin: 30px auto; text-align: center;">在此网络中尚无您的账户信息</p>
+      <a class="btn btn-primary btn-creation bg-green" @click="$refs.menu.open('creation')">创建账户</a>
     </section>
 
     <!-- modal -->
-    <Menu ref="menu" @on-current-account="accountLoader" @accounts-clear="accountClear"></Menu>
     <Qrcode ref="qrcode"></Qrcode>
+    <Menu ref="menu" @on-current-account="accountLoader" @accounts-clear="accountClear"></Menu>
     <Transfer ref="transfer" @on-success="refreshTransactions"></Transfer>
     <TxInfo ref="trxInfo" @on-success="refreshTransactions"></TxInfo>
 
@@ -216,8 +227,8 @@ export default {
       transactions.forEach(transaction => {
         let inputSum = 0;
         let outoutSum = 0;
-        let inputAddresses = [],
-          outputAddresses = [];
+        let inputAddresses = [];
+        let outputAddresses = [];
         transaction.inputs.forEach(input => {
           if (input.address == this.accountInfo.address) {
             inputSum += input.amount;
@@ -226,7 +237,6 @@ export default {
 
           inputAddresses.push(input.address);
         });
-
         transaction.outputs.forEach(output => {
           if (output.address == this.accountInfo.address) {
             outoutSum += output.amount;
@@ -235,7 +245,6 @@ export default {
 
           outputAddresses.push(output.address);
         });
-        console.log(112, inputAddresses, outputAddresses);
 
         let val = outoutSum - inputSum;
         if (val > 0) {

@@ -10,7 +10,6 @@
 <script>
 import Home from "./home/main";
 import Login from "./login/main";
-import bytom from "./script/bytom";
 
 export default {
   components: {
@@ -31,20 +30,12 @@ export default {
       };
     }
   },
-  methods: {
-    loadAccounts: function() {
-      if (localStorage.login == undefined) {
-        this.currView = "login";
-        return;
-      }
-
-      // bytom.Account.list().then(accounts => {
-      //   this.currView = accounts.length > 0 ? "home" : "login";
-      // });
-    }
-  },
+  methods: {},
   mounted() {
-    this.loadAccounts();
+    if (localStorage.login == undefined) {
+      this.currView = "login";
+      return;
+    }
   }
 };
 </script>

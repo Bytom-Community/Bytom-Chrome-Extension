@@ -10,7 +10,7 @@ input {
 <template>
     <div class="mc2warp bg-gray">
         <section>
-            <i class="iconfont btn-close" @click="close">&#xe605;</i>
+            <i class="iconfont btn-close" @click="back">&#xe605;</i>
             <h3>导入账户</h3>
         </section>
         <section class="body">
@@ -32,8 +32,11 @@ export default {
     };
   },
   methods: {
+    back: function() {
+      this.$emit("on-back");
+    },
     close: function() {
-      this.$emit("closed", "");
+      this.$emit("on-exit");
     },
     tirggerFile: function(event) {
       var reader = new FileReader();

@@ -133,8 +133,8 @@
     </transition>
 
     <transition name="page-transfer"
-        enter-active-class="animated slideInUp faster" 
-        leave-active-class="animated slideOutDown faster">
+        <!-- enter-active-class="animated slideInUp faster" 
+        leave-active-class="animated slideOutDown faster"> -->
         <div v-show="confirmShow" class="confirm form bg-gray">
             <div class="form-item">
               <label class="form-item-label">密码确认</label>
