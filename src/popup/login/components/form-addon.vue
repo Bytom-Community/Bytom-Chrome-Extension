@@ -67,21 +67,23 @@ export default {
         this.tips = "两次密码不一致，请检查后再试。";
         return;
       }
-
+      let loader = this.$loading.show({
+        container: null,
+        canCancel: true,
+        onCancel: this.onCancel
+      });
       bytom.Account.create(
         this.formItem.accAlias,
         this.formItem.keyAlias,
         this.formItem.passwd1
       )
         .then(res => {
-          console.log(111, res);
-
-        //   this.$emit("success");
+          loader.hide();
           window.location.reload();
           this.formItem = {};
         })
         .catch(err => {
-          console.log(err);
+          loader.hide();
           alert(err);
         });
     },
@@ -90,7 +92,6 @@ export default {
     }
   },
   mounted() {
-    console.log(21);
   }
 };
 </script>
