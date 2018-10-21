@@ -207,6 +207,12 @@ export default {
         alert("密码不一致");
         return;
       }
+      let loader = this.$loading.show({
+        // Optional parameters
+        container: null,
+        canCancel: true,
+        onCancel: this.onCancel
+      });
       // guid, to, asset, amount, fee, password
       bytom.Transaction.transfer(
         this.transaction.guid,
@@ -218,7 +224,8 @@ export default {
       )
         .then(ret => {
           console.log(ret);
-
+          
+          loader.hide();
           this.close();
           this.confirmClose();
           this.$emit("on-success");
@@ -226,9 +233,11 @@ export default {
           this.transaction.passwd = "";
         })
         .catch(error => {
-          alert(error);
+          loader.hide();
+          this.confirmClose();
           this.transaction.passwd = "";
           this.confirmPasssword = "";
+          alert(error);
         });
     }
   }
