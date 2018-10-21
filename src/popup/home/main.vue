@@ -164,7 +164,10 @@
     <Menu ref="menu" @on-current-account="accountLoader" @accounts-clear="accountClear"></Menu>
     <Transfer ref="transfer" @on-success="refreshTransactions"></Transfer>
     <TxInfo ref="trxInfo" @on-success="refreshTransactions"></TxInfo>
-
+    <v-dialog v-if="showModal" @close="showModal = false">
+      <h3 slot="header">提示</h3>
+      <h5 slot="body">{{this.dialogMsg}}</h5>
+    </v-dialog>
   </div>
 </template>
 
@@ -185,6 +188,8 @@ export default {
   },
   data() {
     return {
+      dialogMsg: "",
+      showModal: false,
       network: "testnet",
       clipboard: new ClipboardJS(".address-text"),
       addressTitle: "点击复制地址",
@@ -287,11 +292,13 @@ export default {
     this.network = localStorage.bytomNet;
     this.refreshTransactions();
 
-    this.clipboard.on("success", function(e) {
-      alert("coby success");
+    this.clipboard.on("success", (e) => {
+      this.dialogMsg = "coby success";
+      this.showModal = true;
     });
-    this.clipboard.on("error", function(e) {
-      alert("coby error");
+    this.clipboard.on("error", (e) => {
+      this.dialogMsg = "coby error";
+      this.showModal = true;
     });
   },
   beforeDestroy() {

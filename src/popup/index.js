@@ -6,9 +6,11 @@ import vuescroll from 'vuescroll/dist/vuescroll-native';
 import 'vuescroll/dist/vuescroll.css';
 import "../assets/style.css";
 import 'vue-loading-overlay/dist/vue-loading.css';
+import dialog from "./dialog/component"
 
 Vue.use(Loading);
 Vue.use(vuescroll);
+Vue.component('v-dialog', dialog);
 Vue.prototype.$vuescrollConfig = {
   bar: {
     mode: 'pure-native',
