@@ -50,7 +50,10 @@ export default {
           localStorage.login = true;
         })
         .catch(error => {
-          alert(error);
+          this.$dialog.show({
+            header: "提示",
+            body: err.message,
+          });
         });
     },
     back: function() {

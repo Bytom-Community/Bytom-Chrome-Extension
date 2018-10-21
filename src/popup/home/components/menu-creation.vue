@@ -95,7 +95,10 @@ export default {
         .catch(err => {
           console.log(err);
           loader.hide();
-          alert(err);
+          this.$dialog.show({
+            header: "提示",
+            body: err.message,
+          });
           // this.tips = err.message;
         });
     }

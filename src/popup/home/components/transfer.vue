@@ -204,7 +204,10 @@ export default {
     },
     confirmTransfer: function() {
       if (this.confirmPasssword != this.transaction.passwd) {
-        alert("密码不一致");
+        this.$dialog.show({
+          header: "提示",
+          body: "密码不一致",
+        });
         return;
       }
       let loader = this.$loading.show({
@@ -237,7 +240,10 @@ export default {
           this.confirmClose();
           this.transaction.passwd = "";
           this.confirmPasssword = "";
-          alert(error);
+          this.$dialog.show({
+            header: "提示",
+            body: err.message,
+          });
         });
     }
   }

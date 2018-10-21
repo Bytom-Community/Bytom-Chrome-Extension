@@ -55,7 +55,10 @@ export default {
           console.log(res);
         })
         .catch(error => {
-          alert(error);
+          this.$dialog.show({
+            header: "提示",
+            body: error,
+          });
         });
     }
   }

@@ -86,7 +86,10 @@ export default {
         })
         .catch(err => {
           loader.hide();
-          alert(err);
+          this.$dialog.show({
+            header: "提示",
+            body: err.message,
+          });
         });
     },
     recover: function() {
