@@ -100,13 +100,13 @@
                 <p>{{transaction.hash}}</p>
               </div>
               <div class="inputs">
-                <section v-for="(input, index) in transaction.inputs">
+                <section :key="index" v-for="(input, index) in transaction.inputs">
                   <p>发款地址{{transaction.inputs.length > 1 ? index+1 : ''}}</p>
                   <p>{{input.address}}<span v-if="input.address == selfAddress">（自己的地址）</span></p>
                 </section>
               </div>
               <div class="outputs">
-                <section v-for="(output, index) in transaction.outputs">
+                <section :key="index" v-for="(output, index) in transaction.outputs">
                   <p>收款地址{{transaction.outputs.length > 1 ? index+1 : ''}}</p>
                   <p>{{output.address}}<span v-if="output.address == selfAddress">（自己的地址）</span></p>
                 </section>

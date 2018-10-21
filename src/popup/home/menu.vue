@@ -155,7 +155,7 @@ export default {
   watch: {
     currView: function() {
       if (this.currView == "" || this.accounts.length == 0) {
-        this.refresh();
+        this.updateAccounts();
       }
     }
   },

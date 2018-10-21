@@ -33,9 +33,7 @@ export default {
   },
   methods: {
     loadAccounts: function() {
-      // localStorage.bytomNet = "testnet";
-      console.log(localStorage.bytomNet);
-      if (localStorage.bytomNet == undefined) {
+      if (localStorage.login == undefined) {
         this.currView = "login";
         return;
       }

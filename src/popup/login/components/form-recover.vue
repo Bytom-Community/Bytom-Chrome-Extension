@@ -46,9 +46,8 @@ export default {
     recovery: function() {
       bytom.Account.restore(this.fileTxt)
         .then(res => {
-          console.log(111, res);
-          // this.$emit("success");
           window.location.reload();
+          localStorage.login = true;
         })
         .catch(error => {
           alert(error);

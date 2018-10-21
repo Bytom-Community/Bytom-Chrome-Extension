@@ -13,9 +13,9 @@
                 <div class="form-item">
                     <label class="form-item-label">选择网络</label>
                     <div class="form-item-content" style="margin-left: 60px;">
-                        <select name="" id="">
-                            <!-- <option value="BYTOM主网络">BYTOM主网络</option> -->
-                            <option value="BYTOM测试网络">BYTOM测试网络</option>
+                        <select name="net" v-model="selected" @change="onChange()">
+                            <option value="mainnet">BYTOM主网络</option>
+                            <option value="testnet">BYTOM测试网络</option>
                         </select>
                     </div>
                 </div>
@@ -58,6 +58,7 @@ export default {
   name: "",
   data() {
     return {
+      selected: 'mainnet',
       formItem: {}
     };
   },
@@ -78,6 +79,7 @@ export default {
         this.formItem.passwd1
       )
         .then(res => {
+          localStorage.login = true;
           loader.hide();
           window.location.reload();
           this.formItem = {};
@@ -89,9 +91,17 @@ export default {
     },
     recover: function() {
       this.$emit("next");
+    },
+    onChange() {
+      localStorage.bytomNet = this.selected;
+      bytom.System.setupNet(this.selected);
     }
   },
   mounted() {
+    if (localStorage.bytomNet != undefined) {
+      bytom.System.setupNet(localStorage.bytomNet);
+      this.selected = localStorage.bytomNet;
+    }
   }
 };
 </script>

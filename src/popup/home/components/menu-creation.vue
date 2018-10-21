@@ -73,7 +73,6 @@ export default {
       }
 
       let loader = this.$loading.show({
-        // Optional parameters
         container: this.fullPage ? null : this.$refs.formContainer,
         canCancel: true,
         onCancel: this.onCancel
@@ -87,12 +86,10 @@ export default {
         .then(res => {
           loader.hide();
           this.close();
-          console.log(res);
           this.formItem = {};
         })
         .catch(err => {
           loader.hide();
-          console.log(err);
           alert(err);
           // this.tips = err.message;
         });
