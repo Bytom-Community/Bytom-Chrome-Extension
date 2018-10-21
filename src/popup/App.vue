@@ -1,8 +1,8 @@
 <template>
   <section id="app">
     <transition-group name="panels" tag="div" class="app-wrapper">
-      <Login class="view" key="login" v-show="view.login" @succ="loadAccounts"></Login>
-      <Home ref="Home" class="view" key="home" v-show="view.home"></Home>
+      <Login class="view" key="login" v-show="view.login"></Login>
+      <Home class="view" key="home" v-show="view.home"></Home>
     </transition-group>
   </section>
 </template>
