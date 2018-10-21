@@ -10,7 +10,7 @@
 <template>
     <div class="mc2warp bg-gray">
         <section>
-            <i class="iconfont btn-close" @click="close">&#xe605;</i>
+            <i class="iconfont btn-close" @click="back">&#xe605;</i>
             <h3>创建账户</h3>
         </section>
         <section class="form">
@@ -63,8 +63,11 @@ export default {
     };
   },
   methods: {
+    back: function() {
+      this.$emit("on-back", "creation");
+    },
     close: function() {
-      this.$emit("closed", "");
+      this.$emit("on-exit", "creation");
     },
     create: function() {
       if (this.formItem.passwd1 != this.formItem.passwd2) {
@@ -84,11 +87,13 @@ export default {
         this.formItem.passwd1
       )
         .then(res => {
-          loader.hide();
-          this.close();
+          console.log(res);
           this.formItem = {};
+          loader.hide();
+          this.back();
         })
         .catch(err => {
+          console.log(err);
           loader.hide();
           alert(err);
           // this.tips = err.message;

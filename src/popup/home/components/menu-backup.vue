@@ -8,7 +8,7 @@
 <template>
     <div class="mc2warp bg-gray">
         <section>
-            <i class="iconfont btn-close" @click="close">&#xe605;</i>
+            <i class="iconfont btn-close" @click="back">&#xe605;</i>
             <h3>备份种子</h3>
         </section>
         <section class="content">
@@ -26,8 +26,11 @@ export default {
     return {};
   },
   methods: {
+    back: function() {
+      this.$emit("on-back");
+    },
     close: function() {
-      this.$emit("closed", "");
+      this.$emit("on-exit");
     },
     backup() {
       bytom.Account.backup().then(txt => {

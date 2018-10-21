@@ -102,14 +102,14 @@ li i {
             </ul>
         </section>
 
-        <!-- modal -->
-        <transition-group name="menus">
-          <Creation key="creation" v-show="view.creation" @closed="currView=''"></Creation>
-          <Recovery key="recovery" v-show="view.recovery" @closed="currView=''"></Recovery>
-          <Bakcup key="backup" v-show="view.backup" @closed="currView=''"></Bakcup>
-          <Help key="help" v-show="view.help" @closed="currView=''"></Help>
-          <Settings key="settings" v-show="view.settings" @closed="currView=''"></Settings>
-        </transition-group>
+        <!-- child-page -->
+        <div>
+          <Creation key="creation" v-show="view.creation" @on-back="goBack" @on-exit="close"></Creation>
+          <Recovery key="recovery" v-show="view.recovery" @on-back="goBack" @on-exit="close"></Recovery>
+          <Bakcup key="backup" v-show="view.backup" @on-back="goBack" @on-exit="close"></Bakcup>
+          <Help key="help" v-show="view.help" @on-back="goBack" @on-exit="close"></Help>
+          <Settings key="settings" v-show="view.settings" @on-back="goBack" @on-exit="close"></Settings>
+        </div>
       </div>
     </transition>
   </div>
@@ -154,34 +154,45 @@ export default {
   },
   watch: {
     currView: function() {
-      if (this.currView == "" || this.accounts.length == 0) {
-        this.updateAccounts();
-      }
+      //
     }
   },
   methods: {
-    open: function() {
+    open: function(child) {
       this.show = true;
       this.maskShow = true;
+      this.currView = child;
     },
     close: function() {
       this.show = false;
       this.maskShow = false;
+      this.currView = "";
+    },
+    goBack: function(from) {
+      this.currView = "";
+      if (from == "creation") {
+        this.updateAccounts();
+      }
     },
     accountSelected: function(accountInfo) {
+      localStorage.currentAccount = JSON.stringify(accountInfo);
       this.currentAccount = accountInfo;
       this.$emit("on-current-account", this.currentAccount);
       this.close();
     },
-    updateAccounts: function(accountInfo) {
+    updateAccounts: function() {
       bytom.Account.list().then(accounts => {
         this.accounts = accounts;
         if (accounts.length == 0) {
           this.$emit("accounts-clear");
           return;
         }
-
-        this.currentAccount = accounts[0];
+        
+        if (localStorage.currentAccount != undefined) {
+          this.currentAccount = JSON.parse(localStorage.currentAccount);
+        } else {
+          this.currentAccount = accounts[0];
+        }
         this.$emit("on-current-account", this.currentAccount);
       });
     }
