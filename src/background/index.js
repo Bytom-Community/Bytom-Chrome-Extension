@@ -62,5 +62,6 @@ bytomAccount.list = function() {
   return retPromise;
 };
 
+window.bytomSystem = bytom;
 window.bytomAccount = bytomAccount;
 window.bytomTransaction = bytomTransaction;

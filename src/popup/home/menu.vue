@@ -1,4 +1,4 @@
-<style>
+<style scoped>
 .btn-close {
   color: #ffffff;
   font-weight: bold;
@@ -55,13 +55,6 @@ ul li {
 li i {
   margin: 0 8px;
 }
-li:active,
-li:hover,
-li.active {
-  background-color: #1bc1b0;
-  border-radius: 8px;
-  cursor: pointer;
-}
 .acc-alias {
   width: 150px;
   overflow: hidden;
@@ -71,46 +64,54 @@ li.active {
 </style>
 
 <template>
-  <div class="mc-wrap bg-gray">
-    <section>
-      <i class="iconfont btn-close" @click="close">&#xe605;</i>
-      <h3>账号切换</h3>
-    </section>
-    <section class="account-list">
-      <ul>
-        <!--  class="active" -->
-        <div v-for="(account, index) in accounts" :key="index">
-            <li :class="(currentAccount != undefined && account.address == currentAccount.address) ? 'active': ''" @click="accountSelected(account)">
-              <i class="iconfont icon-user"></i>
-              <div>
-                  <p v-if="account.alias" class="acc-alias">{{account.alias}}</p>
-                  <p v-else>账户{{index+1}}</p>
-                  <p>{{account.balance}} BTM</p>
-              </div>
-          </li>
-        </div>
-        
-      </ul>
-    </section>
-    <hr>
-    <section class="menu-list">
-        <ul>
-            <li @click="currView='creation'"><i class="iconfont icon-plusbox"></i>创建账户</li>
-            <!-- <li @click="currView='recovery'"><i class="iconfont icon-import"></i>导入账号</li> -->
-            <li @click="currView='backup'"><i class="iconfont icon-backup"></i>备份</li>
-            <li @click="currView='help'"><i class="iconfont icon-help"></i>帮助</li>
-            <li @click="currView='settings'"><i class="iconfont icon-settings"></i>设置</li>
-        </ul>
-    </section>
+<div>
+  <link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">
+  <div v-show="maskShow" class="mask"></div>
+    <transition name="left-menu" 
+        enter-active-class="animated slideInLeft faster" 
+        leave-active-class="animated slideOutLeft faster" 
+        v-on:after-leave="close">
+      <div v-show="show" class="mc-wrap bg-gray">
+        <section>
+          <i class="iconfont btn-close" @click="close">&#xe605;</i>
+          <h3>账号切换</h3>
+        </section>
+        <section class="account-list">
+          <ul>
+            <!--  class="active" -->
+            <div v-for="(account, index) in accounts" :key="index">
+                <li :class="(currentAccount != undefined && account.address == currentAccount.address) ? 'active': ''" @click="accountSelected(account)">
+                  <i class="iconfont icon-user"></i>
+                  <div>
+                      <p v-if="account.alias" class="acc-alias">{{account.alias}}</p>
+                      <p v-else>账户{{index+1}}</p>
+                      <p>{{account.balance}} BTM</p>
+                  </div>
+              </li>
+            </div>
+          </ul>
+        </section>
+        <hr>
+        <section class="menu-list">
+            <ul>
+                <li @click="currView='creation'"><i class="iconfont icon-plusbox"></i>创建账户</li>
+                <!-- <li @click="currView='recovery'"><i class="iconfont icon-import"></i>导入账号</li> -->
+                <li @click="currView='backup'"><i class="iconfont icon-backup"></i>备份</li>
+                <li @click="currView='help'"><i class="iconfont icon-help"></i>帮助</li>
+                <li @click="currView='settings'"><i class="iconfont icon-settings"></i>设置</li>
+            </ul>
+        </section>
 
-    <!-- modal -->
-    <transition-group name="menus">
-      <Creation key="creation" v-show="view.creation" @closed="currView=''"></Creation>
-      <Recovery key="recovery" v-show="view.recovery" @closed="currView=''"></Recovery>
-      <Bakcup key="backup" v-show="view.backup" @closed="currView=''"></Bakcup>
-      <Help key="help" v-show="view.help" @closed="currView=''"></Help>
-      <Settings key="settings" v-show="view.settings" @closed="currView=''"></Settings>
-    </transition-group>
+        <!-- modal -->
+        <transition-group name="menus">
+          <Creation key="creation" v-show="view.creation" @closed="currView=''"></Creation>
+          <Recovery key="recovery" v-show="view.recovery" @closed="currView=''"></Recovery>
+          <Bakcup key="backup" v-show="view.backup" @closed="currView=''"></Bakcup>
+          <Help key="help" v-show="view.help" @closed="currView=''"></Help>
+          <Settings key="settings" v-show="view.settings" @closed="currView=''"></Settings>
+        </transition-group>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -132,6 +133,8 @@ export default {
   },
   data() {
     return {
+      show: false,
+      maskShow: false,
       currView: "",
       accounts: [],
       currentAccount: ""
@@ -157,29 +160,38 @@ export default {
     }
   },
   methods: {
+    open: function() {
+      this.show = true;
+      this.maskShow = true;
+    },
     close: function() {
-      this.$emit("closed");
+      this.show = false;
+      this.maskShow = false;
     },
     accountSelected: function(accountInfo) {
       this.currentAccount = accountInfo;
-      this.$emit("account-change", this.currentAccount);
+      this.$emit("on-current-account", this.currentAccount);
       this.close();
     },
-    refresh: function(accountInfo) {
+    updateAccounts: function(accountInfo) {
       bytom.Account.list().then(accounts => {
-        console.log(222, accounts);
+        this.accounts = accounts;
         if (accounts.length == 0) {
+          this.$emit("accounts-clear");
           return;
         }
 
-        this.accounts = accounts;
         this.currentAccount = accounts[0];
-        this.$emit("account-change", this.currentAccount);
+        this.$emit("on-current-account", this.currentAccount);
       });
     }
   },
   mounted() {
-    this.refresh();
+    if (localStorage.bytomNet != undefined) {
+      bytom.System.setupNet(localStorage.bytomNet);
+    }
+
+    this.updateAccounts();
   }
 };
 </script>

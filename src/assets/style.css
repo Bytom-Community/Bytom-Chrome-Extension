@@ -60,6 +60,14 @@ ul {
   margin: 0;
 }
 
+li:active,
+li:hover,
+li.active {
+  background-color: #1bc1b0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
 hr {
   border-top: 1px solid #000000;
   margin: 10px 0;

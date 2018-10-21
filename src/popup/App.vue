@@ -33,9 +33,16 @@ export default {
   },
   methods: {
     loadAccounts: function() {
-      bytom.Account.list().then(accounts => {
-        this.currView = accounts.length > 0 ? "home" : "login";
-      });
+      // localStorage.bytomNet = "testnet";
+      console.log(localStorage.bytomNet);
+      if (localStorage.bytomNet == undefined) {
+        this.currView = "login";
+        return;
+      }
+
+      // bytom.Account.list().then(accounts => {
+      //   this.currView = accounts.length > 0 ? "home" : "login";
+      // });
     }
   },
   mounted() {

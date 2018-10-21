@@ -3,7 +3,6 @@
   z-index: 1;
 }
 .account {
-  /* text-align: center; */
   font-size: 18px;
 }
 .account .btn-menu {
@@ -17,8 +16,18 @@
   border: 2px solid #fff;
   border-radius: 18px;
   padding: 0 10px;
-  font-size: 14px;
+  font-size: 12px;
+  text-align: center;
 }
+
+.lamp {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #02f823;
+}
+
 .account .alias {
   height: 25px;
 }
@@ -101,11 +110,12 @@
   <div class="warp">
     <section class="bg-green">
       <div class="row account">
-          <a class="btn-menu" href="#"><i class="iconfont icon-menu" @click="openMenu"></i></a>
+          <a class="btn-menu" href="#"><i class="iconfont icon-menu" @click="$refs.menu.open()"></i></a>
           <span class="btn-toggle">
-            <select>
-              <option value="">BYTOM主网络</option>
-              <option value="">BYTOM测试网络</option>
+            <i class="lamp"></i>
+            <select v-model="network" @change="netToggle">
+              <option value="mainnet">BYTOM主网络</option>
+              <option value="testnet">BYTOM测试网络</option>
             </select>
           </span>
           <span class="alias">{{accountInfo.alias}}</span>
@@ -127,7 +137,7 @@
       <h3 class="bg-gray">交易记录</h3>
       <vue-scroll>
         <ul class="list">
-            <li class="list-item" v-for="(transcation, index) in latestTranscations" :key="index" @click="$refs.trxInfo.open(transcation, accountInfo.address)">
+            <li class="list-item" v-for="(transcation, index) in transcations" :key="index" v-if="index<2" @click="$refs.trxInfo.open(transcation, accountInfo.address)">
               <div class="value">{{transcation.direct}} {{transcation.val}} BTM</div>
               <div>
                 <div class="time">{{transcation.timestamp | moment}}</div>
@@ -139,15 +149,7 @@
     </section>
 
     <!-- modal -->
-    <div v-show="maskOpen" class="mask"></div>
-    <link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">
-    <transition name="left-menu" 
-        enter-active-class="animated slideInLeft faster" 
-        leave-active-class="animated slideOutLeft faster" 
-        v-on:after-leave="afterLeave">
-        <Menu v-show="menuOpen" @closed="menuOpen=false" @account-change="selectedAccountChange"></Menu>
-    </transition>
-    
+    <Menu ref="menu" @on-current-account="accountLoader" @accounts-clear="accountClear"></Menu>
     <Qrcode ref="qrcode"></Qrcode>
     <Transfer ref="transfer" @on-success="refreshTransactions"></Transfer>
     <TxInfo ref="trxInfo" @on-success="refreshTransactions"></TxInfo>
@@ -172,36 +174,37 @@ export default {
   },
   data() {
     return {
+      network: "testnet",
       clipboard: new ClipboardJS(".address-text"),
       addressTitle: "点击复制地址",
       menuOpen: false,
       maskOpen: false,
       accountInfo: {},
-      latestTranscations: []
+      transcations: []
     };
   },
   methods: {
-    openMenu: function() {
-      this.maskOpen = true;
-      this.menuOpen = true;
-      this.$refs.qrcode.close();
+    netToggle: function(val) {
+      bytom.System.setupNet(this.network);
+      localStorage.bytomNet = this.network;
+
+      this.$refs.menu.updateAccounts();
     },
     shortAddress(address) {
       return (
         address.substr(0, 7) + "..." + address.substr(address.length - 7, 7)
       );
     },
-    selectedAccountChange: function(accountInfo) {
-      console.log(accountInfo);
-
+    accountClear: function() {
+      this.accountInfo = {};
+      this.transcations = [];
+    },
+    accountLoader: function(accountInfo) {
       this.accountInfo = accountInfo;
       this.accountInfo.address_short = this.shortAddress(
         this.accountInfo.address
       );
       this.refreshTransactions();
-    },
-    afterLeave: function() {
-      this.maskOpen = false;
     },
     showQrcode: function() {
       this.$refs.qrcode.open(this.accountInfo.address);
@@ -209,60 +212,69 @@ export default {
     transferOpen: function() {
       this.$refs.transfer.open(this.accountInfo);
     },
+    transcationsFormat: function(transactions) {
+      transactions.forEach(transaction => {
+        let inputSum = 0;
+        let outoutSum = 0;
+        let inputAddresses = [],
+          outputAddresses = [];
+        transaction.inputs.forEach(input => {
+          if (input.address == this.accountInfo.address) {
+            inputSum += input.amount;
+            return;
+          }
+
+          inputAddresses.push(input.address);
+        });
+
+        transaction.outputs.forEach(output => {
+          if (output.address == this.accountInfo.address) {
+            outoutSum += output.amount;
+            return;
+          }
+
+          outputAddresses.push(output.address);
+        });
+        console.log(112, inputAddresses, outputAddresses);
+
+        let val = outoutSum - inputSum;
+        if (val > 0) {
+          transaction.direct = "+";
+          transaction.address = this.shortAddress(inputAddresses.pop());
+        } else {
+          val = inputSum - outoutSum;
+          transaction.direct = "-";
+          transaction.address = this.shortAddress(outputAddresses.pop());
+        }
+        transaction.val = Number(val / 100000000).toFixed(8);
+        // console.log(111, transaction, val);
+      });
+    },
     refreshTransactions: function() {
+      if (this.accountInfo.guid == undefined) {
+        return;
+      }
+
       bytom.Transaction.list(
         this.accountInfo.guid,
         this.accountInfo.address
       ).then(ret => {
         let transactions = ret.data.transactions;
         if (transactions == null) {
-          this.latestTranscations = [];
+          this.transcations = [];
           return;
         }
 
-        transactions.forEach(transaction => {
-          let inputSum = 0;
-          let outoutSum = 0;
-          let inputAddresses = [],
-            outputAddresses = [];
-          transaction.inputs.forEach(input => {
-            if (input.address == this.accountInfo.address) {
-              inputSum += input.amount;
-              return;
-            }
-
-            inputAddresses.push(input.address);
-          });
-
-          transaction.outputs.forEach(output => {
-            if (output.address == this.accountInfo.address) {
-              outoutSum += output.amount;
-              return;
-            }
-
-            outputAddresses.push(output.address);
-          });
-          console.log(112, inputAddresses, outputAddresses);
-
-          let val = outoutSum - inputSum;
-          if (val > 0) {
-            transaction.direct = "+";
-            transaction.address = this.shortAddress(inputAddresses.pop());
-          } else {
-            val = inputSum - outoutSum;
-            transaction.direct = "-";
-            transaction.address = this.shortAddress(outputAddresses.pop());
-          }
-          transaction.val = Number(val / 100000000).toFixed(8);
-          // console.log(111, transaction, val);
-        });
-        console.log(transactions);
-        this.latestTranscations = transactions;
+        this.transcationsFormat(transactions);
+        console.log("formatTx", transactions);
+        this.transcations = transactions;
       });
     }
   },
   mounted() {
+    this.network = localStorage.bytomNet;
     this.refreshTransactions();
+
     this.clipboard.on("success", function(e) {
       alert("coby success");
     });
