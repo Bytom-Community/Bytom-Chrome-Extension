@@ -251,14 +251,8 @@ export default {
       });
     },
     refreshTransactions: function() {
-      let loader = this.$loading.show({
-        container: null,
-        canCancel: true,
-        onCancel: this.onCancel
-      });
       this.transcations = [];
       if (this.accountInfo.guid == undefined) {
-        loader.hide()
         return;
       }
 
@@ -266,7 +260,6 @@ export default {
         this.accountInfo.guid,
         this.accountInfo.address
       ).then(ret => {
-        loader.hide()
         let transactions = ret.data.transactions;
         if (transactions == null) {
           this.transcations = [];
@@ -278,7 +271,6 @@ export default {
         this.transcations = transactions;
       }).catch(error => {
         console.log(error);
-        loader.hide()
       });
     }
   },
