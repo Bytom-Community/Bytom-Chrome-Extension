@@ -79,20 +79,21 @@
 }
 .transactions .list {
   padding: 0 10px;
+  /* overflow-y: scroll; */
+  height: 290px;
 }
 .list-item {
-  display: flex;
+  display: block;
   padding: 5px 10px;
   border-bottom: 1px solid #5e5e5e;
 }
 
 .list-item .value {
-  position: absolute;
-  right: 20px;
+  float: right;
   margin-top: 13px;
 }
 .account-address {
-  cursor: pointer
+  cursor: pointer;
 }
 </style>
 
@@ -113,11 +114,8 @@
           <img src="../../assets/logo.png" class="token-icon">
           <div class="amount">
               <div class="token-amount">{{accountInfo.balance}} BTM</div>
-              <p
-                :data-clipboard-text="accountInfo.address"
-                :title="addressTitle" 
-                class="account-address">
-                {{accountInfo.address_short}}
+              <p class="account-address">
+                <span class="address-text" :title="addressTitle" :data-clipboard-text="accountInfo.address">{{accountInfo.address_short}}</span>
                 <i class="iconfont qrcode" @click="showQrcode">&#xe7dd;</i>
               </p>
           </div>
@@ -126,17 +124,18 @@
     </section>
 
     <section class="transactions">
-      <h3 class="color-gray">交易记录</h3>
-      <ul class="list">
-        <li class="list-item" v-for="(transcation, index) in latestTranscations" v-if="index < 4" :key="index">
-            <div>
-              <div class="time">{{transcation.timestamp | moment}}</div>
-              <div class="addr">{{transcation.address}}</div>
-            </div>
-            <div class="value">{{transcation.direct}} {{transcation.val}} BTM</div>
-        </li>
-        <span v-else style="width: 22px; margin: 0px auto; font-weight: bold; font-size: 22px;">...</span>
-      </ul>
+      <h3 class="bg-gray">交易记录</h3>
+      <vue-scroll>
+        <ul class="list">
+            <li class="list-item" v-for="(transcation, index) in latestTranscations" :key="index" @click="$refs.trxInfo.open(transcation, accountInfo.address)">
+              <div class="value">{{transcation.direct}} {{transcation.val}} BTM</div>
+              <div>
+                <div class="time">{{transcation.timestamp | moment}}</div>
+                <div class="addr">{{transcation.address}}</div>
+              </div>
+            </li>
+        </ul>
+      </vue-scroll>
     </section>
 
     <!-- modal -->
@@ -151,16 +150,17 @@
     
     <Qrcode ref="qrcode"></Qrcode>
     <Transfer ref="transfer" @on-success="refreshTransactions"></Transfer>
+    <TxInfo ref="trxInfo" @on-success="refreshTransactions"></TxInfo>
 
   </div>
 </template>
 
 <script>
+import ClipboardJS from "clipboard";
 import Menu from "./menu";
 import Qrcode from "./components/qrcode";
 import Transfer from "./components/transfer";
-import TransList from "./components/trans-list";
-import TransDetail from "./components/trans-detail";
+import TxInfo from "./components/tx-info";
 import bytom from "../script/bytom";
 export default {
   name: "",
@@ -168,10 +168,11 @@ export default {
     Menu,
     Qrcode,
     Transfer,
-    TransDetail
+    TxInfo
   },
   data() {
     return {
+      clipboard: new ClipboardJS(".address-text"),
       addressTitle: "点击复制地址",
       menuOpen: false,
       maskOpen: false,
@@ -262,6 +263,15 @@ export default {
   },
   mounted() {
     this.refreshTransactions();
+    this.clipboard.on("success", function(e) {
+      alert("coby success");
+    });
+    this.clipboard.on("error", function(e) {
+      alert("coby error");
+    });
+  },
+  beforeDestroy() {
+    this.clipboard.destroy();
   }
 };
 </script>

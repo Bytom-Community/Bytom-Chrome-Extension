@@ -2,18 +2,20 @@ import Vue from "vue";
 import App from "./App.vue";
 import Loading from 'vue-loading-overlay';
 import moment from "moment";
-import ClipboardJS from "clipboard";
+import vuescroll from 'vuescroll/dist/vuescroll-native';
+import 'vuescroll/dist/vuescroll.css';
 import "../assets/style.css";
 import 'vue-loading-overlay/dist/vue-loading.css';
 
-let clipboard = new ClipboardJS(".account-address");
-clipboard.on('success', function(e) {
-  alert("coby success");
-});
-clipboard.on('error', function(e) {
-  alert("coby error");
-});
 Vue.use(Loading);
+Vue.use(vuescroll);
+Vue.prototype.$vuescrollConfig = {
+  bar: {
+    mode: 'pure-native',
+    keepShow: true,
+    background: '#c9c9c9'
+  }
+};
 Vue.filter("moment", function(value, formatString) {
   formatString = formatString || "YYYY-MM-DD HH:mm:ss";
   return moment(value * 1000).format(formatString);
