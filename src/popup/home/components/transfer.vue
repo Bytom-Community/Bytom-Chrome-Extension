@@ -82,7 +82,7 @@
             <div class="form-item">
               <!-- <label>账户</label> -->
               <select v-model="transaction.guid">
-                <option :key="account" v-for="account in accounts" :value="account.guid">{{account.alias != null ? account.alias : '账户1'}}</option>
+                <option :key="index" v-for="(account, index) in accounts" :value="account.guid">{{account.alias != null ? account.alias : '账户1'}}</option>
               </select>
             </div>
             <div class="form-item" style="margin-left: 20px;">
