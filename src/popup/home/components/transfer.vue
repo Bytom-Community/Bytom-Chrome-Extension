@@ -242,7 +242,7 @@ export default {
           this.confirmPasssword = "";
           this.$dialog.show({
             header: "提示",
-            body: err.message,
+            body: error.message,
           });
         });
     }

@@ -15,9 +15,15 @@ const dialogInstance = {
   },
   show: function(op) {
     let data = {
-      header: op.header,
-      body: op.body,
+      header: "提示",
+      body: "",
     };
+    if (op.header) {
+      data.header = op.header;
+    }
+    if (op.body) {
+      data.body = op.body;
+    }
     if (op.confirm) {
       data.confirm = op.confirm;
     }
