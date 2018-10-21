@@ -251,6 +251,7 @@ export default {
       });
     },
     refreshTransactions: function() {
+      this.transcations = [];
       if (this.accountInfo.guid == undefined) {
         return;
       }
