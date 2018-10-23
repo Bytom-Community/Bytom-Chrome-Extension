@@ -7,7 +7,8 @@ const en = {
     }
   },
   help: {
-    title: "Help"
+    title: "Help",
+    page: "Help and Information Page"
   },
   setting: {
     title: "Setting",

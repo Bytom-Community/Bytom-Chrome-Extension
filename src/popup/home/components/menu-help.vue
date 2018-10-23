@@ -13,7 +13,7 @@
             <h3>{{ $t("help.title") }}</h3>
         </section>
         <section class="content">
-          <p>帮助与信息页</p>
+          <p>{{ $t("help.page") }}</p>
           <a href="http://github.com/bytom/bytom/wiki" target="_blank">http://github.com/bytom/bytom/wiki</a>
         </section>
     </div>

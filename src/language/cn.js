@@ -7,7 +7,8 @@ const cn = {
     }
   },
   help: {
-    title: "帮助"
+    title: "帮助",
+    page: "帮助与信息页"
   },
   setting: {
     title: "设置",
