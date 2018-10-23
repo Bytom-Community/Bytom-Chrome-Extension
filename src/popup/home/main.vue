@@ -289,13 +289,13 @@ export default {
     this.clipboard.on("success", (e) => {
       this.$dialog.show({
         header: "提示",
-        body: "copy success",
+        body: "Copied！",
       });
     });
     this.clipboard.on("error", (e) => {
       this.$dialog.show({
         header: "提示",
-        body: "copy error",
+        body: "Copy failed！",
       });
     });
   },
