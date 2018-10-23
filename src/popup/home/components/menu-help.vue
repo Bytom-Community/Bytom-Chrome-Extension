@@ -10,7 +10,7 @@
     <div class="mc2warp bg-gray">
         <section>
             <i class="iconfont btn-close" @click="back">&#xe605;</i>
-            <h3>帮助</h3>
+            <h3>{{ $t("help.title") }}</h3>
         </section>
         <section class="content">
           <p>帮助与信息页</p>

@@ -12,21 +12,22 @@
     <div class="mc2warp bg-gray">
         <section>
             <i class="iconfont btn-close" @click="back">&#xe605;</i>
-            <h3>设置</h3>
+            <h3>{{ $t("setting.title") }}</h3>
         </section>
         <section class="content">
             <div>
-                <p>钱包版本</p>
+                <p>{{ $t("setting.version") }}</p>
                 <p>1.0.1-2c74b9a</p>
             </div>
             <div>
-                <p>语言</p>
-                <select name="" id="">
-                    <option value="">中文</option>
+                <p>{{ $t("setting.lang") }}</p>
+                <select v-model="selected" @change="onChange()">
+                    <option value="cn">中文</option>
+                    <option value="en">English</option>
                 </select>
             </div>
             <div>
-                <p>比原数量单位</p>
+                <p>{{ $t("setting.unit") }}</p>
                 <select name="" id="">
                     <option value="">BTM</option>
                 </select>
@@ -39,15 +40,26 @@
 export default {
   name: "",
   data() {
-    return {};
+    return {
+      selected: 'cn'
+    };
   },
   methods: {
+    onChange: function() {
+      localStorage.lang = this.selected;
+      this.$i18n.locale = this.selected;
+    },
     back: function() {
       this.$emit("on-back");
     },
     close: function() {
       this.$emit("on-exit");
     },
+  },
+  mounted: function() {
+    if (localStorage.lang) {
+      this.selected = localStorage.lang;
+    }
   }
 };
 </script>

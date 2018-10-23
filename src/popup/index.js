@@ -25,8 +25,13 @@ Vue.filter("moment", function(value, formatString) {
   formatString = formatString || "YYYY-MM-DD HH:mm:ss";
   return moment(value * 1000).format(formatString);
 });
+let lang = 'en';
+if(localStorage.lang) {
+  lang = localStorage.lang;
+}
 const i18n = new VueI18n({
-  locale: 'en',
+  fallbackLocale: 'en',
+  locale: lang,
   messages,
 })
 new Vue({
