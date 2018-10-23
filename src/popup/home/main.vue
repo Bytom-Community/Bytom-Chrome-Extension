@@ -289,13 +289,13 @@ export default {
     this.clipboard.on("success", (e) => {
       this.$dialog.show({
         header: "提示",
-        body: "coby success",
+        body: "copy success",
       });
     });
     this.clipboard.on("error", (e) => {
       this.$dialog.show({
         header: "提示",
-        body: "coby error",
+        body: "copy error",
       });
     });
   },
