@@ -8,11 +8,11 @@
             <img src="../../../assets/logo.png">
         </section>
         <section class="login-content">
-            <h4>创建账户</h4>
+            <div class="title">创建账户</div>
             <div class="form">
                 <div class="form-item">
                     <label class="form-item-label">选择网络</label>
-                    <div class="form-item-content" style="margin-left: 60px;">
+                    <div class="form-item-content" style="margin-left: 75px;">
                         <select name="net" v-model="selected" @change="onChange()">
                             <option value="mainnet">BYTOM主网络</option>
                             <option value="testnet">BYTOM测试网络</option>
@@ -21,25 +21,25 @@
                 </div>
                 <div class="form-item">
                     <label class="form-item-label">账户别名</label>
-                    <div class="form-item-content" style="margin-left: 60px;">
+                    <div class="form-item-content" style="margin-left: 76px;">
                         <input type="text" v-model="formItem.accAlias" autofocus>
                     </div>
                 </div>
                 <div class="form-item">
                     <label class="form-item-label">密钥别名</label>
-                    <div class="form-item-content" style="margin-left: 60px;">
+                    <div class="form-item-content" style="margin-left: 76px;">
                         <input type="text" v-model="formItem.keyAlias">
                     </div>
                 </div>
                 <div class="form-item">
                     <label class="form-item-label">密钥密码</label>
-                    <div class="form-item-content" style="margin-left: 60px;">
+                    <div class="form-item-content" style="margin-left: 76px;">
                         <input type="password" v-model="formItem.passwd1">
                     </div>
                 </div>
                 <div class="form-item">
                     <label class="form-item-label">重复密码</label>
-                    <div class="form-item-content" style="margin-left: 60px;">
+                    <div class="form-item-content" style="margin-left: 76px;">
                         <input type="password" v-model="formItem.passwd2">
                     </div>
                 </div>

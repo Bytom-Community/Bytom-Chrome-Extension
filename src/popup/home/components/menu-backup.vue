@@ -1,20 +1,13 @@
 <style scoped>
-.content {
-  margin: 30px 0;
-  padding: 0 10px;
-}
+
 </style>
 
 <template>
-    <div class="mc2warp bg-gray">
-        <section>
-            <i class="iconfont btn-close" @click="back">&#xe605;</i>
-            <h3>备份种子</h3>
-        </section>
-        <section class="content">
-          <div class="btn bg-green" @click="backup">备份</div>
-        </section>
-    </div>
+    <MenuPage title="备份" @back="back">
+      <div style="text-align: center">
+        <div style="width: 200px;" class="btn bg-green" @click="backup">备份</div>
+      </div>
+    </MenuPage>
 </template>
 
 <script>

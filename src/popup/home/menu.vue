@@ -1,11 +1,4 @@
 <style scoped>
-.btn-close {
-  color: #ffffff;
-  font-weight: bold;
-  position: absolute;
-  right: 10px;
-  top: 10px;
-}
 .mc-wrap {
   position: fixed;
   top: 0;
@@ -13,53 +6,43 @@
   right: 0;
   bottom: 0;
   z-index: 9999;
-  width: 60%;
+  width: 55%;
   height: 100%;
   padding: 40px;
   background-color: #3c454b;
 }
-
-.mc2warp {
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding: 40px;
-}
-.account-list {
+.accounts {
   width: 100%;
-  height: 230px;
+  height: 200px;
   overflow-x: hidden;
   overflow-y: scroll;
+  margin-bottom: 25px;
 }
-.account-list::-webkit-scrollbar {
+.accounts::-webkit-scrollbar {
   display: none;
 }
-.account-list ul {
-  margin-top: 30px;
-}
-.account-list i {
-  font-size: 28px;
-  line-height: 45px;
-  margin-right: 18px;
+.accounts i {
+  font-size: 24px;
 }
 
-ul {
-  display: grid;
+.menu {
+  border-top: 1px solid #c9c9c9;
+  padding-top: 15px;
 }
-ul li {
-  display: flex;
-  padding: 5px 0;
-}
-li i {
-  margin: 0 8px;
-}
-.acc-alias {
+.account {
   width: 150px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.account-alias {
+  width: 150px;
+  font-size: 19px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+.account-asset {
+  font-size: 15px;
 }
 </style>
 
@@ -67,40 +50,37 @@ li i {
 <div>
   <link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">
   <div v-show="maskShow" class="mask"></div>
-    <transition name="left-menu" 
+    <transition name="left-menu" v-on:after-leave="close"
         enter-active-class="animated slideInLeft faster" 
-        leave-active-class="animated slideOutLeft faster" 
-        v-on:after-leave="close">
-      <div v-show="show" class="mc-wrap bg-gray">
-        <section>
-          <i class="iconfont btn-close" @click="close">&#xe605;</i>
-          <h3>账号切换</h3>
-        </section>
-        <section class="account-list">
-          <ul>
-            <!--  class="active" -->
-            <div v-for="(account, index) in accounts" :key="index">
-                <li :class="(currentAccount != undefined && account.address == currentAccount.address) ? 'active': ''" @click="accountSelected(account)">
-                  <i class="iconfont icon-user"></i>
-                  <div>
-                      <p v-if="account.alias" class="acc-alias">{{account.alias}}</p>
-                      <p v-else>账户{{index+1}}</p>
-                      <p>{{account.balance}} BTM</p>
-                  </div>
-              </li>
+        leave-active-class="animated slideOutLeft faster">
+      <div v-show="show" class="mc-wrap">
+        <MenuPage title="账号切换" @back="close">
+          <div class="list accounts">
+            <div v-for="(account, index) in accounts" :key="index" @click="accountSelected(account)">
+              <div :class="(currentAccount != undefined && account.address == currentAccount.address) ? 'list-item active': 'list-item'">
+                <i class="iconfont icon-user"></i>
+                <div class="account">
+                    <div class="account-alias">{{account.alias}}</div>
+                    <div class="account-asset">{{account.balance}} BTM</div>
+                </div>
+              </div>
             </div>
-          </ul>
-        </section>
-        <hr>
-        <section class="menu-list">
-            <ul>
-                <li @click="currView='creation'"><i class="iconfont icon-plusbox"></i>创建账户</li>
-                <!-- <li @click="currView='recovery'"><i class="iconfont icon-import"></i>导入账号</li> -->
-                <li @click="currView='backup'"><i class="iconfont icon-backup"></i>备份</li>
-                <li @click="currView='help'"><i class="iconfont icon-help"></i>帮助</li>
-                <li @click="currView='settings'"><i class="iconfont icon-settings"></i>设置</li>
-            </ul>
-        </section>
+          </div>
+          <div class="list menu">
+            <div class="list-item" @click="currView='creation'">
+              <i class="iconfont icon-plusbox"></i>创建账户
+            </div>
+            <div class="list-item" @click="currView='backup'">
+              <i class="iconfont icon-backup"></i>备份
+            </div>
+            <div class="list-item" @click="currView='help'">
+              <i class="iconfont icon-help"></i>帮助
+            </div>
+            <div class="list-item" @click="currView='settings'">
+              <i class="iconfont icon-settings"></i>设置
+            </div>
+          </div>
+        </MenuPage>
 
         <!-- child-page -->
         <div>
@@ -187,7 +167,7 @@ export default {
           this.$emit("accounts-clear");
           return;
         }
-        
+
         if (localStorage.currentAccount != undefined) {
           this.currentAccount = JSON.parse(localStorage.currentAccount);
         } else {

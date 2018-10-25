@@ -7,11 +7,11 @@
             <img src="../../../assets/logo.png">
         </section>
         <section class="login-content">
-            <h4>从种子导入</h4>
+            <div class="title">从种子导入</div>
             <div class="form">
                 <div class="form-item">
                     <label class="form-item-label">备份文件</label>
-                    <div class="form-item-content" style="margin-left: 60px;">
+                    <div class="form-item-content" style="margin-left: 75px;">
                       <input type="file" @change="tirggerFile($event)">
                     </div>
                 </div>

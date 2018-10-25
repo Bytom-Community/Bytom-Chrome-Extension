@@ -1,5 +1,5 @@
-import dialog from "./component"
 import Vue from 'vue';
+import dialog from "./component"
 
 let instance;
 const dialogInstance = {

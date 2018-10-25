@@ -1,39 +1,33 @@
 <style scoped>
-.content{
-    margin: 50px 0;
-  font-size: 14px;
+.row {
+  margin: 25px 0;
 }
-.content div{
-    margin: 20px 0;
+.value {
+  font-size: 15px;
+  line-height: 30px;
 }
 </style>
 
 <template>
-    <div class="mc2warp bg-gray">
-        <section>
-            <i class="iconfont btn-close" @click="back">&#xe605;</i>
-            <h3>{{ $t("setting.title") }}</h3>
-        </section>
-        <section class="content">
-            <div>
-                <p>{{ $t("setting.version") }}</p>
-                <p>1.0.1-2c74b9a</p>
-            </div>
-            <div>
-                <p>{{ $t("setting.lang") }}</p>
-                <select v-model="selected" @change="onChange()">
-                    <option value="cn">中文</option>
-                    <option value="en">English</option>
-                </select>
-            </div>
-            <div>
-                <p>{{ $t("setting.unit") }}</p>
-                <select name="" id="">
-                    <option value="">BTM</option>
-                </select>
-            </div>
-        </section>
-    </div>
+    <MenuPage :title="$t('setting.title')" @back="back">
+        <div class="row">
+            <p>{{ $t("setting.version") }}</p>
+            <p class="value">1.0.1-2c74b9a</p>
+        </div>
+        <div class="row">
+            <p>{{ $t("setting.lang") }}</p>
+            <select class="value" v-model="selected" @change="onChange()">
+                <option value="cn">中文</option>
+                <option value="en">English</option>
+            </select>
+        </div>
+        <div class="row">
+            <p>{{ $t("setting.unit") }}</p>
+            <select class="value">
+                <option value="">BTM</option>
+            </select>
+        </div>
+    </MenuPage>
 </template>
 
 <script>
@@ -41,7 +35,7 @@ export default {
   name: "",
   data() {
     return {
-      selected: 'cn'
+      selected: "cn"
     };
   },
   methods: {
@@ -54,7 +48,7 @@ export default {
     },
     close: function() {
       this.$emit("on-exit");
-    },
+    }
   },
   mounted: function() {
     if (localStorage.lang) {

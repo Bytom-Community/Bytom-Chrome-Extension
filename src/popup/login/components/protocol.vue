@@ -1,10 +1,7 @@
 <style scoped>
-.login-content {
-  height: 414px;
-  font-size: 12px;
-}
-.login-footer {
-  padding: 20px 85px;
+.protocol {
+  height: 385px;
+  /* font-size: 12px; */
 }
 </style>
 <template>
@@ -12,12 +9,12 @@
         <section class="login-header bg-green">
             <img src="../../../assets/logo.png">
         </section>
-        <section class="login-content">
-            <h4>钱包使用条款</h4>
+        <section class="login-content protocol">
+            <div class="title">钱包使用条款</div>
             <p>1.是范德萨发</p>
         </section>
-        <section class="login-footer bg-green">
-            <div class="btn btn-primary" @click="confirm">确认</div>
+        <section class="welcome-bottom bg-green">
+            <div class="btn btn-primary btn-startup" @click="confirm">确认</div>
         </section>
     </div>
 </template>

@@ -17,11 +17,11 @@
 }
 .login-content {
   padding: 30px;
-  font-size: 12px;
 }
-.login-content h4 {
+.login-content .title {
   text-align: center;
-  font-size: 18px;
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 .login-footer {
   padding: 20px 85px;

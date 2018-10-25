@@ -2,66 +2,75 @@
 .warp {
   z-index: 1;
 }
-.account {
-  font-size: 18px;
-}
-.account .btn-menu {
-  float: left;
-  margin: 20px 8px 0 20px;
-}
-.account .btn-toggle {
-  float: right;
-  margin-top: 15px;
-  margin-right: 20px;
-  border: 2px solid #fff;
-  border-radius: 18px;
-  padding: 0 10px;
-  font-size: 12px;
-  text-align: center;
-}
 
-.lamp {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: #02f823;
+.topbar {
+  font-size: 19px;
 }
-
-.account .alias {
-  height: 25px;
-}
-.account span {
-  display: block;
-  padding-top: 20px;
-  font-size: 18px;
-  font-weight: bold;
+.topbar .topbar-left {
   width: 120px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  padding-top: 20px;
+  padding-left: 20px;
+}
+.topbar-left .btn-menu {
+  float: left;
+  margin-right: 8px;
+}
+.topbar-left .btn-menu i {
+  font-size: 100%;
+}
+.topbar-left .alias {
+  height: 25px;
+  font-size: 19px;
+  line-height: 28px;
 }
 
-.balance {
+.topbar .topbar-right {
+  float: right;
+  margin-top: 20px;
+  margin-right: 20px;
+  border: 2px solid #fff;
+  border-radius: 18px;
+  padding: 0 10px;
+  font: 12px system-ui;
+  text-align: center;
+}
+
+.topbar-right .lamp {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #02f823;
+  margin-right: 2px;
+  position: relative;
+  top: -2px;
+}
+
+.content {
   margin-top: 20px;
   text-align: center;
   padding: 0 30px 20px;
 }
-.balance .token-icon {
+.content .token-icon {
   display: inline-flex;
   height: 40px;
   width: 40px;
-  /* background: #fff; */
-  /* border: 1px solid #dedede; */
-  /* border-radius: 25px; */
   padding: 8px;
   margin: 8px;
 }
-.balance .amount {
+.content .amount {
   padding-bottom: 10px;
 }
-.balance .token-amount {
-  font-size: 32px;
+.content .token-amount {
+  font-size: 45px;
+  line-height: 45px;
+}
+.token-amount .asset {
+  font-size: 18px;
+  margin-left: 2px;
 }
 .qrcode {
   margin-left: 5px;
@@ -70,26 +79,25 @@
 }
 .btn-transfer {
   width: 200px;
-  font-size: 20px;
-  line-height: 22px;
-  height: 40px;
-  line-height: 40px;
+  /* font-size: 20px; */
+  /* line-height: 22px; */
+  /* height: 40px; */
 }
 
 .transactions {
-  font-size: 14px;
+  font-size: 15px;
   /* line-height: 40px; */
   /* display: contents; */
 }
 .transactions h3 {
-  padding: 10px;
-  margin: 0;
+  font-size: 18px;
+  font-weight: inherit;
   color: #cacaca;
+  text-align: center;
+  padding: 5px 0;
 }
 .transactions .list {
   padding: 0 10px;
-  /* overflow-y: scroll; */
-  
 }
 .list-item {
   display: block;
@@ -114,21 +122,23 @@
 <template>
   <div class="warp">
     <section class="bg-green">
-      <div class="row account">
-          <a class="btn-menu" href="#"><i class="iconfont icon-menu" @click="$refs.menu.open()"></i></a>
-          <span class="btn-toggle">
+      <div class="topbar">
+          <div class="topbar-right">
             <i class="lamp"></i>
             <select v-model="network" @change="netToggle">
               <option value="mainnet">BYTOM主网络</option>
               <option value="testnet">BYTOM测试网络</option>
             </select>
-          </span>
-          <span class="alias">{{accountInfo.alias}}</span>
+          </div>
+          <div class="topbar-left">
+            <a class="btn-menu" href="#"><i class="iconfont icon-menu" @click="$refs.menu.open()"></i></a>
+            <span class="alias">{{accountInfo.alias}}</span>
+          </div>
       </div>
-      <div class="row balance">
+      <div class="content">
           <img src="../../assets/logo.png" class="token-icon">
           <div v-if="accountInfo.address!=undefined" class="amount">
-              <div class="token-amount">{{accountInfo.balance}} BTM</div>
+              <div class="token-amount">{{accountInfo.balance}}<span class="asset">BTM</span></div>
               <p class="account-address">
                 <span class="address-text" :title="addressTitle" :data-clipboard-text="accountInfo.address">{{accountInfo.address_short}}</span>
                 <i class="iconfont qrcode" @click="showQrcode">&#xe7dd;</i>
@@ -264,35 +274,34 @@ export default {
         return;
       }
 
-      bytom.Transaction.list(
-        this.accountInfo.guid,
-        this.accountInfo.address
-      ).then(ret => {
-        let transactions = ret.data.transactions;
-        if (transactions == null) {
-          this.transcations = [];
-          return;
-        }
+      bytom.Transaction.list(this.accountInfo.guid, this.accountInfo.address)
+        .then(ret => {
+          let transactions = ret.data.transactions;
+          if (transactions == null) {
+            this.transcations = [];
+            return;
+          }
 
-        this.transcationsFormat(transactions);
-        console.log("formatTx", transactions);
-        this.transcations = transactions;
-      }).catch(error => {
-        console.log(error);
-      });
+          this.transcationsFormat(transactions);
+          console.log("formatTx", transactions);
+          this.transcations = transactions;
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   },
   mounted() {
     this.network = localStorage.bytomNet;
     this.refreshTransactions();
 
-    this.clipboard.on("success", (e) => {
+    this.clipboard.on("success", e => {
       this.$dialog.show({
         header: this.$t("dialog.header"),
         body: this.$t("dialog.copy.success"),
       });
     });
-    this.clipboard.on("error", (e) => {
+    this.clipboard.on("error", e => {
       this.$dialog.show({
         header: this.$t("dialog.header"),
         body: this.$t("dialog.copy.fail"),

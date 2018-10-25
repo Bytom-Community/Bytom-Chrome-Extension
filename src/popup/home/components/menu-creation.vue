@@ -3,47 +3,44 @@
   margin: 50px 0;
 }
 .form-item .btn {
+  width: 200px;
   margin-top: 15px;
 }
 </style>
 
 <template>
-    <div class="mc2warp bg-gray">
-        <section>
-            <i class="iconfont btn-close" @click="back">&#xe605;</i>
-            <h3>创建账户</h3>
-        </section>
-        <section class="form">
+    <MenuPage title="创建账户" @back="back">
+      <div class="form">
           <div class="form-item">
             <label class="form-item-label">账户别名</label>
-            <div class="form-item-content" style="margin-left: 60px;">
+            <div class="form-item-content" style="margin-left: 76px;">
               <input type="text" v-model="formItem.accAlias">
             </div>
           </div>
           <div class="form-item">
             <label class="form-item-label">密钥别名</label>
-            <div class="form-item-content" style="margin-left: 60px;">
+            <div class="form-item-content" style="margin-left: 76px;">
               <input type="text" v-model="formItem.keyAlias">
             </div>
           </div>
           <div class="form-item">
             <label class="form-item-label">密钥密码</label>
-            <div class="form-item-content" style="margin-left: 60px;">
+            <div class="form-item-content" style="margin-left: 76px;">
               <input type="password" v-model="formItem.passwd1">
             </div>
           </div>
           <div class="form-item">
             <label class="form-item-label">重复密码</label>
-            <div class="form-item-content" style="margin-left: 60px;">
+            <div class="form-item-content" style="margin-left: 76px;">
               <input type="password" v-model="formItem.passwd2">
             </div>
           </div>
           <div class="tips">{{tips}}</div>
-          <div class="form-item bg-gray">
+          <div class="form-item bg-gray" style="text-align: center">
             <div class="btn bg-green" @click="create">创建账户</div>
           </div>
-        </section>
-    </div>
+        </div>
+    </MenuPage>
 </template>
 
 <script>
@@ -97,7 +94,7 @@ export default {
           loader.hide();
           this.$dialog.show({
             header: "提示",
-            body: err.message,
+            body: err.message
           });
           // this.tips = err.message;
         });

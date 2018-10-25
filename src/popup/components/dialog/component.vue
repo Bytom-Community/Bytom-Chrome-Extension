@@ -48,7 +48,7 @@
 }
 
 .modal-footer {
-  height: 20px;
+  height: 35px;
 }
 
 .modal-enter .modal-container,

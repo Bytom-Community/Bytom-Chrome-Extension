@@ -189,16 +189,16 @@ hr {
   width: 100%;
   position: relative;
   display: inline-block;
-  font-size: 0.7rem;
+  font-size: 18px;
   font-weight: 400;
   font-family: inherit;
   text-decoration: none;
   text-align: center;
   margin: 0;
   background: #dddddd;
-  padding: 0 0.6rem;
-  height: 1.5rem;
-  line-height: 1.5rem;
+  padding: 10px 20px;
+  height: 35px;
+  line-height: 18px;
   border-radius: 0.2rem;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -214,6 +214,10 @@ hr {
 .btn:active {
   color: #212121;
   background-color: #bdbdbd;
+}
+.btn-small {
+  width: 50%;
+  height: 50%;
 }
 .btn-primary {
   color: #ffffff;
@@ -234,23 +238,42 @@ hr {
   cursor: pointer;
 }
 .btn-group {
-  padding: 5px 50px;
-  line-height: 45px;
+  padding: 0px 45px;
+  line-height: 55px;
+}
+
+.list {
+}
+
+.list-item {
+  padding: 5px 10px;
+}
+.list-item:active,
+.list-item:hover,
+.list-item.active {
+  background-color: #1bc1b0;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.list-item i {
+  margin-right: 5px;
 }
 
 .form {
-  font-size: 14px;
+  font-size: 18px !important;
 }
 
 .form-item {
-  margin: 10px 0;
-  padding: 5px 10px;
+  margin: 15px 0;
+  padding: 0 10px;
   background-color: #282f38;
   border-radius: 5px;
 }
 
 .form-item label {
   display: inline-flex;
+  font-size: 16px;
+  line-height: 15px;
 }
 .form-item input {
   border: none;
@@ -259,11 +282,15 @@ hr {
   display: inline-block;
   width: 100%;
 }
+
+.form-item input,select {
+  font: 15px system-ui;
+}
+
 .form-item-label {
   text-align: right;
   vertical-align: middle;
   float: left;
-  font-size: 12px;
   line-height: 1;
   padding: 10px 12px 10px 0;
   box-sizing: border-box;
@@ -271,5 +298,4 @@ hr {
 .form-item-content {
   position: relative;
   line-height: 32px;
-  font-size: 12px;
 }

@@ -11,24 +11,22 @@
   height: 150px;
 }
 .balance {
-  display: flex;
-  position: absolute;
-  right: 0px;
-  margin: 30px 50px;
+  text-align: center;
+  margin-top: 15px;
 }
 .balance .token-icon {
-  height: 30px;
-  width: 30px;
-  line-height: 35px;
+  height: 38px;
+  width: 38px;
+  margin-right: 5px;
 }
-.balance h1 {
-  font-size: 38px;
-  line-height: 32px;
-  margin-left: 10px;
+.balance .token-amount {
+  display: inline-block;
+  font-size: 45px;
+  line-height: 45px;
 }
-.balance span {
-  line-height: 42px;
-  margin-left: 3px;
+.balance .token-amount .asset {
+  font-size: 18px;
+  margin-left: 2px;
 }
 .mask {
   z-index: 3 !important;
@@ -54,9 +52,10 @@
 
 .btn-inline {
   display: flex;
+  padding: 0;
 }
 .btn-inline .btn {
-  margin: 0 10px;
+  margin: 10px 15px;
 }
 </style>
 
@@ -67,15 +66,13 @@
       leave-active-class="animated fadeOutLeft faster">
       <div v-show="show" class="warp bg-gray">
         <section class="header bg-green">
-            <i class="iconfont icon-back" @click="show=false; confirmClose()"></i>
-            <div class="balance">
-              <img src="../../../assets/logo.png" class="token-icon">
-              <div style="display: flex">
-                <h1>{{balance}}</h1>
-                <span> BTM</span>
-              </div>
-            </div>
+          <i class="iconfont icon-back" @click="show=false; confirmClose()"></i>
+          <div class="balance">
+            <img src="../../../assets/logo.png" class="token-icon">
+            <div class="token-amount">{{balance}}<span class="asset">BTM</span></div>
+          </div>
         </section>
+        
         <section v-show="maskShow" class="mask"></section>
         <section class="form">
           <div class="form-item-group">
@@ -94,15 +91,15 @@
           </div>
           <div class="form-item">
             <label class="form-item-label">地址</label>
-            <div class="form-item-content" style="margin-left: 60px;">
+            <div class="form-item-content" style="margin-left: 80px;">
               <input type="text" v-model="transaction.to">
             </div>
           </div>
           <div class="form-item">
             <label class="form-item-label">数量</label>
-            <div class="form-item-content" style="margin-left: 60px; display: flex;">
+            <div class="form-item-content" style="margin-left: 80px; display: flex;">
               <input type="text" v-model="transaction.amount">
-              <span style="width: 30px;">{{unit}}</span>
+              <span style="width: 40px; font-size: 15px;">{{unit}}</span>
             </div>
           </div>
           <!-- <div class="form-item">
@@ -112,20 +109,14 @@
           </div> -->
           <div class="form-item">
             <label class="form-item-label">矿工费用</label>
-            <div class="form-item-content" style="margin-left: 60px;">
+            <div class="form-item-content" style="margin-left: 80px;">
               <select v-model="transaction.fee">
                 <option value="">标准</option>
               </select>
             </div>
           </div>
           <br>
-          <div class="form-item">
-            <label class="form-item-label">交易密码</label>
-            <div class="form-item-content" style="margin-left: 60px;">
-              <input type="password" v-model="transaction.passwd">
-            </div>
-          </div>
-          <div class="btn-group">
+          <div style="width: 200px; margin: 0 auto;">
             <div class="btn bg-green" @click="confirmOpen">发送交易</div>
           </div>
         </section>
@@ -138,8 +129,8 @@
         <div v-show="confirmShow" class="confirm form bg-gray">
             <div class="form-item">
               <label class="form-item-label">密码确认</label>
-              <div class="form-item-content" style="margin-left: 60px;">
-                <input type="password" v-model="confirmPasssword" autofocus>
+              <div class="form-item-content" style="margin-left: 85px;">
+                <input type="password" v-model="transaction.passwd" autofocus>
               </div>
             </div>
             <div class="btn-group btn-inline">
@@ -165,7 +156,6 @@ export default {
       balance: 0,
       accounts: [],
       unit: "单位",
-      confirmPasssword: "",
       assets: {
         ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff: "BTM"
       },
@@ -203,10 +193,10 @@ export default {
       this.maskShow = false;
     },
     confirmTransfer: function() {
-      if (this.confirmPasssword != this.transaction.passwd) {
+      if (this.transaction.passwd != "") {
         this.$dialog.show({
           header: "提示",
-          body: "密码不一致",
+          body: "密码不能为空"
         });
         return;
       }
@@ -227,22 +217,20 @@ export default {
       )
         .then(ret => {
           console.log(ret);
-          
+
           loader.hide();
           this.close();
           this.confirmClose();
           this.$emit("on-success");
-          this.confirmPasssword = "";
           this.transaction.passwd = "";
         })
         .catch(error => {
           loader.hide();
           this.confirmClose();
           this.transaction.passwd = "";
-          this.confirmPasssword = "";
           this.$dialog.show({
             header: "提示",
-            body: error.message,
+            body: error.message
           });
         });
     }

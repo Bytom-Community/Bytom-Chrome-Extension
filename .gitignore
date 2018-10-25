@@ -4,6 +4,7 @@ dist/
 npm-debug.log
 yarn-error.log
 key.pem
+*.crx
 
 # Editor directories and files
 .idea
