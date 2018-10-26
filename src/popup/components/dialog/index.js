@@ -3,9 +3,11 @@ import dialog from "./component"
 
 let instance;
 const dialogInstance = {
+  i18n: null,
   install: function (Vue, options) {
     Vue.component('v-dialog', dialog);
     Vue.prototype.$dialog = dialogInstance;
+    this.i18n = options;
   },
   close: function() {
     if(instance) {
@@ -15,7 +17,7 @@ const dialogInstance = {
   },
   show: function(op) {
     let data = {
-      header: "提示",
+      header: this.i18n.t("dialog.header"),
       body: "",
     };
     if (op.header) {

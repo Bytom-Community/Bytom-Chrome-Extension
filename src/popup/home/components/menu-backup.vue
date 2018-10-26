@@ -3,9 +3,9 @@
 </style>
 
 <template>
-    <MenuPage title="备份" @back="back">
+    <MenuPage :title="$t('backup.title')" @back="back">
       <div style="text-align: center">
-        <div style="width: 200px;" class="btn bg-green" @click="backup">备份</div>
+        <div style="width: 200px;" class="btn bg-green" @click="backup">{{ $t('backup.button') }}</div>
       </div>
     </MenuPage>
 </template>

@@ -12,7 +12,6 @@ import "vuescroll/dist/vuescroll.css";
 import "vue-loading-overlay/dist/vue-loading.css";
 
 Vue.use(vuescroll);
-Vue.use(Dialog);
 Vue.use(MenuPage);
 Vue.use(Loading);
 Vue.use(VueI18n);
@@ -37,7 +36,7 @@ const i18n = new VueI18n({
   locale: lang,
   messages
 });
-
+Vue.use(Dialog, i18n);
 new Vue({
   el: "#app",
   i18n: i18n,

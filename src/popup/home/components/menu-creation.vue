@@ -9,35 +9,35 @@
 </style>
 
 <template>
-    <MenuPage title="创建账户" @back="back">
+    <MenuPage :title="$t('createAccount.title')" @back="back">
       <div class="form">
           <div class="form-item">
-            <label class="form-item-label">账户别名</label>
+            <label class="form-item-label">{{ $t('createAccount.accountAlias') }}</label>
             <div class="form-item-content" style="margin-left: 76px;">
               <input type="text" v-model="formItem.accAlias">
             </div>
           </div>
           <div class="form-item">
-            <label class="form-item-label">密钥别名</label>
+            <label class="form-item-label">{{ $t('createAccount.keyAlias') }}</label>
             <div class="form-item-content" style="margin-left: 76px;">
               <input type="text" v-model="formItem.keyAlias">
             </div>
           </div>
           <div class="form-item">
-            <label class="form-item-label">密钥密码</label>
+            <label class="form-item-label">{{ $t('createAccount.keyPassword') }}</label>
             <div class="form-item-content" style="margin-left: 76px;">
               <input type="password" v-model="formItem.passwd1">
             </div>
           </div>
           <div class="form-item">
-            <label class="form-item-label">重复密码</label>
+            <label class="form-item-label">{{ $t('createAccount.confirmPassword') }}</label>
             <div class="form-item-content" style="margin-left: 76px;">
               <input type="password" v-model="formItem.passwd2">
             </div>
           </div>
           <div class="tips">{{tips}}</div>
           <div class="form-item bg-gray" style="text-align: center">
-            <div class="btn bg-green" @click="create">创建账户</div>
+            <div class="btn bg-green" @click="create">{{ $t('createAccount.create') }}</div>
           </div>
         </div>
     </MenuPage>
@@ -93,7 +93,6 @@ export default {
           console.log(err);
           loader.hide();
           this.$dialog.show({
-            header: "提示",
             body: err.message
           });
           // this.tips = err.message;

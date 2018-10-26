@@ -28,10 +28,10 @@
 <template>
     <div>
         <section class="welcome-top">
-            <p>欢迎使用BYTOM精简Chrome钱包</p>
+            <p>{{ $t('welcome.title') }}</p>
         </section>
         <section class="welcome-bottom bg-green">
-            <div class="btn btn-primary btn-startup" @click="start">开始使用</div>
+            <div class="btn btn-primary btn-startup" @click="start">{{ $t('welcome.use') }}</div>
         </section>
     </div>
 </template>

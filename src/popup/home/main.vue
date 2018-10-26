@@ -122,8 +122,8 @@
           <div class="topbar-right">
             <i class="lamp"></i>
             <select v-model="network" @change="netToggle">
-              <option value="mainnet">BYTOM主网络</option>
-              <option value="testnet">BYTOM测试网络</option>
+              <option value="mainnet">{{ $t('main.mainNet') }}</option>
+              <option value="testnet">{{ $t('main.testNet') }}</option>
             </select>
           </div>
           <div class="topbar-left">
@@ -140,12 +140,12 @@
                 <i class="iconfont qrcode" @click="showQrcode">&#xe7dd;</i>
               </p>
           </div>
-          <a v-if="accountInfo.address!=undefined" class="btn btn-primary btn-transfer" @click="transferOpen">转账</a>
+          <a v-if="accountInfo.address!=undefined" class="btn btn-primary btn-transfer" @click="transferOpen">{{ $t('main.transfer') }}</a>
       </div>
     </section>
 
     <section v-if="accountInfo.address!=undefined" class="transactions">
-      <h3 class="bg-gray">交易记录</h3>
+      <h3 class="bg-gray">{{ $t('main.record') }}</h3>
       <vue-scroll>
         <ul class="list">
             <li class="list-item" v-for="(transcation, index) in transcations" :key="index" @click="$refs.trxInfo.open(transcation, accountInfo.address)">
@@ -159,8 +159,8 @@
       </vue-scroll>
     </section>
     <section v-else>
-      <p style="width: 250px; margin: 30px auto; text-align: center;">在此网络中尚无您的账户信息</p>
-      <a class="btn btn-primary btn-creation bg-green" @click="$refs.menu.open('creation')">创建账户</a>
+      <p style="width: 250px; margin: 30px auto; text-align: center;">{{ $t('main.noAccount') }}</p>
+      <a class="btn btn-primary btn-creation bg-green" @click="$refs.menu.open('creation')">{{ $t('main.create') }}</a>
     </section>
 
     <!-- modal -->
@@ -190,7 +190,7 @@ export default {
     return {
       network: "testnet",
       clipboard: new ClipboardJS(".address-text"),
-      addressTitle: "点击复制地址",
+      addressTitle: this.$t("main.copy"),
       menuOpen: false,
       maskOpen: false,
       accountInfo: {},

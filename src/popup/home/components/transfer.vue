@@ -90,13 +90,13 @@
             </div>
           </div>
           <div class="form-item">
-            <label class="form-item-label">地址</label>
+            <label class="form-item-label">{{ $t('transfer.address') }}</label>
             <div class="form-item-content" style="margin-left: 80px;">
               <input type="text" v-model="transaction.to">
             </div>
           </div>
           <div class="form-item">
-            <label class="form-item-label">数量</label>
+            <label class="form-item-label">{{ $t('transfer.quantity') }}</label>
             <div class="form-item-content" style="margin-left: 80px; display: flex;">
               <input type="text" v-model="transaction.amount">
               <span style="width: 40px; font-size: 15px;">{{unit}}</span>
@@ -108,16 +108,16 @@
             <span>CNY</span>
           </div> -->
           <div class="form-item">
-            <label class="form-item-label">矿工费用</label>
+            <label class="form-item-label">{{ $t('transfer.fee') }}</label>
             <div class="form-item-content" style="margin-left: 80px;">
               <select v-model="transaction.fee">
-                <option value="">标准</option>
+                <option value="">{{ $t('transfer.feeType') }}</option>
               </select>
             </div>
           </div>
           <br>
           <div style="width: 200px; margin: 0 auto;">
-            <div class="btn bg-green" @click="confirmOpen">发送交易</div>
+            <div class="btn bg-green" @click="confirmOpen">{{ $t('transfer.send') }}</div>
           </div>
         </section>
       </div>
@@ -128,14 +128,14 @@
         leave-active-class="animated slideOutDown faster"> -->
         <div v-show="confirmShow" class="confirm form bg-gray">
             <div class="form-item">
-              <label class="form-item-label">密码确认</label>
+              <label class="form-item-label">{{ $t('transfer.confirmPassword') }}</label>
               <div class="form-item-content" style="margin-left: 85px;">
                 <input type="password" v-model="transaction.passwd" autofocus>
               </div>
             </div>
             <div class="btn-group btn-inline">
-              <div class="btn bg-green" @click="confirmTransfer">确认发送</div>
-              <div class="btn bg-red" @click="confirmClose">取消发送</div>
+              <div class="btn bg-green" @click="confirmTransfer">{{ $t('transfer.confirm') }}</div>
+              <div class="btn bg-red" @click="confirmClose">{{ $t('transfer.cancel') }}</div>
             </div>
         </div>
     </transition>
@@ -155,7 +155,7 @@ export default {
       confirmShow: false,
       balance: 0,
       accounts: [],
-      unit: "单位",
+      unit: this.$t("transfer.unit"),
       assets: {
         ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff: "BTM"
       },
@@ -185,6 +185,19 @@ export default {
       this.show = false;
     },
     confirmOpen: function() {
+      if (this.transaction.to == "") {
+        this.$dialog.show({
+          body: this.$t("transfer.emptyTo"),
+        });
+        return;
+      }
+      let num = parseInt(this.transaction.amount);
+      if (isNaN(num) || num<=0) {
+        this.$dialog.show({
+          body: this.$t("transfer.noneBTM"),
+        });
+        return;
+      }
       this.maskShow = true;
       this.confirmShow = true;
     },
@@ -193,10 +206,9 @@ export default {
       this.maskShow = false;
     },
     confirmTransfer: function() {
-      if (this.transaction.passwd != "") {
+      if (this.transaction.passwd == "") {
         this.$dialog.show({
-          header: "提示",
-          body: "密码不能为空"
+          body: this.$t("transfer.emptyPassword"),
         });
         return;
       }
@@ -229,7 +241,6 @@ export default {
           this.confirmClose();
           this.transaction.passwd = "";
           this.$dialog.show({
-            header: "提示",
             body: error.message
           });
         });

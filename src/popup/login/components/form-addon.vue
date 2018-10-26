@@ -8,44 +8,44 @@
             <img src="../../../assets/logo.png">
         </section>
         <section class="login-content">
-            <div class="title">创建账户</div>
+            <div class="title">{{ $t('createAccount.title') }}</div>
             <div class="form">
                 <div class="form-item">
-                    <label class="form-item-label">选择网络</label>
+                    <label class="form-item-label">{{ $t('createAccount.select') }}</label>
                     <div class="form-item-content" style="margin-left: 75px;">
                         <select name="net" v-model="selected" @change="onChange()">
-                            <option value="mainnet">BYTOM主网络</option>
-                            <option value="testnet">BYTOM测试网络</option>
+                            <option value="mainnet">{{ $t('main.mainNet') }}</option>
+                            <option value="testnet">{{ $t('main.testNet') }}</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-item">
-                    <label class="form-item-label">账户别名</label>
+                    <label class="form-item-label">{{ $t('createAccount.accountAlias') }}</label>
                     <div class="form-item-content" style="margin-left: 76px;">
                         <input type="text" v-model="formItem.accAlias" autofocus>
                     </div>
                 </div>
                 <div class="form-item">
-                    <label class="form-item-label">密钥别名</label>
+                    <label class="form-item-label">{{ $t('createAccount.keyAlias') }}</label>
                     <div class="form-item-content" style="margin-left: 76px;">
                         <input type="text" v-model="formItem.keyAlias">
                     </div>
                 </div>
                 <div class="form-item">
-                    <label class="form-item-label">密钥密码</label>
+                    <label class="form-item-label">{{ $t('createAccount.keyPassword') }}</label>
                     <div class="form-item-content" style="margin-left: 76px;">
                         <input type="password" v-model="formItem.passwd1">
                     </div>
                 </div>
                 <div class="form-item">
-                    <label class="form-item-label">重复密码</label>
+                    <label class="form-item-label">{{ $t('createAccount.confirmPassword') }}</label>
                     <div class="form-item-content" style="margin-left: 76px;">
                         <input type="password" v-model="formItem.passwd2">
                     </div>
                 </div>
                 <div class="btn-group">
-                    <div class="btn bg-green" @click="create">创建账户</div>
-                    <div class="btn bg-green" @click="recover">从种子导入</div>
+                    <div class="btn bg-green" @click="create">{{ $t('createAccount.create') }}</div>
+                    <div class="btn bg-green" @click="recover">{{ $t('createAccount.import') }}</div>
                 </div>
             </div>
         </section>
@@ -65,7 +65,9 @@ export default {
   methods: {
     create: function() {
       if (this.formItem.passwd1 != this.formItem.passwd2) {
-        this.tips = "两次密码不一致，请检查后再试。";
+        this.$dialog.show({
+            body: this.$t('createAccount.passwordAgain'),
+        });
         return;
       }
       let loader = this.$loading.show({
@@ -87,7 +89,6 @@ export default {
         .catch(err => {
           loader.hide();
           this.$dialog.show({
-            header: "提示",
             body: err.message,
           });
         });

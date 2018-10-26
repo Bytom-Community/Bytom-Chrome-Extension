@@ -54,7 +54,7 @@
         enter-active-class="animated slideInLeft faster" 
         leave-active-class="animated slideOutLeft faster">
       <div v-show="show" class="mc-wrap">
-        <MenuPage title="账号切换" @back="close">
+        <MenuPage :title="$t('menu.title')" @back="close">
           <div class="list accounts">
             <div v-for="(account, index) in accounts" :key="index" @click="accountSelected(account)">
               <div :class="(currentAccount != undefined && account.address == currentAccount.address) ? 'list-item active': 'list-item'">
@@ -68,16 +68,16 @@
           </div>
           <div class="list menu">
             <div class="list-item" @click="currView='creation'">
-              <i class="iconfont icon-plusbox"></i>创建账户
+              <i class="iconfont icon-plusbox"></i>{{ $t('menu.createAccount') }}
             </div>
             <div class="list-item" @click="currView='backup'">
-              <i class="iconfont icon-backup"></i>备份
+              <i class="iconfont icon-backup"></i>{{ $t('menu.backup') }}
             </div>
             <div class="list-item" @click="currView='help'">
-              <i class="iconfont icon-help"></i>帮助
+              <i class="iconfont icon-help"></i>{{ $t('menu.help') }}
             </div>
             <div class="list-item" @click="currView='settings'">
-              <i class="iconfont icon-settings"></i>设置
+              <i class="iconfont icon-settings"></i>{{ $t('menu.setting') }}
             </div>
           </div>
         </MenuPage>

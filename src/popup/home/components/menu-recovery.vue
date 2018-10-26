@@ -50,7 +50,6 @@ export default {
         })
         .catch(error => {
           this.$dialog.show({
-            header: "提示",
             body: error.message,
           });
         });
