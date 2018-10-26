@@ -30,21 +30,28 @@
 }
 
 .title {
+  font-size: 18px;
+  font-weight: inherit;
+  color: #cacaca;
   text-align: center;
-  font-size: 16px;
   padding: 5px 0;
 }
 .transaction {
   padding: 0 40px;
-  font-size: 14px;
+  font-size: 15px;
   word-break: break-all;
-  /* overflow-y: scroll; */
   height: 415px;
+  margin-top: 20px;
 }
 .transaction .time {
   margin: 10px 0;
+  font-size: 15px;
+}
+.transaction .label {
+  font-size: 12px;
 }
 .transaction .info {
+  font-size: 18px;
   display: inline-flex;
 }
 .transaction .info section {
@@ -83,31 +90,31 @@
               <p class="time">{{transaction.timestamp | moment}}</p>
               <div class="info">
                 <section>
-                  <p>矿工费用</p>
-                  <p>0.2BTM</p>
+                  <p class="label">矿工费用</p>
+                  <p>0.02BTM</p>
                 </section>
                 <section>
-                  <p>区块高度</p>
+                  <p class="label">区块高度</p>
                   <p>{{transaction.block_height}}</p>
                 </section>
                 <section>
-                  <p>交易大小</p>
+                  <p class="label">交易大小</p>
                   <p>{{transaction.size}}</p>
                 </section>
               </div>
               <div class="txid">
-                <p>交易ID</p>
+                <p class="label">交易ID</p>
                 <p>{{transaction.hash}}</p>
               </div>
               <div class="inputs">
                 <section :key="index" v-for="(input, index) in transaction.inputs">
-                  <p>发款地址{{transaction.inputs.length > 1 ? index+1 : ''}}</p>
+                  <p class="label">发款地址{{transaction.inputs.length > 1 ? index+1 : ''}}</p>
                   <p>{{input.address}}<span v-if="input.address == selfAddress">（自己的地址）</span></p>
                 </section>
               </div>
               <div class="outputs">
                 <section :key="index" v-for="(output, index) in transaction.outputs">
-                  <p>收款地址{{transaction.outputs.length > 1 ? index+1 : ''}}</p>
+                  <p class="label">收款地址{{transaction.outputs.length > 1 ? index+1 : ''}}</p>
                   <p>{{output.address}}<span v-if="output.address == selfAddress">（自己的地址）</span></p>
                 </section>
               </div>

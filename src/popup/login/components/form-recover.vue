@@ -11,7 +11,7 @@
             <div class="form">
                 <div class="form-item">
                     <label class="form-item-label">备份文件</label>
-                    <div class="form-item-content" style="margin-left: 75px;">
+                    <div class="form-item-content" style="margin-left: 76px;">
                       <input type="file" @change="tirggerFile($event)">
                     </div>
                 </div>

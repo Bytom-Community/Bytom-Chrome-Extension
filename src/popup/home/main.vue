@@ -79,15 +79,11 @@
 }
 .btn-transfer {
   width: 200px;
-  /* font-size: 20px; */
-  /* line-height: 22px; */
-  /* height: 40px; */
 }
 
 .transactions {
   font-size: 15px;
-  /* line-height: 40px; */
-  /* display: contents; */
+  height: 275px;
 }
 .transactions h3 {
   font-size: 18px;
@@ -97,7 +93,7 @@
   padding: 5px 0;
 }
 .transactions .list {
-  padding: 0 10px;
+  padding: 0 20px;
 }
 .list-item {
   display: block;
@@ -150,19 +146,17 @@
 
     <section v-if="accountInfo.address!=undefined" class="transactions">
       <h3 class="bg-gray">交易记录</h3>
-      <div style="height: 290px;">
-        <vue-scroll>
-          <ul class="list">
-              <li class="list-item" v-for="(transcation, index) in transcations" :key="index" @click="$refs.trxInfo.open(transcation, accountInfo.address)">
-                <div class="value">{{transcation.direct}} {{transcation.val}} BTM</div>
-                <div>
-                  <div class="time">{{transcation.timestamp | moment}}</div>
-                  <div class="addr">{{transcation.address}}</div>
-                </div>
-              </li>
-          </ul>
-        </vue-scroll>
-      </div>
+      <vue-scroll>
+        <ul class="list">
+            <li class="list-item" v-for="(transcation, index) in transcations" :key="index" @click="$refs.trxInfo.open(transcation, accountInfo.address)">
+              <div class="value">{{transcation.direct}} {{transcation.val}} BTM</div>
+              <div>
+                <div class="time">{{transcation.timestamp | moment}}</div>
+                <div class="addr">{{transcation.address}}</div>
+              </div>
+            </li>
+        </ul>
+      </vue-scroll>
     </section>
     <section v-else>
       <p style="width: 250px; margin: 30px auto; text-align: center;">在此网络中尚无您的账户信息</p>
@@ -298,13 +292,13 @@ export default {
     this.clipboard.on("success", e => {
       this.$dialog.show({
         header: this.$t("dialog.header"),
-        body: this.$t("dialog.copy.success"),
+        body: this.$t("dialog.copy.success")
       });
     });
     this.clipboard.on("error", e => {
       this.$dialog.show({
         header: this.$t("dialog.header"),
-        body: this.$t("dialog.copy.fail"),
+        body: this.$t("dialog.copy.fail")
       });
     });
   },
