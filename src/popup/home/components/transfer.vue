@@ -144,6 +144,7 @@
 
 <script>
 import bytom from "../../script/bytom";
+import getLang from "../../../assets/language/sdk"
 export default {
   name: "",
   data() {
@@ -241,7 +242,7 @@ export default {
           this.confirmClose();
           this.transaction.passwd = "";
           this.$dialog.show({
-            body: error.message
+            body: getLang(error.message)
           });
         });
     }
