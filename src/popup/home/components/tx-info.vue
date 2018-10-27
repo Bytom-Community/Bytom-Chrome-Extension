@@ -37,7 +37,8 @@
   padding: 5px 0;
 }
 .transaction {
-  padding: 0 40px;
+  width: 293px;
+  padding: 0 30px;
   font-size: 15px;
   word-break: break-all;
   height: 415px;
@@ -83,39 +84,39 @@
             </div>
         </section>
 
-        <h3 class="title bg-gray">交易详情</h3>
+        <h3 class="title bg-gray">{{ $t('transactionDetail.title') }}</h3>
         <section>
           <vue-scroll>
             <div class="transaction">
               <p class="time">{{transaction.timestamp | moment}}</p>
               <div class="info">
                 <section>
-                  <p class="label">矿工费用</p>
+                  <p class="label">{{ $t('transactionDetail.fee') }}</p>
                   <p>0.02BTM</p>
                 </section>
                 <section>
-                  <p class="label">区块高度</p>
+                  <p class="label">{{ $t('transactionDetail.blockHeight') }}</p>
                   <p>{{transaction.block_height}}</p>
                 </section>
                 <section>
-                  <p class="label">交易大小</p>
+                  <p class="label">{{ $t('transactionDetail.blockSize') }}</p>
                   <p>{{transaction.size}}</p>
                 </section>
               </div>
               <div class="txid">
-                <p class="label">交易ID</p>
+                <p class="label">{{ $t('transactionDetail.transactionID') }}</p>
                 <p>{{transaction.hash}}</p>
               </div>
               <div class="inputs">
                 <section :key="index" v-for="(input, index) in transaction.inputs">
-                  <p class="label">发款地址{{transaction.inputs.length > 1 ? index+1 : ''}}</p>
-                  <p>{{input.address}}<span v-if="input.address == selfAddress">（自己的地址）</span></p>
+                  <p class="label">{{ $t('transactionDetail.sendAddress') }}{{transaction.inputs.length > 1 ? index+1 : ''}}</p>
+                  <p>{{input.address}}<span v-if="input.address == selfAddress"> {{ $t('transactionDetail.myAddress') }}</span></p>
                 </section>
               </div>
               <div class="outputs">
                 <section :key="index" v-for="(output, index) in transaction.outputs">
-                  <p class="label">收款地址{{transaction.outputs.length > 1 ? index+1 : ''}}</p>
-                  <p>{{output.address}}<span v-if="output.address == selfAddress">（自己的地址）</span></p>
+                  <p class="label">{{ $t('transactionDetail.receiveAddress') }}{{transaction.outputs.length > 1 ? index+1 : ''}}</p>
+                  <p>{{output.address}}<span v-if="output.address == selfAddress"> {{ $t('transactionDetail.myAddress') }}</span></p>
                 </section>
               </div>
             </div>

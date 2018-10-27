@@ -35,6 +35,16 @@ const cn = {
     noAccount: "当前网络无账户信息",
     create: "创建账户",
   },
+  transactionDetail: {
+    title: "交易详情",
+    fee: "矿工费用",
+    blockHeight: "区块高度",
+    blockSize: "区块大小",
+    transactionID: "交易ID",
+    sendAddress: "发送地址",
+    receiveAddress: "接收地址",
+    myAddress: "（我的地址）",
+  },
   menu: {
     title: "切换账户",
     createAccount: "创建账户",

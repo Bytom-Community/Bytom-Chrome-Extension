@@ -35,6 +35,16 @@ const en = {
     noAccount: "No account information on this network.",
     create: "Create Account",
   },
+  transactionDetail: {
+    title: "Transaction Detail",
+    fee: "Fee",
+    blockHeight: "Block Height",
+    blockSize: "Block Size",
+    transactionID: "Transaction ID",
+    sendAddress: "Send Address",
+    receiveAddress: "Receive Address",
+    myAddress: "(My Address)",
+  },
   menu: {
     title: "Switch Account",
     createAccount: "Create Account",

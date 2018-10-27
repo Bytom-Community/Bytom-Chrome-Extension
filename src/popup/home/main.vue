@@ -259,7 +259,6 @@ export default {
           transaction.address = this.shortAddress(outputAddresses.pop());
         }
         transaction.val = Number(val / 100000000).toFixed(8);
-        // console.log(111, transaction, val);
       });
     },
     refreshTransactions: function() {
