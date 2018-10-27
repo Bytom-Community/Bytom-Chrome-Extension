@@ -12,7 +12,7 @@
     <MenuPage :title="$t('setting.title')" @back="back">
         <div class="row">
             <p>{{ $t("setting.version") }}</p>
-            <p class="value">1.0.1-2c74b9a</p>
+            <p class="value">[AIV]{version}[/AIV]-{{hashVersion}}</p>
         </div>
         <div class="row">
             <p>{{ $t("setting.lang") }}</p>
@@ -35,7 +35,8 @@ export default {
   name: "",
   data() {
     return {
-      selected: "cn"
+      selected: "cn",
+      hashVersion: ""
     };
   },
   methods: {
@@ -51,6 +52,7 @@ export default {
     }
   },
   mounted: function() {
+    this.hashVersion = version.hash;
     if (localStorage.lang) {
       this.selected = localStorage.lang;
     }
