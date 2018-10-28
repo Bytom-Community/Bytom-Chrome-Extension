@@ -16,8 +16,8 @@ Vue.use(MenuPage);
 Vue.use(Loading);
 Vue.use(VueI18n);
 Vue.prototype.$vuescrollConfig = {
+  mode: "pure-native",
   bar: {
-    mode: "pure-native",
     keepShow: true,
     background: "#c9c9c9"
   }

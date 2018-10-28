@@ -11,6 +11,7 @@ console.log("gitHash:", gitHash);
 module.exports = {
   entry: {
     popup: resolve("src/popup"),
+    prompt: resolve("src/prompt"),
     options: resolve("src/options"),
     content: resolve("src/content"),
     background: resolve("src/background"),
@@ -102,6 +103,11 @@ module.exports = {
       title: "options title",
       name: "options",
       chunks: ["options"]
+    }),
+    page({
+      title: "prompt title",
+      name: "prompt",
+      chunks: ["prompt"]
     }),
     new CopyWebpackPlugin([
       {

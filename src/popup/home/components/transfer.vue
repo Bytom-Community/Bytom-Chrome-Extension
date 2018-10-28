@@ -85,7 +85,7 @@
           <div class="form-item">
             <label class="form-item-label">{{ $t('transfer.quantity') }}</label>
             <div class="form-item-content" style="margin-left: 80px; display: flex;">
-              <input type="text" v-model="transaction.amount">
+              <input type="number" v-model="transaction.amount" placeholder="0">
               <span style="width: 40px; font-size: 15px;">{{unit}}</span>
             </div>
           </div>
@@ -116,7 +116,7 @@
 
 <script>
 import bytom from "../../script/bytom";
-import getLang from "../../../assets/language/sdk"
+import getLang from "../../../assets/language/sdk";
 import TransferConfirm from "./transfer-confirm";
 export default {
   components: {
@@ -139,7 +139,7 @@ export default {
       transaction: {
         to: "",
         asset: ASSET_BTM,
-        amount: 0,
+        amount: "",
         fee: ""
       }
     };
@@ -169,7 +169,7 @@ export default {
     close: function() {
       this.show = false;
       this.transaction.to = "";
-      this.transaction.amount = 0;
+      this.transaction.amount = "";
     },
     send: function() {
       if (this.transaction.to == "") {

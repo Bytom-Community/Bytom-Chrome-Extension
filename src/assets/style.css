@@ -318,6 +318,11 @@ hr {
   display: inline-block;
   width: 100%;
 }
+.form-item input::-webkit-outer-spin-button,
+.form-item input::-webkit-inner-spin-button {
+    -webkit-appearance: none !important;
+    margin: 0;
+}
 
 .form-item input,
 select {

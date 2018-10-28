@@ -4,8 +4,8 @@ function transaction(bytom) {
   this.bytom = bytom;
 }
 
-transaction.prototype.list = function(guid, address) {
-  return this.bytom.transaction.list(guid, address);
+transaction.prototype.list = function(guid, address, start, limit) {
+  return this.bytom.transaction.list(guid, address, start, limit);
 };
 
 transaction.prototype.build = function(guid, to, asset, amount, fee){

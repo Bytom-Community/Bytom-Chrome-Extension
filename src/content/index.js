@@ -1,1 +1,1 @@
-console.log('This is CONTENT page!')
+console.log("This is CONTENT page!");

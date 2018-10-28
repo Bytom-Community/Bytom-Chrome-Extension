@@ -146,7 +146,7 @@
 
     <section v-if="accountInfo.address!=undefined" class="transactions">
       <h3 class="bg-gray">{{ $t('main.record') }}</h3>
-      <vue-scroll>
+      <vue-scroll @handle-scroll="handleScroll">
         <ul class="list">
             <li class="list-item" v-for="(transcation, index) in transcations" :key="index" @click="$refs.trxInfo.open(transcation, accountInfo.address)">
               <div class="value">{{transcation.direct}} {{transcation.val}} BTM</div>
@@ -195,10 +195,23 @@ export default {
       menuOpen: false,
       maskOpen: false,
       accountInfo: {},
-      transcations: []
+      transcations: [],
+      start: 0,
+      limit: 10
     };
   },
   methods: {
+    handleScroll(vertical, horizontal, nativeEvent) {
+      if (vertical.process == 0) {
+        this.start = 0;
+        return;
+      }
+
+      if (vertical.process == 1) {
+        this.start += this.limit;
+        this.appendTransactions();
+      }
+    },
     netToggle: function(val) {
       bytom.System.setupNet(this.network);
       localStorage.bytomNet = this.network;
@@ -268,13 +281,35 @@ export default {
         .then(ret => {
           let transactions = ret.data.transactions;
           if (transactions == null) {
-            this.transcations = [];
             return;
           }
 
           this.transcationsFormat(transactions);
           console.log("formatTx", transactions);
           this.transcations = transactions;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    appendTransactions: function() {
+      bytom.Transaction.list(
+        this.accountInfo.guid,
+        this.accountInfo.address,
+        this.start,
+        this.limit
+      )
+        .then(ret => {
+          let transactions = ret.data.transactions;
+          if (transactions == null || ret._links.next == undefined) {
+            return;
+          }
+
+          this.transcationsFormat(transactions);
+          console.log("formatTx", transactions);
+          transactions.forEach(transaction => {
+            this.transcations.push(transaction);
+          });
         })
         .catch(error => {
           console.log(error);
