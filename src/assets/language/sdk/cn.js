@@ -8,6 +8,7 @@ const cn = {
     "duplicate account alias": "账户别名已存在",
     "The wallet already has account data. Can't restore.": "当前钱包存在数据，无法从备份覆盖恢复",
     "could not decrypt key with given passphrase": "无法解密私钥，请检查密码是否正确",
+    "unknown address type": "未知的地址类型"
 };
 
 export default cn;
