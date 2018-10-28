@@ -178,6 +178,7 @@ import Qrcode from "./components/qrcode";
 import Transfer from "./components/transfer";
 import TxInfo from "./components/tx-info";
 import bytom from "../script/bytom";
+import utils from "../script/utils";
 export default {
   name: "",
   components: {
@@ -204,18 +205,13 @@ export default {
 
       this.$refs.menu.updateAccounts();
     },
-    shortAddress(address) {
-      return (
-        address.substr(0, 7) + "..." + address.substr(address.length - 7, 7)
-      );
-    },
     accountClear: function() {
       this.accountInfo = {};
       this.transcations = [];
     },
     accountLoader: function(accountInfo) {
       this.accountInfo = accountInfo;
-      this.accountInfo.address_short = this.shortAddress(
+      this.accountInfo.address_short = utils.shortAddress(
         this.accountInfo.address
       );
       this.refreshTransactions();
@@ -249,14 +245,15 @@ export default {
           outputAddresses.push(output.address);
         });
 
+        console.log(transaction);
         let val = outoutSum - inputSum;
         if (val > 0) {
           transaction.direct = "+";
-          transaction.address = this.shortAddress(inputAddresses.pop());
+          transaction.address = utils.shortAddress(inputAddresses.pop());
         } else {
           val = inputSum - outoutSum;
           transaction.direct = "-";
-          transaction.address = this.shortAddress(outputAddresses.pop());
+          transaction.address = utils.shortAddress(outputAddresses.pop());
         }
         transaction.val = Number(val / 100000000).toFixed(8);
       });

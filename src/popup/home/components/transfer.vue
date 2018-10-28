@@ -28,10 +28,6 @@
   font-size: 18px;
   margin-left: 2px;
 }
-.mask {
-  z-index: 3 !important;
-  top: 150px !important;
-}
 .form {
   padding: 10px 20px;
 }
@@ -40,14 +36,6 @@
 }
 .form-item-group .form-item {
   width: 40%;
-}
-.confirm {
-  padding: 10px 20px;
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  z-index: 4;
 }
 
 .btn-inline {
@@ -66,19 +54,18 @@
       leave-active-class="animated fadeOutLeft faster">
       <div v-show="show" class="warp bg-gray">
         <section class="header bg-green">
-          <i class="iconfont icon-back" @click="show=false; confirmClose()"></i>
+          <i class="iconfont icon-back" @click="close"></i>
           <div class="balance">
             <img src="../../../assets/logo.png" class="token-icon">
-            <div class="token-amount">{{balance}}<span class="asset">BTM</span></div>
+            <div class="token-amount">{{account.balance}}<span class="asset">BTM</span></div>
           </div>
         </section>
         
-        <section v-show="maskShow" class="mask"></section>
         <section class="form">
           <div class="form-item-group">
             <div class="form-item">
               <!-- <label>账户</label> -->
-              <select v-model="transaction.guid">
+              <select v-model="guid">
                 <option :key="index" v-for="(account, index) in accounts" :value="account.guid">{{account.alias != null ? account.alias : '账户1'}}</option>
               </select>
             </div>
@@ -117,58 +104,58 @@
           </div>
           <br>
           <div style="width: 200px; margin: 0 auto;">
-            <div class="btn bg-green" @click="confirmOpen">{{ $t('transfer.send') }}</div>
+            <div class="btn bg-green" @click="send">{{ $t('transfer.send') }}</div>
           </div>
         </section>
       </div>
     </transition>
 
-    <transition name="page-transfer"
-        <!-- enter-active-class="animated slideInUp faster" 
-        leave-active-class="animated slideOutDown faster"> -->
-        <div v-show="confirmShow" class="confirm form bg-gray">
-            <div class="form-item">
-              <label class="form-item-label">{{ $t('transfer.confirmPassword') }}</label>
-              <div class="form-item-content" style="margin-left: 85px;">
-                <input type="password" v-model="transaction.passwd" autofocus>
-              </div>
-            </div>
-            <div class="btn-group btn-inline">
-              <div class="btn bg-green" @click="confirmTransfer">{{ $t('transfer.confirm') }}</div>
-              <div class="btn bg-red" @click="confirmClose">{{ $t('transfer.cancel') }}</div>
-            </div>
-        </div>
-    </transition>
+    <TransferConfirm ref="transferConfirm" @on-success="close"></TransferConfirm>
   </div>
 </template>
 
 <script>
 import bytom from "../../script/bytom";
+<<<<<<< Updated upstream
 import getLang from "../../../assets/language/sdk"
+=======
+import TransferConfirm from "./transfer-confirm";
+>>>>>>> Stashed changes
 export default {
-  name: "",
+  components: {
+    TransferConfirm
+  },
   data() {
     const ASSET_BTM =
       "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
     return {
       show: false,
-      maskShow: false,
-      confirmShow: false,
-      balance: 0,
       accounts: [],
-      unit: this.$t("transfer.unit"),
+      unit: "",
       assets: {
         ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff: "BTM"
       },
+      guid: "",
+      account: {
+        guid: ""
+      },
       transaction: {
-        guid: "",
         to: "",
         asset: ASSET_BTM,
         amount: 0,
-        fee: "",
-        passwd: ""
+        fee: ""
       }
     };
+  },
+  watch: {
+    guid: function(newGuid) {
+      this.accounts.forEach(account => {
+        if (account.guid == newGuid) {
+          this.account = account;
+          return;
+        }
+      });
+    }
   },
   methods: {
     open: function(accountInfo) {
@@ -178,69 +165,55 @@ export default {
         this.accounts = accounts;
       });
 
-      this.balance = accountInfo.balance;
-      this.transaction.guid = accountInfo.guid;
+      this.account = accountInfo;
+      this.guid = accountInfo.guid;
       this.unit = this.assets[this.transaction.asset];
     },
     close: function() {
       this.show = false;
+      this.transaction.to = "";
+      this.transaction.amount = 0;
     },
-    confirmOpen: function() {
+    send: function() {
       if (this.transaction.to == "") {
         this.$dialog.show({
-          body: this.$t("transfer.emptyTo"),
+          body: this.$t("transfer.emptyTo")
         });
         return;
       }
       let num = parseInt(this.transaction.amount);
-      if (isNaN(num) || num<=0) {
+      if (isNaN(num) || num <= 0) {
         this.$dialog.show({
-          body: this.$t("transfer.noneBTM"),
+          body: this.$t("transfer.noneBTM")
         });
         return;
       }
-      this.maskShow = true;
-      this.confirmShow = true;
-    },
-    confirmClose: function() {
-      this.confirmShow = false;
-      this.maskShow = false;
-    },
-    confirmTransfer: function() {
-      if (this.transaction.passwd == "") {
-        this.$dialog.show({
-          body: this.$t("transfer.emptyPassword"),
-        });
-        return;
-      }
+
       let loader = this.$loading.show({
         // Optional parameters
         container: null,
         canCancel: true,
         onCancel: this.onCancel
       });
-      // guid, to, asset, amount, fee, password
-      bytom.Transaction.transfer(
-        this.transaction.guid,
+      bytom.Transaction.build(
+        this.account.guid,
         this.transaction.to,
         this.transaction.asset,
         this.transaction.amount,
-        this.transaction.fee,
-        this.transaction.passwd
+        this.transaction.fee
       )
         .then(ret => {
           console.log(ret);
-
           loader.hide();
-          this.close();
-          this.confirmClose();
-          this.$emit("on-success");
-          this.transaction.passwd = "";
+
+          this.$refs.transferConfirm.open(
+            this.account,
+            this.transaction,
+            ret.data
+          );
         })
         .catch(error => {
           loader.hide();
-          this.confirmClose();
-          this.transaction.passwd = "";
           this.$dialog.show({
             body: getLang(error.message)
           });
