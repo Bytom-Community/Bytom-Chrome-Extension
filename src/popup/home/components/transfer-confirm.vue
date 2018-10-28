@@ -91,7 +91,7 @@
               <div class="col value">{{transaction.fee}}<span class="uint">BTM</span></div>
             </div>
 
-            <div class="divider" style="margin-top: 30px; margin-bottom: 10px;"></div>
+            <div class="divider" style="margin-top: 130px; margin-bottom: 10px;"></div>
             <div class="row" style="text-align: right;">
               <div class="col label" style="line-height: 50px;">总计</div>
               <div class="col value">

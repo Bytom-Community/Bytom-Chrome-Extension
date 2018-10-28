@@ -116,11 +116,8 @@
 
 <script>
 import bytom from "../../script/bytom";
-<<<<<<< Updated upstream
 import getLang from "../../../assets/language/sdk"
-=======
 import TransferConfirm from "./transfer-confirm";
->>>>>>> Stashed changes
 export default {
   components: {
     TransferConfirm
