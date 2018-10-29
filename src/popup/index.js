@@ -28,7 +28,7 @@ Vue.filter("moment", function(value, formatString) {
 });
 
 let lang = "cn";
-if (localStorage.lang) {
+if (localStorage.lang != undefined) {
   lang = localStorage.lang;
 }
 const i18n = new VueI18n({
