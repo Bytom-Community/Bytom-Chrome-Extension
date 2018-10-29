@@ -203,6 +203,7 @@ export default {
           console.log(ret);
           loader.hide();
 
+          this.transaction.fee = Number(ret.data.fee/100000000);
           this.$refs.transferConfirm.open(
             this.account,
             this.transaction,
