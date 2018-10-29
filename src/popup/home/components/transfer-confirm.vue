@@ -83,19 +83,19 @@
               <div class="col to">{{transaction.toShort}}</div>
             </div>
             <div class="row">
-              <div class="col label">转账金额</div>
+              <div class="col label">{{ $t('transfer.transferAmount') }}</div>
               <div class="col value">{{transaction.amount}}<span class="uint">BTM</span></div>
             </div>
             <div class="row">
-              <div class="col label">矿工费用</div>
+              <div class="col label">{{ $t('transfer.fee') }}</div>
               <div class="col value">{{transaction.fee}}<span class="uint">BTM</span></div>
             </div>
 
             <div class="divider" style="margin-top: 130px; margin-bottom: 10px;"></div>
             <div class="row" style="text-align: right;">
-              <div class="col label" style="line-height: 50px;">总计</div>
+              <div class="col label" style="line-height: 50px;">{{ $t('transfer.total') }}</div>
               <div class="col value">
-                <p class="fee-intro">转账费用+矿工费用</p>
+                <p class="fee-intro">{{ $t('transfer.totalTip') }}</p>
                 {{transaction.amount+transaction.fee}}<span class="uint">BTM</span>
               </div>
             </div>

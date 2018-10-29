@@ -25,6 +25,9 @@ const cn = {
     unit: "单位",
     emptyTo: "地址不能为空",
     noneBTM: "错误的BTM数量",
+    transferAmount: "转账金额",
+    total: "总计",
+    totalTip: "转账金额+矿工费用",
   },
   main: {
     mainNet: "BYTOM主网络",

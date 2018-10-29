@@ -25,6 +25,9 @@ const en = {
     unit: "unit",
     emptyTo: "Empty address",
     noneBTM: "Error BTM quantity",
+    transferAmount: "Transfer Amount",
+    total: "Total",
+    totalTip: "Transfer Amount+Fee",
   },
   main: {
     mainNet: "BYTOM MainNet",
