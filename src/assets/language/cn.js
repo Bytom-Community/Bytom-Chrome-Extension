@@ -28,6 +28,7 @@ const cn = {
     transferAmount: "转账金额",
     total: "总计",
     totalTip: "转账金额+矿工费用",
+    success: "交易发送成功",
   },
   main: {
     mainNet: "BYTOM主网络",

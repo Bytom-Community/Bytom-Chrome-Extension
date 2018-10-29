@@ -28,6 +28,7 @@ const en = {
     transferAmount: "Transfer Amount",
     total: "Total",
     totalTip: "Transfer Amount+Fee",
+    success: "Transaction sent successfully",
   },
   main: {
     mainNet: "BYTOM MainNet",

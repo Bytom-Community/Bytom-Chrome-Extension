@@ -189,7 +189,7 @@ export default {
   },
   data() {
     return {
-      network: "testnet",
+      network: "mainnet",
       clipboard: new ClipboardJS(".address-text"),
       addressTitle: this.$t("main.copy"),
       menuOpen: false,
@@ -317,7 +317,9 @@ export default {
     }
   },
   mounted() {
-    this.network = localStorage.bytomNet;
+    if (localStorage.bytomNet != undefined) {
+      this.network = localStorage.bytomNet;
+    }
     this.refreshTransactions();
 
     this.clipboard.on("success", e => {

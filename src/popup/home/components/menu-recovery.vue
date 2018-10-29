@@ -18,6 +18,7 @@ input {
 
 <script>
 import bytom from "../../script/bytom";
+import getLang from "../../../assets/language/sdk";
 export default {
   name: "",
   data() {
@@ -50,7 +51,7 @@ export default {
         })
         .catch(error => {
           this.$dialog.show({
-            body: error.message,
+            body: getLang(error.message),
           });
         });
     }

@@ -114,6 +114,7 @@
 import bytom from "../../script/bytom";
 import utils from "../../script/utils";
 import modalPasswd from "./modal-passwd";
+import getLang from "../../../assets/language/sdk";
 export default {
   components: {
     modalPasswd
@@ -159,11 +160,14 @@ export default {
 
           this.close();
           this.$emit("on-success");
+          this.$dialog.show({
+            body: this.$t("transfer.success"),
+          });
         })
         .catch(error => {
           loader.hide();
           this.$dialog.show({
-            body: error.message
+            body: getLang(error.message)
           });
         });
     }
