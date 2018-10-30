@@ -1,6 +1,16 @@
 <style scoped>
-.form {
-  margin: 50px 0;
+.form-item {
+  background: transparent;
+  margin: 0;
+}
+.form-item .form-item-content {
+  padding: 0 10px;
+  background-color: #282f38;
+  border-radius: 5px;
+}
+.form-item .form-item-label {
+  float: none;
+  width: 200px;
 }
 .form-item .btn {
   width: 200px;
@@ -13,25 +23,25 @@
       <div class="form">
           <div class="form-item">
             <label class="form-item-label">{{ $t('createAccount.accountAlias') }}</label>
-            <div class="form-item-content" style="margin-left: 76px;">
+            <div class="form-item-content">
               <input type="text" v-model="formItem.accAlias">
             </div>
           </div>
           <div class="form-item">
             <label class="form-item-label">{{ $t('createAccount.keyAlias') }}</label>
-            <div class="form-item-content" style="margin-left: 76px;">
+            <div class="form-item-content">
               <input type="text" v-model="formItem.keyAlias">
             </div>
           </div>
           <div class="form-item">
             <label class="form-item-label">{{ $t('createAccount.keyPassword') }}</label>
-            <div class="form-item-content" style="margin-left: 76px;">
+            <div class="form-item-content">
               <input type="password" v-model="formItem.passwd1">
             </div>
           </div>
           <div class="form-item">
             <label class="form-item-label">{{ $t('createAccount.confirmPassword') }}</label>
-            <div class="form-item-content" style="margin-left: 76px;">
+            <div class="form-item-content">
               <input type="password" v-model="formItem.passwd2">
             </div>
           </div>
