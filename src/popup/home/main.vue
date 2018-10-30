@@ -149,7 +149,7 @@
       <vue-scroll @handle-scroll="handleScroll">
         <ul class="list">
             <li class="list-item" v-for="(transcation, index) in transcations" :key="index" @click="$refs.trxInfo.open(transcation, accountInfo.address)">
-              <div class="value">{{transcation.direct}} {{transcation.val}} BTM</div>
+              <div class="value">{{transcation.direct}} {{transcation.val.toFixed(2)}} BTM</div>
               <div>
                 <div class="time">{{transcation.timestamp | moment}}</div>
                 <div class="addr">{{transcation.address}}</div>
@@ -238,37 +238,41 @@ export default {
     transcationsFormat: function(transactions) {
       transactions.forEach(transaction => {
         let inputSum = 0;
-        let outoutSum = 0;
+        let outputSum = 0;
+        let selfInputSum = 0;
+        let selfoutputSum = 0;
         let inputAddresses = [];
         let outputAddresses = [];
         transaction.inputs.forEach(input => {
+          inputSum += input.amount;
           if (input.address == this.accountInfo.address) {
-            inputSum += input.amount;
+            selfInputSum += input.amount;
             return;
           }
 
           inputAddresses.push(input.address);
         });
         transaction.outputs.forEach(output => {
+          outputSum += output.amount;
           if (output.address == this.accountInfo.address) {
-            outoutSum += output.amount;
+            selfoutputSum += output.amount;
             return;
           }
 
           outputAddresses.push(output.address);
         });
 
-        console.log(transaction);
-        let val = outoutSum - inputSum;
+        let val = selfoutputSum - selfInputSum;
         if (val > 0) {
           transaction.direct = "+";
           transaction.address = utils.shortAddress(inputAddresses.pop());
         } else {
-          val = inputSum - outoutSum;
+          val = selfInputSum - selfoutputSum;
           transaction.direct = "-";
           transaction.address = utils.shortAddress(outputAddresses.pop());
         }
-        transaction.val = Number(val / 100000000).toFixed(8);
+        transaction.val = Number(val / 100000000);
+        transaction.fee = Number(inputSum - outputSum) / 100000000;
       });
     },
     refreshTransactions: function() {

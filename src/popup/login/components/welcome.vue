@@ -28,7 +28,7 @@
 <template>
     <div>
         <section class="welcome-top">
-            <p>{{ $t('welcome.title') }}</p>
+            <!-- <p>{{ $t('welcome.title') }}</p> -->
         </section>
         <section class="welcome-bottom bg-green">
             <div class="btn btn-primary btn-startup" @click="start">{{ $t('welcome.use') }}</div>

@@ -96,7 +96,7 @@
               <div class="col label" style="line-height: 50px;">{{ $t('transfer.total') }}</div>
               <div class="col value">
                 <p class="fee-intro">{{ $t('transfer.totalTip') }}</p>
-                {{transaction.amount+transaction.fee}}<span class="uint">BTM</span>
+                {{Number(transaction.amount)+Number(transaction.fee)}}<span class="uint">BTM</span>
               </div>
             </div>
             <div class="row" style="margin: 20px;">
@@ -128,7 +128,7 @@ export default {
         to: "",
         toShort: "",
         amount: 0,
-        fee: "",
+        fee: ""
       }
     };
   },
@@ -161,7 +161,7 @@ export default {
           this.close();
           this.$emit("on-success");
           this.$dialog.show({
-            body: this.$t("transfer.success"),
+            body: this.$t("transfer.success")
           });
         })
         .catch(error => {

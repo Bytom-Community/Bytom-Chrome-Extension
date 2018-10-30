@@ -56,7 +56,8 @@
   display: inline-flex;
 }
 .transaction .info section {
-  margin-right: 29px;
+  margin-right: 30px;
+  width: 80px;
 }
 .transaction .txid {
   margin-top: 20px;
@@ -91,8 +92,8 @@
               <p class="time">{{transaction.timestamp | moment}}</p>
               <div class="info">
                 <section>
-                  <p class="label">{{ $t('transactionDetail.fee') }}</p>
-                  <p>0.02BTM</p>
+                  <p class="label">{{ $t('transactionDetail.fee') }}(BTM)</p>
+                  <p>{{transaction.fee}}</p>
                 </section>
                 <section>
                   <p class="label">{{ $t('transactionDetail.blockHeight') }}</p>
