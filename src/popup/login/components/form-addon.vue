@@ -1,5 +1,8 @@
 
 <style scoped>
+.form-item-label {
+  width: 135px;
+}
 </style>
 
 <template>
@@ -12,7 +15,7 @@
             <div class="form">
                 <div class="form-item">
                     <label class="form-item-label">{{ $t('createAccount.select') }}</label>
-                    <div class="form-item-content" style="margin-left: 75px;">
+                    <div class="form-item-content" style="margin-left: 135px;">
                         <select name="net" v-model="selected" @change="onChange()">
                             <option value="mainnet">{{ $t('main.mainNet') }}</option>
                             <option value="testnet">{{ $t('main.testNet') }}</option>
@@ -21,25 +24,25 @@
                 </div>
                 <div class="form-item">
                     <label class="form-item-label">{{ $t('createAccount.accountAlias') }}</label>
-                    <div class="form-item-content" style="margin-left: 76px;">
+                    <div class="form-item-content" style="margin-left: 135px;">
                         <input type="text" v-model="formItem.accAlias" autofocus>
                     </div>
                 </div>
                 <div class="form-item">
                     <label class="form-item-label">{{ $t('createAccount.keyAlias') }}</label>
-                    <div class="form-item-content" style="margin-left: 76px;">
+                    <div class="form-item-content" style="margin-left: 135px;">
                         <input type="text" v-model="formItem.keyAlias">
                     </div>
                 </div>
                 <div class="form-item">
                     <label class="form-item-label">{{ $t('createAccount.keyPassword') }}</label>
-                    <div class="form-item-content" style="margin-left: 76px;">
+                    <div class="form-item-content" style="margin-left: 135px;">
                         <input type="password" v-model="formItem.passwd1">
                     </div>
                 </div>
                 <div class="form-item">
                     <label class="form-item-label">{{ $t('createAccount.confirmPassword') }}</label>
-                    <div class="form-item-content" style="margin-left: 76px;">
+                    <div class="form-item-content" style="margin-left: 135px;">
                         <input type="password" v-model="formItem.passwd2">
                     </div>
                 </div>

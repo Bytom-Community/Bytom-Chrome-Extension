@@ -11,7 +11,7 @@
             <div class="form">
                 <div class="form-item">
                     <label class="form-item-label">{{ $t('createAccount.file') }}</label>
-                    <div class="form-item-content" style="margin-left: 76px;">
+                    <div class="form-item-content" style="margin-left: 95px;">
                       <input type="file" @change="tirggerFile($event)">
                     </div>
                 </div>
@@ -52,7 +52,7 @@ export default {
         })
         .catch(error => {
           this.$dialog.show({
-            body: getLang(error.message),
+            body: getLang(error.message)
           });
         });
     },

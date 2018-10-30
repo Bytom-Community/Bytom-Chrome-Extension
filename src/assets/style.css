@@ -307,7 +307,6 @@ hr {
 }
 
 .form-item label {
-  display: inline-flex;
   font-size: 16px;
   line-height: 15px;
 }

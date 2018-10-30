@@ -11,6 +11,8 @@
 .form-item .form-item-label {
   float: none;
   width: 200px;
+  line-height: 35px;
+  margin: 0 5px;
 }
 .form-item .btn {
   width: 200px;
