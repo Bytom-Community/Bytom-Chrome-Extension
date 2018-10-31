@@ -65,15 +65,11 @@
           <div class="form-item-group">
             <div class="form-item">
               <!-- <label>账户</label> -->
-              <select v-model="guid">
-                <option :key="index" v-for="(account, index) in accounts" :value="account.guid">{{account.alias != null ? account.alias : '账户1'}}</option>
-              </select>
+              <v-select :clearable="false" v-model="guid" style="height: 32px;" label="alias" :options="accounts"></v-select>
             </div>
             <div class="form-item" style="margin-left: 20px;">
               <!-- <label>资产</label> -->
-              <select v-model="transaction.asset">
-                <option value="ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff">BTM</option>
-              </select>
+              <v-select @input="assetChange" :clearable="false" v-model="selectAsset" style="height: 32px;" label="name" :options="assetOptions"></v-select>
             </div>
           </div>
           <div class="form-item">
@@ -97,9 +93,7 @@
           <div class="form-item">
             <label class="form-item-label">{{ $t('transfer.fee') }}</label>
             <div class="form-item-content" style="margin-left: 80px;">
-              <select v-model="transaction.fee">
-                <option value="">{{ $t('transfer.feeType') }}</option>
-              </select>
+              <v-select :clearable="false" v-model="fee" style="height: 32px;" :options="feeTypeOptions"></v-select>
             </div>
           </div>
           <br>
@@ -126,13 +120,17 @@ export default {
     const ASSET_BTM =
       "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
     return {
+      fee: this.$t('transfer.feeType'),
+      feeTypeOptions: [this.$t('transfer.feeType')],
+      selectAsset: {assets:"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", name: "BTM"},
+      assetOptions: [{assets:"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", name: "BTM"}],
       show: false,
       accounts: [],
       unit: "",
       assets: {
         ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff: "BTM"
       },
-      guid: "",
+      guid: null,
       account: {
         guid: ""
       },
@@ -147,7 +145,7 @@ export default {
   watch: {
     guid: function(newGuid) {
       this.accounts.forEach(account => {
-        if (account.guid == newGuid) {
+        if (account.guid == newGuid.guid) {
           this.account = account;
           return;
         }
@@ -155,15 +153,23 @@ export default {
     }
   },
   methods: {
+    assetChange: function(val) {
+      this.transaction.asset = val.assets;
+    },
     open: function(accountInfo) {
       this.show = true;
 
       bytom.Account.list().then(accounts => {
         this.accounts = accounts;
+        let options = [];
+        this.accounts.forEach(function(element) {
+          options.push({label: element.alias, value: element.guid})
+        });
+        this.options = options;
       });
 
       this.account = accountInfo;
-      this.guid = accountInfo.guid;
+      this.guid = accountInfo;
       this.unit = this.assets[this.transaction.asset];
     },
     close: function() {
@@ -178,8 +184,8 @@ export default {
         });
         return;
       }
-      let num = parseInt(this.transaction.amount);
-      if (isNaN(num) || num <= 0) {
+
+      if (this.transaction.amount <= 0) {
         this.$dialog.show({
           body: this.$t("transfer.noneBTM")
         });

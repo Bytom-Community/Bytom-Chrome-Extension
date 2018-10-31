@@ -4,6 +4,7 @@ import moment from "moment";
 import Loading from "vue-loading-overlay";
 import vuescroll from "vuescroll/dist/vuescroll-native";
 import Dialog from "./components/dialog";
+import vSelect from "./components/select";
 import MenuPage from "./components/menu-page";
 import VueI18n from "vue-i18n";
 import messages from "../assets/language";
@@ -15,6 +16,7 @@ Vue.use(vuescroll);
 Vue.use(MenuPage);
 Vue.use(Loading);
 Vue.use(VueI18n);
+Vue.component('v-select', vSelect);
 Vue.prototype.$vuescrollConfig = {
   mode: "pure-native",
   bar: {

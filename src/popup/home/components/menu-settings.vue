@@ -43,6 +43,7 @@ export default {
     onChange: function() {
       localStorage.lang = this.selected;
       this.$i18n.locale = this.selected;
+      window.location.reload();
     },
     back: function() {
       this.$emit("on-back");
