@@ -69,7 +69,7 @@
             </div>
             <div class="form-item" style="margin-left: 20px;">
               <!-- <label>资产</label> -->
-              <v-select @input="assetChange" :clearable="false" v-model="selectAsset" style="height: 32px;" label="name" :options="assetOptions"></v-select>
+              <v-select :clearable="false" v-model="selectAsset" style="height: 32px;" label="name" :options="assetOptions"></v-select>
             </div>
           </div>
           <div class="form-item">
@@ -120,8 +120,6 @@ export default {
     const ASSET_BTM =
       "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
     return {
-      fee: this.$t('transfer.feeType'),
-      feeTypeOptions: [this.$t('transfer.feeType')],
       selectAsset: {assets:"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", name: "BTM"},
       assetOptions: [{assets:"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", name: "BTM"}],
       show: false,
@@ -142,7 +140,24 @@ export default {
       }
     };
   },
+  props: {
+    fee: {
+      type: String,
+      default() {
+        return this.$t('transfer.feeType');
+      },
+    },
+    feeTypeOptions: {
+      type: Array,
+      default() {
+        return [this.$t('transfer.feeType')];
+      }
+    }
+  },
   watch: {
+    selectAsset: function(val) {
+      this.transaction.asset = val.assets;
+    },
     guid: function(newGuid) {
       this.accounts.forEach(account => {
         if (account.guid == newGuid.guid) {
@@ -153,9 +168,6 @@ export default {
     }
   },
   methods: {
-    assetChange: function(val) {
-      this.transaction.asset = val.assets;
-    },
     open: function(accountInfo) {
       this.show = true;
 

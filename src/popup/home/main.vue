@@ -166,7 +166,7 @@
     <!-- modal -->
     <Qrcode ref="qrcode"></Qrcode>
     <Menu ref="menu" @on-current-account="accountLoader" @accounts-clear="accountClear"></Menu>
-    <Transfer ref="transfer" @on-success="refreshTransactions"></Transfer>
+    <Transfer ref="transfer" :fee="fee" :feeTypeOptions="feeTypeOptions" @on-success="refreshTransactions"></Transfer>
     <TxInfo ref="trxInfo" @on-success="refreshTransactions"></TxInfo>
   </div>
 </template>
@@ -189,6 +189,8 @@ export default {
   },
   data() {
     return {
+      feeTypeOptions: [this.$t('transfer.feeType')],
+      fee: this.$t('transfer.feeType'),
       network: "mainnet",
       clipboard: new ClipboardJS(".address-text"),
       addressTitle: this.$t("main.copy"),
@@ -233,6 +235,8 @@ export default {
       this.$refs.qrcode.open(this.accountInfo.address);
     },
     transferOpen: function() {
+      this.fee = this.$t('transfer.feeType');
+      this.feeTypeOptions = [this.$t('transfer.feeType')];
       this.$refs.transfer.open(this.accountInfo);
     },
     transcationsFormat: function(transactions) {

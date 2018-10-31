@@ -7,7 +7,7 @@ import Dialog from "./components/dialog";
 import vSelect from "./components/select";
 import MenuPage from "./components/menu-page";
 import VueI18n from "vue-i18n";
-import messages from "../assets/language";
+import messages, {have} from "../assets/language";
 import "../assets/style.css";
 import "vuescroll/dist/vuescroll.css";
 import "vue-loading-overlay/dist/vue-loading.css";
@@ -30,7 +30,7 @@ Vue.filter("moment", function(value, formatString) {
 });
 
 let lang = "cn";
-if (localStorage.lang != undefined) {
+if (have(localStorage.lang)) {
   lang = localStorage.lang;
 }
 const i18n = new VueI18n({

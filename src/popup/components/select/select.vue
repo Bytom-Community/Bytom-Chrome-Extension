@@ -225,7 +225,7 @@
     cursor: pointer;
   }
   .v-select .dropdown-menu .active > a {
-    color: #333;
+    color: #fff;
     background: rgba(50, 50, 50, .1);
   }
   li.active {

@@ -16,10 +16,7 @@
         </div>
         <div class="row">
             <p>{{ $t("setting.lang") }}</p>
-            <select class="value" v-model="selected" @change="onChange()">
-                <option value="cn">中文</option>
-                <option value="en">English</option>
-            </select>
+            <v-select :value="selected" :clearable="false" :onChange="onChange" :options="i18nOptions"></v-select>
         </div>
         <div class="row">
             <p>{{ $t("setting.unit") }}</p>
@@ -31,19 +28,23 @@
 </template>
 
 <script>
+import {have} from "../../../assets/language";
+
 export default {
   name: "",
   data() {
     return {
-      selected: "cn",
+      i18nOptions: [{label: "中文", value: "cn"}, {label: "English", value: "en"}],
+      selected: {label: "中文", value: "cn"},
       hashVersion: ""
     };
   },
   methods: {
-    onChange: function() {
-      localStorage.lang = this.selected;
-      this.$i18n.locale = this.selected;
-      window.location.reload();
+    onChange: function(value) {
+      let needReload = false;
+      localStorage.lang = value.value;
+      this.$i18n.locale = value.value;
+      this.selected = value;
     },
     back: function() {
       this.$emit("on-back");
@@ -54,8 +55,12 @@ export default {
   },
   mounted: function() {
     this.hashVersion = version.hash;
-    if (localStorage.lang) {
-      this.selected = localStorage.lang;
+    if (have(localStorage.lang)) {
+      if(localStorage.lang == 'cn') {
+        this.selected = {label: "中文", value: "cn"};
+      } else if (localStorage.lang == 'en') {
+        this.selected = {label: "English", value: "en"};
+      }
     }
   }
 };
