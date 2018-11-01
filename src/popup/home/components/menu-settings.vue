@@ -6,6 +6,13 @@
   font-size: 15px;
   line-height: 30px;
 }
+.setting {
+  margin: 5px 0 0 0;
+  width: 120px;
+}
+.form-item-content .select {
+  height: 32px;
+}
 </style>
 
 <template>
@@ -16,13 +23,15 @@
         </div>
         <div class="row">
             <p>{{ $t("setting.lang") }}</p>
-            <v-select :value="selected" :clearable="false" :onChange="onChange" :options="i18nOptions"></v-select>
+              <div class="form-item setting">
+                  <v-select class="select" :value="selected" :clearable="false" :onChange="onChange" :options="i18nOptions"></v-select>
+              </div>
         </div>
         <div class="row">
             <p>{{ $t("setting.unit") }}</p>
-            <select class="value">
-                <option value="">BTM</option>
-            </select>
+            <div class="form-item setting">
+                <v-select class="select" :value="unit" :clearable="false" :options="['BTM']"></v-select>
+            </div>
         </div>
     </MenuPage>
 </template>
@@ -34,6 +43,7 @@ export default {
   name: "",
   data() {
     return {
+      unit: "BTM",
       i18nOptions: [{label: "中文", value: "cn"}, {label: "English", value: "en"}],
       selected: {label: "中文", value: "cn"},
       hashVersion: ""

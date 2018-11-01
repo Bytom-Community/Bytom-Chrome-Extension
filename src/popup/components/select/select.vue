@@ -196,7 +196,7 @@
     border: 1px solid transparent;
     border-left: none;
     outline: none;
-    margin: 0 0 0 0;
+    margin: 4px 0 0 0;
     padding: 0 7px;
     max-width: 100%;
     background: none;
