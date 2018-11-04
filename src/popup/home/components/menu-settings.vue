@@ -51,7 +51,6 @@ export default {
   },
   methods: {
     onChange: function(value) {
-      let needReload = false;
       localStorage.lang = value.value;
       this.$i18n.locale = value.value;
       this.selected = value;
