@@ -151,7 +151,7 @@
             <li class="list-item" v-for="(transcation, index) in transcations" :key="index" @click="$refs.trxInfo.open(transcation, accountInfo.address)">
               <div class="value">{{transcation.direct}} {{transcation.val.toFixed(2)}} BTM</div>
               <div>
-                <div class="time">{{transcation.timestamp | moment}}</div>
+                <div class="time">{{transcation.block_timestamp | moment}}</div>
                 <div class="addr">{{transcation.address}}</div>
               </div>
             </li>
