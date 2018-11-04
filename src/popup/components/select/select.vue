@@ -138,7 +138,7 @@
   }
   /* Selected Tags */
   .v-select .selected-tag {
-    display: flex;
+    display: block;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
