@@ -116,7 +116,7 @@
 </style>
 
 <template>
-  <div class="warp">
+  <div id="app" class="warp">
     <section class="bg-green">
       <div class="topbar">
           <div class="topbar-right">
@@ -132,7 +132,7 @@
           </div>
       </div>
       <div class="content">
-          <img src="../../assets/logo.png" class="token-icon">
+          <img src="../assets/logo.png" class="token-icon">
           <div v-if="accountInfo.address!=undefined" class="amount">
               <div class="token-amount">{{accountInfo.balance}}<span class="asset">BTM</span></div>
               <p class="account-address">
@@ -173,12 +173,12 @@
 
 <script>
 import ClipboardJS from "clipboard";
-import Menu from "./menu";
-import Qrcode from "./components/qrcode";
-import Transfer from "./components/transfer";
-import TxInfo from "./components/tx-info";
-import bytom from "../script/bytom";
-import utils from "../script/utils";
+import Menu from "./home/menu";
+import Qrcode from "./transfer/qrcode";
+import Transfer from "./transfer/transfer";
+import TxInfo from "./transfer/detail";
+import bytom from "./common/bytom";
+import utils from "./common/utils";
 export default {
   name: "",
   components: {
@@ -325,6 +325,7 @@ export default {
     }
   },
   mounted() {
+    console.log(2222)
     if (localStorage.bytomNet != undefined) {
       this.network = localStorage.bytomNet;
     }

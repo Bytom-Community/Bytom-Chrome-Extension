@@ -1,8 +1,10 @@
 <style scoped>
 .warp {
+  position: absolute;
+  left: 35px;
+  top: 135px;
   width: 220px;
   height: 200px;
-  margin: 128px auto;
   border-radius: 5px;
   text-align: center;
   padding: 30px;

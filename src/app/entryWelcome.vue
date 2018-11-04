@@ -29,7 +29,7 @@
 </style>
 
 <template>
-  <section id="app">
+  <section id="welcome">
     <transition-group name="panels">
       <Welcome class="view" key="welcome" v-show="view.welcome" @next="currView='protocol'"></Welcome>
       <Protocol class="view" key="protocol" v-show="view.protocol" @next="currView='formAddon'"></Protocol>
@@ -40,10 +40,10 @@
 </template>
 
 <script>
-import Welcome from "./components/welcome";
-import Protocol from "./components/protocol";
-import FormAddon from "./components/form-addon";
-import FormRecover from "./components/form-recover";
+import Welcome from "./welcome/welcome";
+import Protocol from "./welcome/protocol";
+import FormAddon from "./welcome/form-addon";
+import FormRecover from "./welcome/form-recover";
 
 export default {
   components: {

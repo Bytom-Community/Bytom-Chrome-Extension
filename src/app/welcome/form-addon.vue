@@ -8,7 +8,7 @@
 <template>
     <div class="warp bg-gray">
         <section class="login-header bg-green">
-            <img src="../../../assets/logo.png">
+            <img src="../../assets/logo.png">
         </section>
         <section class="login-content">
             <div class="title">{{ $t('createAccount.title') }}</div>
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import bytom from "../../script/bytom";
+import bytom from "../common/bytom";
 export default {
   name: "",
   data() {

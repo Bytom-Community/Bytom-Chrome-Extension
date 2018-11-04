@@ -96,12 +96,12 @@
 </template>
 
 <script>
-import Creation from "./components/menu-creation";
-import Recovery from "./components/menu-recovery";
-import Bakcup from "./components/menu-backup";
-import Help from "./components/menu-help";
-import Settings from "./components/menu-settings";
-import bytom from "../script/bytom";
+import Creation from "./menu-creation";
+import Recovery from "./menu-recovery";
+import Bakcup from "./menu-backup";
+import Help from "./menu-help";
+import Settings from "./menu-settings";
+import bytom from "../common/bytom";
 export default {
   name: "",
   components: {

@@ -37,15 +37,18 @@
 </template>
 
 <script>
-import {have} from "../../../assets/language";
+import { have } from "../../assets/language";
 
 export default {
   name: "",
   data() {
     return {
       unit: "BTM",
-      i18nOptions: [{label: "中文", value: "cn"}, {label: "English", value: "en"}],
-      selected: {label: "中文", value: "cn"},
+      i18nOptions: [
+        { label: "中文", value: "cn" },
+        { label: "English", value: "en" }
+      ],
+      selected: { label: "中文", value: "cn" },
       hashVersion: ""
     };
   },
@@ -67,10 +70,10 @@ export default {
   mounted: function() {
     this.hashVersion = version.hash;
     if (have(localStorage.lang)) {
-      if(localStorage.lang == 'cn') {
-        this.selected = {label: "中文", value: "cn"};
-      } else if (localStorage.lang == 'en') {
-        this.selected = {label: "English", value: "en"};
+      if (localStorage.lang == "cn") {
+        this.selected = { label: "中文", value: "cn" };
+      } else if (localStorage.lang == "en") {
+        this.selected = { label: "English", value: "en" };
       }
     }
   }

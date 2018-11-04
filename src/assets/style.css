@@ -38,11 +38,15 @@ a {
   text-decoration: none;
 }
 
-#app {
+#app,
+#welcome {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   color: #fff;
+  width: 350px;
+  height: 600px;
   font-size: 18px;
   line-height: 25px;
+  overflow: hidden;
 }
 
 .float-right {
@@ -319,8 +323,8 @@ hr {
 }
 .form-item input::-webkit-outer-spin-button,
 .form-item input::-webkit-inner-spin-button {
-    -webkit-appearance: none !important;
-    margin: 0;
+  -webkit-appearance: none !important;
+  margin: 0;
 }
 
 .form-item input,

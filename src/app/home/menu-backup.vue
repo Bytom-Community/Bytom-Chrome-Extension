@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import bytom from "../../script/bytom";
+import bytom from "../common/bytom";
 import FileSaver from "file-saver";
 export default {
   name: "",

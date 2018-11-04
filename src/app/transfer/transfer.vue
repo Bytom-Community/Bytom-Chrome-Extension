@@ -56,7 +56,7 @@
         <section class="header bg-green">
           <i class="iconfont icon-back" @click="close"></i>
           <div class="balance">
-            <img src="../../../assets/logo.png" class="token-icon">
+            <img src="../../assets/logo.png" class="token-icon">
             <div class="token-amount">{{account.balance}}<span class="asset">BTM</span></div>
           </div>
         </section>
@@ -104,17 +104,17 @@
       </div>
     </transition>
 
-    <TransferConfirm ref="transferConfirm" @on-success="close"></TransferConfirm>
+    <Confirm ref="transferConfirm" @on-success="close"></Confirm>
   </div>
 </template>
 
 <script>
-import bytom from "../../script/bytom";
-import getLang from "../../../assets/language/sdk";
-import TransferConfirm from "./transfer-confirm";
+import bytom from "../common/bytom";
+import getLang from "../../assets/language/sdk";
+import Confirm from "./confirm";
 export default {
   components: {
-    TransferConfirm
+    Confirm
   },
   data() {
     const ASSET_BTM =

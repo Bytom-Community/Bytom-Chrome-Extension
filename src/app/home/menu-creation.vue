@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import bytom from "../../script/bytom";
+import bytom from "../common/bytom";
 export default {
   name: "",
   components: {},

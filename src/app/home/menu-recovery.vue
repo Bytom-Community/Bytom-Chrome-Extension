@@ -17,8 +17,8 @@ input {
 </template>
 
 <script>
-import bytom from "../../script/bytom";
-import getLang from "../../../assets/language/sdk";
+import bytom from "../common/bytom";
+import getLang from "../../assets/language/sdk";
 export default {
   name: "",
   data() {

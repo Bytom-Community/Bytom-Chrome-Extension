@@ -111,10 +111,10 @@
 </template>
 
 <script>
-import bytom from "../../script/bytom";
-import utils from "../../script/utils";
+import bytom from "../common/bytom";
+import utils from "../common/utils";
 import modalPasswd from "./modal-passwd";
-import getLang from "../../../assets/language/sdk";
+import getLang from "../../assets/language/sdk";
 export default {
   components: {
     modalPasswd

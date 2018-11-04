@@ -89,7 +89,7 @@
         <section>
           <vue-scroll>
             <div class="transaction">
-              <p class="time">{{transaction.timestamp | moment}}</p>
+              <p class="time">{{transaction.block_timestamp | moment}}</p>
               <div class="info">
                 <section>
                   <p class="label">{{ $t('transactionDetail.fee') }}(BTM)</p>

@@ -4,7 +4,7 @@
 <template>
     <div class="warp bg-gray">
         <section class="login-header bg-green">
-            <img src="../../../assets/logo.png">
+            <img src="../../assets/logo.png">
         </section>
         <section class="login-content">
             <div class="title">{{ $t('createAccount.import') }}</div>
@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import bytom from "../../script/bytom";
-import getLang from "../../../assets/language/sdk";
+import bytom from "../common/bytom";
+import getLang from "../../assets/language/sdk";
 export default {
   name: "",
   data() {
