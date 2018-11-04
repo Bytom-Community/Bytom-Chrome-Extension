@@ -65,7 +65,7 @@
           <div class="form-item-group">
             <div class="form-item">
               <!-- <label>账户</label> -->
-              <v-select :clearable="false" v-model="guid" style="height: 32px;" label="alias" :options="accounts"></v-select>
+              <v-select :clearable="false" v-model="guid" style="height: 32px;width: 125px;" label="alias" :options="accounts"></v-select>
             </div>
             <div class="form-item" style="margin-left: 20px;">
               <!-- <label>资产</label> -->

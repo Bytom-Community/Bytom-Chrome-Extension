@@ -64,6 +64,8 @@
     -moz-appearance: none;
     appearance: none;
     display: flex;
+    height: 100%;
+    width: 100%;
     padding: 0 0 4px 0;
     background: none;
     /* border: 1px solid rgba(60, 60, 60, .26); */
@@ -72,6 +74,7 @@
   }
   .v-select .vs__selected-options {
     display: flex;
+    width: 80%;
     flex-basis: 100%;
     flex-grow: 1;
     flex-wrap: wrap;
@@ -136,6 +139,10 @@
   /* Selected Tags */
   .v-select .selected-tag {
     display: flex;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 80%;
     align-items: center;
     background-color: #f0f0f0;
     border: 1px solid #ccc;
@@ -151,7 +158,6 @@
     border-color: transparent;
   }
   .v-select.single.open .selected-tag {
-    position: absolute;
     opacity: .4;
   }
   .v-select.single.searching .selected-tag {
@@ -446,7 +452,7 @@
        */
       searchable: {
         type: Boolean,
-        default: true
+        default: false
       },
       /**
        * Equivalent to the `multiple` attribute on a `<select>` input.

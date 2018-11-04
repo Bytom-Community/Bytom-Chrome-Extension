@@ -51,9 +51,11 @@ export default {
   },
   methods: {
     onChange: function(value) {
-      localStorage.lang = value.value;
-      this.$i18n.locale = value.value;
-      this.selected = value;
+      if (localStorage.lang != value.value) {
+        localStorage.lang = value.value;
+        this.$i18n.locale = value.value;
+        this.selected = value;
+      }
     },
     back: function() {
       this.$emit("on-back");
