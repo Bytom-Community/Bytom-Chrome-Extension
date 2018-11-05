@@ -6,8 +6,9 @@ import vuescroll from "vuescroll/dist/vuescroll-native";
 import "vue-loading-overlay/dist/vue-loading.css";
 import "vuescroll/dist/vuescroll.css";
 
-import Home from "./entryHome";
-import Welcome from "./entryWelcome";
+import EntryHome from "./entry/home";
+import EntryWelcome from "./entry/welcome";
+import EntryTransfer from "./entry/transfer";
 import Dialog from "./components/dialog";
 import vSelect from "./components/select";
 import MenuPage from "./components/menu-page";
@@ -42,19 +43,27 @@ Vue.filter("moment", function(value, formatString) {
 
 let Application = {};
 
-Application.launth = function() {
-  new Vue({
-    el: "#app",
-    i18n: i18n,
-    render: h => h(Home)
-  });
-};
-
 Application.welcome = function() {
   new Vue({
     el: "#app",
     i18n: i18n,
-    render: h => h(Welcome)
+    render: h => h(EntryWelcome)
+  });
+};
+
+Application.launth = function() {
+  new Vue({
+    el: "#app",
+    i18n: i18n,
+    render: h => h(EntryHome)
+  });
+};
+
+Application.transfer = function() {
+  new Vue({
+    el: "#app",
+    i18n: i18n,
+    render: h => h(EntryTransfer)
   });
 };
 

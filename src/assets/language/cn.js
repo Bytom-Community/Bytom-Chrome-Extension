@@ -26,6 +26,7 @@ const cn = {
     emptyTo: "地址不能为空",
     noneBTM: "错误的BTM数量",
     transferAmount: "转账金额",
+    transferCost: "当前价值",
     total: "总计",
     totalTip: "转账金额+矿工费用",
     success: "交易发送成功",

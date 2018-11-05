@@ -1,6 +1,7 @@
 console.log("This is BACKGROUND page!");
 
 import bytom from "./bytom";
+import query from "./query";
 import account from "./account";
 import transaction from "./transaction";
 
@@ -50,6 +51,7 @@ function refreshAccounts(success) {
 refreshAccounts(refreshBalances);
 setInterval(refreshBalances, 10000);
 
+var bytomQuery = new query(bytom);
 var bytomAccount = new account(bytom);
 var bytomTransaction = new transaction(bytom);
 bytomAccount.list = function() {
@@ -63,18 +65,26 @@ bytomAccount.list = function() {
 };
 
 window.bytomSystem = bytom;
+window.bytomQuery = bytomQuery;
 window.bytomAccount = bytomAccount;
 window.bytomTransaction = bytomTransaction;
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   console.log("收到来自content-script的消息：");
-  console.log(request, sender, sendResponse);
-  sendResponse("我是后台，我已收到你的消息：" + JSON.stringify(request));
+  console.log(request);
+  console.log(sender);
+  console.log(sendResponse);
+  // sendResponse("我是后台，我已收到你的消息：" + JSON.stringify(request));
 
-
-  var optionsUrl = chrome.extension.getURL("pages/prompt.html");
-  console.log(optionsUrl);
-  chrome.tabs.query({ url: optionsUrl }, function(tabs) {
-    chrome.windows.create({ url: optionsUrl, type: "popup", width: 350, height: 625 });
-  });
+  if (request.bty == "transfer") {
+    var optionsUrl = chrome.extension.getURL("pages/prompt.html");
+    console.log(optionsUrl);
+    chrome.tabs.query({ url: optionsUrl }, (tabs) => {
+        console.log(22, tabs)
+        chrome.windows.create({ url: optionsUrl, type: "popup", width: 350, height: 625, left: 0 }, ()=>{
+          chrome.extension.sendMessage(  {cmd: "来自前台页面的主动调用"}, function(response) {  console.log(123, response); }  );//测试前台掉后台
+        });
+        
+    });
+  }
 });

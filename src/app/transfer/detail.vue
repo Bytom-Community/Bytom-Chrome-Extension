@@ -89,7 +89,8 @@
         <section>
           <vue-scroll>
             <div class="transaction">
-              <p class="time">{{transaction.block_timestamp | moment}}</p>
+              <p v-if="transaction.is_confirmed" class="time">{{transaction.block_timestamp | moment}}</p>
+              <p v-else class="time">{{transaction.submission_timestamp | moment}}</p>
               <div class="info">
                 <section>
                   <p class="label">{{ $t('transactionDetail.fee') }}(BTM)</p>
@@ -97,7 +98,8 @@
                 </section>
                 <section>
                   <p class="label">{{ $t('transactionDetail.blockHeight') }}</p>
-                  <p>{{transaction.block_height}}</p>
+                  <p v-if="transaction.block_height != undefined">{{transaction.block_height}}</p>
+                  <p v-else>-</p>
                 </section>
                 <section>
                   <p class="label">{{ $t('transactionDetail.blockSize') }}</p>

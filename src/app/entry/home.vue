@@ -132,7 +132,7 @@
           </div>
       </div>
       <div class="content">
-          <img src="../assets/logo.png" class="token-icon">
+          <img src="../../assets/logo.png" class="token-icon">
           <div v-if="accountInfo.address!=undefined" class="amount">
               <div class="token-amount">{{accountInfo.balance}}<span class="asset">BTM</span></div>
               <p class="account-address">
@@ -151,7 +151,8 @@
             <li class="list-item" v-for="(transcation, index) in transcations" :key="index" @click="$refs.trxInfo.open(transcation, accountInfo.address)">
               <div class="value">{{transcation.direct}} {{transcation.val.toFixed(2)}} BTM</div>
               <div>
-                <div class="time">{{transcation.block_timestamp | moment}}</div>
+                <div v-if="transcation.is_confirmed" class="time">{{transcation.block_timestamp | moment}}</div>
+                <div v-else class="time">{{transcation.submission_timestamp | moment}}</div>
                 <div class="addr">{{transcation.address}}</div>
               </div>
             </li>
@@ -173,12 +174,12 @@
 
 <script>
 import ClipboardJS from "clipboard";
-import Menu from "./home/menu";
-import Qrcode from "./transfer/qrcode";
-import Transfer from "./transfer/transfer";
-import TxInfo from "./transfer/detail";
-import bytom from "./common/bytom";
-import utils from "./common/utils";
+import Menu from "../home/menu";
+import Qrcode from "../transfer/qrcode";
+import Transfer from "../transfer/transfer";
+import TxInfo from "../transfer/detail";
+import bytom from "../common/bytom";
+import utils from "../common/utils";
 export default {
   name: "",
   components: {

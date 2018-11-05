@@ -40,10 +40,10 @@
 </template>
 
 <script>
-import Welcome from "./welcome/welcome";
-import Protocol from "./welcome/protocol";
-import FormAddon from "./welcome/form-addon";
-import FormRecover from "./welcome/form-recover";
+import Welcome from "../welcome/welcome";
+import Protocol from "../welcome/protocol";
+import FormAddon from "../welcome/form-addon";
+import FormRecover from "../welcome/form-recover";
 
 export default {
   components: {

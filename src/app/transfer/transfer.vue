@@ -85,11 +85,13 @@
               <span style="width: 40px; font-size: 15px;">{{unit}}</span>
             </div>
           </div>
-          <!-- <div class="form-item">
-            <label for="">≈</label>
-            <input type="text" disabled>
-            <span>CNY</span>
-          </div> -->
+          <div class="form-item">
+            <label class="form-item-label">≈</label>
+            <div class="form-item-content" style="margin-left: 80px; display: flex;">
+              <input type="number" v-model="transaction.cost" placeholder="0" disabled>
+              <span style="width: 40px; font-size: 15px;">CNY</span>
+            </div>
+          </div>
           <div class="form-item">
             <label class="form-item-label">{{ $t('transfer.fee') }}</label>
             <div class="form-item-content" style="margin-left: 80px;">
@@ -120,8 +122,18 @@ export default {
     const ASSET_BTM =
       "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
     return {
-      selectAsset: {assets:"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", name: "BTM"},
-      assetOptions: [{assets:"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", name: "BTM"}],
+      selectAsset: {
+        assets:
+          "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        name: "BTM"
+      },
+      assetOptions: [
+        {
+          assets:
+            "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+          name: "BTM"
+        }
+      ],
       show: false,
       accounts: [],
       unit: "",
@@ -136,7 +148,8 @@ export default {
         to: "",
         asset: ASSET_BTM,
         amount: "",
-        fee: ""
+        fee: "",
+        cost: ""
       }
     };
   },
@@ -144,19 +157,24 @@ export default {
     fee: {
       type: String,
       default() {
-        return this.$t('transfer.feeType');
-      },
+        return this.$t("transfer.feeType");
+      }
     },
     feeTypeOptions: {
       type: Array,
       default() {
-        return [this.$t('transfer.feeType')];
+        return [this.$t("transfer.feeType")];
       }
     }
   },
   watch: {
     selectAsset: function(val) {
       this.transaction.asset = val.assets;
+    },
+    "transaction.amount": function(newAmount) {
+      bytom.Query.asset(this.transaction.asset).then(ret => {
+        this.transaction.cost = Number(ret.data.cny_price*newAmount).toFixed(2);
+      });
     },
     guid: function(newGuid) {
       this.accounts.forEach(account => {
@@ -175,7 +193,7 @@ export default {
         this.accounts = accounts;
         let options = [];
         this.accounts.forEach(function(element) {
-          options.push({label: element.alias, value: element.guid})
+          options.push({ label: element.alias, value: element.guid });
         });
         this.options = options;
       });
@@ -221,7 +239,7 @@ export default {
           console.log(ret);
           loader.hide();
 
-          this.transaction.fee = Number(ret.data.fee/100000000);
+          this.transaction.fee = Number(ret.data.fee / 100000000);
           this.$refs.transferConfirm.open(
             this.account,
             this.transaction,

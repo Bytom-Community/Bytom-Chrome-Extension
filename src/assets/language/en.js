@@ -26,6 +26,7 @@ const en = {
     emptyTo: "Empty address",
     noneBTM: "Error BTM quantity",
     transferAmount: "Transfer Amount",
+    transferCost: "Transfer Cost",
     total: "Total",
     totalTip: "Transfer Amount+Fee",
     success: "Transaction sent successfully",

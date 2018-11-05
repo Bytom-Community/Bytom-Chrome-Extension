@@ -87,6 +87,10 @@
               <div class="col value">{{transaction.amount}}<span class="uint">BTM</span></div>
             </div>
             <div class="row">
+              <div class="col label">{{ $t('transfer.transferCost') }}</div>
+              <div class="col value">{{transaction.cost}}<span class="uint">CNY</span></div>
+            </div>
+            <div class="row">
               <div class="col label">{{ $t('transfer.fee') }}</div>
               <div class="col value">{{transaction.fee}}<span class="uint">BTM</span></div>
             </div>

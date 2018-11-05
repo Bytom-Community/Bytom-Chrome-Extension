@@ -105,7 +105,7 @@ module.exports = {
       chunks: ["options"]
     }),
     page({
-      title: "prompt title",
+      title: "转账",
       name: "prompt",
       chunks: ["prompt"]
     }),
