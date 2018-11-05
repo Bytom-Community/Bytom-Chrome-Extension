@@ -13,7 +13,7 @@ export function have(lang) {
     return false;
   }
   for (let i = 0; i < langSet.length; i++) {
-    if (lang == langSet) {
+    if (lang == langSet[i]) {
       return true;
     }
   }

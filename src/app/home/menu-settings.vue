@@ -9,6 +9,7 @@
 .setting {
   margin: 5px 0 0 0;
   width: 120px;
+  height: 32px;
 }
 .form-item-content .select {
   height: 32px;

@@ -32,8 +32,8 @@
   <section id="welcome">
     <transition-group name="panels">
       <Welcome class="view" key="welcome" v-show="view.welcome" @next="currView='protocol'"></Welcome>
-      <Protocol class="view" key="protocol" v-show="view.protocol" @next="currView='formAddon'"></Protocol>
-      <FormAddon class="view" key="formAddon" v-show="view.formAddon" @next="currView='formRecover'" @success="loadHome"></FormAddon>
+      <Protocol class="view" key="protocol" v-show="view.protocol" @next="protocolNext"></Protocol>
+      <FormAddon class="view" key="formAddon" :i18n="i18n" v-show="view.formAddon" @next="currView='formRecover'" @success="loadHome"></FormAddon>
       <FormRecover class="view" key="formRecover" v-show="view.formRecover" @back="currView='formAddon'" @success="loadHome"></FormRecover>
     </transition-group>
   </section>
@@ -44,6 +44,7 @@ import Welcome from "../welcome/welcome";
 import Protocol from "../welcome/protocol";
 import FormAddon from "../welcome/form-addon";
 import FormRecover from "../welcome/form-recover";
+import {have} from "../../assets/language"
 
 export default {
   components: {
@@ -54,6 +55,7 @@ export default {
   },
   data() {
     return {
+      i18n: "cn",
       currView: "welcome"
     };
   },
@@ -69,6 +71,12 @@ export default {
     }
   },
   methods: {
+    protocolNext() {
+      if(have(localStorage.lang)) {
+        this.i18n = localStorage.lang;
+      }
+      this.currView='formAddon';
+    },
     loadHome: function() {
       this.$emit("succ");
     }

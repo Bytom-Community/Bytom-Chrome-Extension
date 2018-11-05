@@ -1,7 +1,16 @@
 
 <style scoped>
+.content {
+  margin-left: 135px;
+}
+.content-cn {
+  margin-left: 85px;
+}
 .form-item-label {
   width: 135px;
+}
+.form-item-label-cn {
+  width: 85px;
 }
 </style>
 
@@ -14,35 +23,32 @@
             <div class="title">{{ $t('createAccount.title') }}</div>
             <div class="form">
                 <div class="form-item">
-                    <label class="form-item-label">{{ $t('createAccount.select') }}</label>
-                    <div class="form-item-content" style="margin-left: 135px;">
-                        <select name="net" v-model="selected" @change="onChange()">
-                            <option value="mainnet">{{ $t('main.mainNet') }}</option>
-                            <option value="testnet">{{ $t('main.testNet') }}</option>
-                        </select>
+                    <label :class="formItemLabel">{{ $t('createAccount.select') }}</label>
+                    <div :class="formItemContent">
+                        <v-select :clearable="false" v-model="selected" style="height: 32px;font: 15;" :options="nets"></v-select>
                     </div>
                 </div>
                 <div class="form-item">
-                    <label class="form-item-label">{{ $t('createAccount.accountAlias') }}</label>
-                    <div class="form-item-content" style="margin-left: 135px;">
+                    <label :class="formItemLabel">{{ $t('createAccount.accountAlias') }}</label>
+                    <div :class="formItemContent">
                         <input type="text" v-model="formItem.accAlias" autofocus>
                     </div>
                 </div>
                 <div class="form-item">
-                    <label class="form-item-label">{{ $t('createAccount.keyAlias') }}</label>
-                    <div class="form-item-content" style="margin-left: 135px;">
+                    <label :class="formItemLabel">{{ $t('createAccount.keyAlias') }}</label>
+                    <div :class="formItemContent">
                         <input type="text" v-model="formItem.keyAlias">
                     </div>
                 </div>
                 <div class="form-item">
-                    <label class="form-item-label">{{ $t('createAccount.keyPassword') }}</label>
-                    <div class="form-item-content" style="margin-left: 135px;">
+                    <label :class="formItemLabel">{{ $t('createAccount.keyPassword') }}</label>
+                    <div :class="formItemContent">
                         <input type="password" v-model="formItem.passwd1">
                     </div>
                 </div>
                 <div class="form-item">
-                    <label class="form-item-label">{{ $t('createAccount.confirmPassword') }}</label>
-                    <div class="form-item-content" style="margin-left: 135px;">
+                    <label :class="formItemLabel">{{ $t('createAccount.confirmPassword') }}</label>
+                    <div :class="formItemContent">
                         <input type="password" v-model="formItem.passwd2">
                     </div>
                 </div>
@@ -57,13 +63,40 @@
 
 <script>
 import bytom from "../common/bytom";
+let mainNet = null;
+let testNet = null;
 export default {
   name: "",
   data() {
     return {
-      selected: 'mainnet',
+      nets: [],
+      selected: mainNet,
       formItem: {}
     };
+  },
+  computed : {
+    formItemLabel: function() {
+      if (this.i18n == "cn") {
+        return "form-item-label form-item-label-cn";
+      } else if (this.i18n == "en") {
+        return "form-item-label";
+      }
+      return "form-item-label form-item-label-cn";
+    },
+    formItemContent: function() {
+      if (this.i18n == "cn") {
+        return "form-item-content content-cn";
+      } else if (this.i18n == "en") {
+        return "form-item-content content";
+      }
+      return "form-item-label form-item-label-cn";
+    }
+  },
+  props: {
+    i18n: {
+      type: String,
+      default: 'cn',
+    }
   },
   methods: {
     create: function() {
@@ -99,15 +132,27 @@ export default {
     recover: function() {
       this.$emit("next");
     },
-    onChange() {
-      localStorage.bytomNet = this.selected;
-      bytom.System.setupNet(this.selected);
+  },
+  watch: {
+    selected: function(value) {
+      localStorage.bytomNet = value.value;
+      bytom.System.setupNet(value.value);
     }
   },
   mounted() {
+    mainNet = {label: this.$t('main.mainNet'), value: "mainnet"};
+    testNet = {label: this.$t('main.testNet'), value: "testnet"};
+    this.nets = [mainNet, testNet];
     if (localStorage.bytomNet != undefined) {
       bytom.System.setupNet(localStorage.bytomNet);
-      this.selected = localStorage.bytomNet;
+      if (localStorage.bytomNet == "mainnet") {
+        this.selected = mainNet;
+      } else if (localStorage.bytomNet == "testnet") {
+        this.selected = testNet;
+      }
+    } else {
+      this.selected = mainNet;
+      localStorage.bytomNet = "mainnet";
     }
   }
 };
