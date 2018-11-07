@@ -10,6 +10,7 @@
   margin: 5px 0 0 0;
   width: 120px;
   height: 32px;
+  position: relative;
 }
 .form-item-content .select {
   height: 32px;
@@ -25,13 +26,13 @@
         <div class="row">
             <p>{{ $t("setting.lang") }}</p>
               <div class="form-item setting">
-                  <v-select class="select" :value="selected" :clearable="false" :onChange="onChange" :options="i18nOptions"></v-select>
+                  <v-select style="height: 32px;" class="select" :value="selected" :clearable="false" :onChange="onChange" :options="i18nOptions"></v-select>
               </div>
         </div>
         <div class="row">
             <p>{{ $t("setting.unit") }}</p>
             <div class="form-item setting">
-                <v-select class="select" :value="unit" :clearable="false" :options="['BTM']"></v-select>
+                <v-select style="height: 32px;" class="select" :value="unit" :clearable="false" :options="['BTM']"></v-select>
             </div>
         </div>
     </MenuPage>

@@ -142,7 +142,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 80%;
+    width: 100%;
     align-items: center;
     background-color: #f0f0f0;
     border: 1px solid #ccc;

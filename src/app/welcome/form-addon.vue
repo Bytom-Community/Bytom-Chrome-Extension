@@ -140,8 +140,8 @@ export default {
     }
   },
   mounted() {
-    mainNet = {label: this.$t('main.mainNet'), value: "mainnet"};
-    testNet = {label: this.$t('main.testNet'), value: "testnet"};
+    mainNet = {label: this.$t('main.mainNetShort'), value: "mainnet"};
+    testNet = {label: this.$t('main.testNetShort'), value: "testnet"};
     this.nets = [mainNet, testNet];
     if (localStorage.bytomNet != undefined) {
       bytom.System.setupNet(localStorage.bytomNet);

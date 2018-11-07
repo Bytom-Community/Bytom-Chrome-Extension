@@ -34,6 +34,8 @@ const en = {
   main: {
     mainNet: "BYTOM MainNet",
     testNet: "BYTOM TestNet",
+    mainNetShort: "MainNet",
+    testNetShort: "TestNet",
     copy: "Click to copy",
     transfer: "Transfer",
     record: "Transaction Record",
