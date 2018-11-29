@@ -326,7 +326,6 @@ export default {
     }
   },
   mounted() {
-    console.log(2222)
     if (localStorage.bytomNet != undefined) {
       this.network = localStorage.bytomNet;
     }

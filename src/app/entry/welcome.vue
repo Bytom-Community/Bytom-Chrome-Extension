@@ -29,7 +29,7 @@
 </style>
 
 <template>
-  <section id="welcome">
+  <section id="app">
     <transition-group name="panels">
       <Welcome class="view" key="welcome" v-show="view.welcome" @next="currView='protocol'"></Welcome>
       <Protocol class="view" key="protocol" v-show="view.protocol" @next="protocolNext"></Protocol>

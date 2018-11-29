@@ -5,7 +5,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 9999;
+  z-index: 994;
   width: 55%;
   height: 100%;
   padding: 40px;
