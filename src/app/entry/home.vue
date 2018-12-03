@@ -288,7 +288,7 @@ export default {
 
       bytom.Transaction.list(this.accountInfo.guid, this.accountInfo.address)
         .then(ret => {
-          let transactions = ret.data.transactions;
+          let transactions = ret.result.data;
           if (transactions == null) {
             return;
           }
@@ -309,7 +309,7 @@ export default {
         this.limit
       )
         .then(ret => {
-          let transactions = ret.data.transactions;
+          let transactions = ret.result.data;
           if (transactions == null || ret._links.next == undefined) {
             return;
           }

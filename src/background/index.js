@@ -15,8 +15,8 @@ function refreshBalances() {
     bytom.accounts.listAddressUseServer(account.guid).then(addresses => {
       let balance = 0;
       addresses.forEach(item => {
-        if (item.asset != null) {
-          item.asset.forEach(asset => {
+        if (item.assets != null) {
+          item.assets.forEach(asset => {
             if (asset.asset == ASSET_BTM) {
               balance += asset.balance;
             }

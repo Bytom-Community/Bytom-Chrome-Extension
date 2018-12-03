@@ -173,7 +173,7 @@ export default {
     },
     "transaction.amount": function(newAmount) {
       bytom.Query.asset(this.transaction.asset).then(ret => {
-        this.transaction.cost = Number(ret.data.cny_price*newAmount).toFixed(2);
+        this.transaction.cost = Number(ret.result.data.cny_price*newAmount).toFixed(2);
       });
     },
     guid: function(newGuid) {
@@ -239,11 +239,11 @@ export default {
           console.log(ret);
           loader.hide();
 
-          this.transaction.fee = Number(ret.data.fee / 100000000);
+          this.transaction.fee = Number(ret.result.data.fee / 100000000);
           this.$refs.transferConfirm.open(
             this.account,
             this.transaction,
-            ret.data
+            ret.result.data
           );
         })
         .catch(error => {
