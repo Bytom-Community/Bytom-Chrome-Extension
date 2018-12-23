@@ -17,3 +17,6 @@ npm run build
 
 ## Architecture Diagram
 ![png](https://raw.githubusercontent.com/Bytom-Community/Bytom-Chrome-Extension/master/doc/architecture-diagram.png)
+
+## Doc
+[中文](https://github.com/Bytom-Community/Bytom-Chrome-Extension/tree/master/doc/cn)
