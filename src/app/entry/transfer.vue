@@ -1,5 +1,5 @@
 <template>
-    <div>aaa{{transfer}}</div>
+    <div>{{transfer}}</div>
 </template>
 
 <script>
@@ -14,8 +14,7 @@ export default {
   beforeCreate() {
     chrome.extension.onMessage.addListener((request, sender, sendResponse) => {
       this.transfer = request.cmd;
-      console.log(request, 222);
-    //   alert("前端/后端/Popup收到");
+      console.log("transfer", request);
         sendResponse("popup返回值");
     });
   }

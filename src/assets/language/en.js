@@ -72,6 +72,9 @@ const en = {
     import: "Import",
     back: "Back",
     passwordAgain: "The passwords are inconsistent twice. Please check and try again.",
+    inputAlias: "Please enter the account alias.",
+    inputKey: "Please enter the key alias.",
+    inputPass: "Please enter your password.",
   },
   help: {
     title: "Help",

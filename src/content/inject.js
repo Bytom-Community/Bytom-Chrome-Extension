@@ -10,10 +10,10 @@ window.addEventListener("message", function (event) {
         return;
     }
     
-    console.log(111, event.data);
+    console.log("event.data", event.data);
     if(event.data.bty == 'transfer'){
         chrome.runtime.sendMessage(event.data, function (response) {
-            console.log(222, response);
+            console.log("transfer response", response);
         });
     }
 

@@ -148,8 +148,6 @@ export default {
   methods: {
     open: function(transaction, selfAddress) {
       this.show = true;
-
-      console.log(transaction);
       this.transaction = transaction;
       this.selfAddress = selfAddress;
     },

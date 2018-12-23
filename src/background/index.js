@@ -15,8 +15,8 @@ function refreshBalances() {
     bytom.accounts.listAddressUseServer(account.guid).then(addresses => {
       let balance = 0;
       addresses.forEach(item => {
-        if (item.assets != null) {
-          item.assets.forEach(asset => {
+        if (item.balances != null) {
+          item.balances.forEach(asset => {
             if (asset.asset == ASSET_BTM) {
               balance += asset.balance;
             }
@@ -35,7 +35,7 @@ function refreshAccounts(success) {
   bytom.accounts
     .listAccountUseServer()
     .then(accounts => {
-      console.log(accounts);
+      console.log("refreshAccounts", accounts);
       globalAccounts = accounts;
       globalAccounts.forEach(account => {
         if (account.balance == null) {

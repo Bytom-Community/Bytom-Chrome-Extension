@@ -72,6 +72,9 @@ const cn = {
     import: "导入",
     back: "返回",
     passwordAgain: "两次密码不一致，请检查后再试。",
+    inputAlias: "请输入账户别名",
+    inputKey: "请输入秘钥别名",
+    inputPass: "请输入密码",
   },
   help: {
     title: "帮助",

@@ -47,7 +47,7 @@ export default {
         .restore(this.fileTxt)
         .then(res => {
           this.close();
-          console.log(res);
+          console.log("recovery", res);
         })
         .catch(error => {
           this.$dialog.show({

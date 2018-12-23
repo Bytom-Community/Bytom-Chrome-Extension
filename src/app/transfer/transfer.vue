@@ -236,7 +236,6 @@ export default {
         this.transaction.fee
       )
         .then(ret => {
-          console.log(ret);
           loader.hide();
 
           this.transaction.fee = Number(ret.result.data.fee / 100000000);

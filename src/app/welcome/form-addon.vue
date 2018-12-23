@@ -71,7 +71,12 @@ export default {
     return {
       nets: [],
       selected: mainNet,
-      formItem: {}
+      formItem: {
+        accAlias: "",
+        keyAlias: "",
+        passwd1: "",
+        passwd2: ""
+      }
     };
   },
   computed : {
@@ -100,6 +105,24 @@ export default {
   },
   methods: {
     create: function() {
+      if (this.formItem.accAlias == "") {
+        this.$dialog.show({
+          body: this.$t("createAccount.inputAlias")
+        });
+        return;
+      }
+      if (this.formItem.keyAlias == "") {
+        this.$dialog.show({
+          body: this.$t("createAccount.inputKey")
+        });
+        return;
+      }
+      if (this.formItem.passwd1 == "") {
+        this.$dialog.show({
+          body: this.$t("createAccount.inputPass")
+        });
+        return;
+      }
       if (this.formItem.passwd1 != this.formItem.passwd2) {
         this.$dialog.show({
             body: this.$t('createAccount.passwordAgain'),

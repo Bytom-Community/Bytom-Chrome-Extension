@@ -138,7 +138,6 @@ export default {
   },
   methods: {
     open: function(account, transaction, data) {
-      console.log(transaction);
       this.account = account;
       this.transaction = transaction;
       this.transaction.toShort = utils.shortAddress(transaction.to, 4);
@@ -160,8 +159,6 @@ export default {
       bytom.Transaction.transfer(this.account.guid, this.rawData, passwd)
         .then(ret => {
           loader.hide();
-          console.log(ret);
-
           this.close();
           this.$emit("on-success");
           this.$dialog.show({

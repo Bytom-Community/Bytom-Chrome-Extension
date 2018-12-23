@@ -79,8 +79,26 @@ export default {
       this.$emit("on-exit", "creation");
     },
     create: function() {
+      if (this.formItem.accAlias == "") {
+        this.$dialog.show({
+          body: this.$t("createAccount.inputAlias")
+        });
+        return;
+      }
+      if (this.formItem.keyAlias == "") {
+        this.$dialog.show({
+          body: this.$t("createAccount.inputKey")
+        });
+        return;
+      }
+      if (this.formItem.passwd1 == "") {
+        this.$dialog.show({
+          body: this.$t("createAccount.inputPass")
+        });
+        return;
+      }
       if (this.formItem.passwd1 != this.formItem.passwd2) {
-        this.tips = "两次密码不一致，请检查后再试";
+        this.tips = this.$t('createAccount.passwordAgain');
         return;
       }
 
@@ -96,7 +114,7 @@ export default {
         this.formItem.passwd1
       )
         .then(res => {
-          console.log(res);
+          console.log("bytom.Account.create", res);
           this.formItem = {};
           loader.hide();
           this.back();
