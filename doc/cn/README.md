@@ -35,6 +35,6 @@ npm run build # 构建插件文件（crx文件）
 npm run dev
 ```
 这个时候会在工作目录生成dist目录，在Chrome浏览器扩展程序界面中点击`加载已解压的扩展程序`选择dist文件夹，即可在浏览器中调试程序。
-npm进程会监听您对文件的修改，以及时编译代码，将更改提现在程序上（这就和前端开发的dev模式一样）。
+npm进程会监听您对文件的修改，以及时编译代码，将更改提现在程序上（这就和前端开发的dev模式一样）。<br>
 如果您想自行构建wasm文件，请参考此项目[Go-WebAssembly](https://github.com/golang/go/wiki/WebAssembly)。
 您只需要将构建好的wasm文件拷贝到`static/wasm`目录下，并命名为main.wasm即可。
