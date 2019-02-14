@@ -38,5 +38,4 @@ npm run dev
 npm进程会监听您对文件的修改，以及时编译代码，将更改提现在程序上（这就和前端开发的dev模式一样）。<br>
 如果您想自行构建wasm文件，请参考此项目[Bytom-WebAssembly](https://github.com/Bytom-Community/Bytom-WebAssembly)。
 您只需要将构建好的wasm文件拷贝到`static/wasm`目录下，并命名为main.wasm即可。<br>
-注意，要想自行构建wasm文件，需要安装Go（最低1.11版本），安装请参考[Go Install](https://golang.org/doc/install)
-```
+注意，要想自行构建wasm文件，需要安装Go（最低1.11版本），安装请参考[Go Install](https://golang.org/doc/install)。
